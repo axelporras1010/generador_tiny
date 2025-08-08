@@ -5,54 +5,76 @@
 
 package ve.edu.unet;
 
-/** CUP generated class containing symbol constants. */
+// Clase temporal de símbolos para probar el analizador léxico
 public class sym {
-  /* terminals */
-  public static final int TIMES = 17;
-  public static final int READ = 8;
-  public static final int OVER = 18;
-  public static final int LT = 14;
-  public static final int ELSE = 4;
-  public static final int PLUS = 15;
-  public static final int RPAREN = 20;
-  public static final int THEN = 3;
-  public static final int SEMI = 21;
-  public static final int END = 5;
-  public static final int IF = 2;
-  public static final int LPAREN = 19;
-  public static final int WRITE = 9;
-  public static final int ID = 10;
-  public static final int NUM = 11;
-  public static final int EOF = 0;
-  public static final int MINUS = 16;
-  public static final int error = 1;
-  public static final int UNTIL = 7;
-  public static final int ASSIGN = 12;
-  public static final int EQ = 13;
-  public static final int REPEAT = 6;
-  public static final String[] terminalNames = new String[] {
-  "EOF",
-  "error",
-  "IF",
-  "THEN",
-  "ELSE",
-  "END",
-  "REPEAT",
-  "UNTIL",
-  "READ",
-  "WRITE",
-  "ID",
-  "NUM",
-  "ASSIGN",
-  "EQ",
-  "LT",
-  "PLUS",
-  "MINUS",
-  "TIMES",
-  "OVER",
-  "LPAREN",
-  "RPAREN",
-  "SEMI"
-  };
+    // Símbolos originales
+    public static final int EOF = 0;
+    public static final int IF = 1;
+    public static final int THEN = 2;
+    public static final int ELSE = 3;
+    public static final int END = 4;
+    public static final int REPEAT = 5;
+    public static final int UNTIL = 6;
+    public static final int READ = 7;
+    public static final int WRITE = 8;
+    public static final int ASSIGN = 9;
+    public static final int EQ = 10;
+    public static final int LT = 11;
+    public static final int PLUS = 12;
+    public static final int MINUS = 13;
+    public static final int TIMES = 14;
+    public static final int OVER = 15;
+    public static final int LPAREN = 16;
+    public static final int RPAREN = 17;
+    public static final int SEMI = 18;
+    public static final int NUM = 19;
+    public static final int ID = 20;
+    
+    // Nuevos símbolos para funciones
+    public static final int FUNCTION = 21;
+    public static final int RETURN = 22;
+    public static final int CALL = 23;
+    
+    // Nuevos símbolos para ámbitos
+    public static final int BEGIN = 24;
+    public static final int VAR = 25;
+    public static final int GLOBAL = 26;
+    
+    // Nuevos símbolos para vectores
+    public static final int ARRAY = 27;
+    
+    // Instrucción especial: FOR LOOP
+    public static final int FOR = 28;
+    public static final int TO = 29;
+    public static final int STEP = 30;
+    public static final int BREAK = 31;
+    public static final int CONTINUE = 32;
+    
+    // Nuevos operadores relacionales
+    public static final int GT = 33;
+    public static final int LE = 34;
+    public static final int GE = 35;
+    public static final int NE = 36;
+    
+    // Nuevos operadores matemáticos
+    public static final int MOD = 37;
+    public static final int POW = 38;
+    
+    // Operadores lógicos
+    public static final int AND = 39;
+    public static final int OR = 40;
+    public static final int NOT = 41;
+    
+    // Nuevos delimitadores
+    public static final int LBRACKET = 42;
+    public static final int RBRACKET = 43;
+    public static final int LBRACE = 44;
+    public static final int RBRACE = 45;
+    public static final int COMMA = 46;
+    public static final int COLON = 47;
+    
+    // Nuevos tipos de datos
+    public static final int REAL = 48;
+    public static final int STRING = 49;
 }
 

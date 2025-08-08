@@ -1,0 +1,93 @@
+{Programa ejemplo que demuestra las nuevas características del compilador extendido}
+
+// Declaración de variables globales
+global x;
+global arr : array[10];
+
+// Definición de función que calcula factorial
+function factorial(n) 
+begin
+    var result;
+    if n <= 1 then
+        result := 1
+    else
+        result := n * call factorial(n - 1)
+    end;
+    return result
+end
+
+// Función que suma elementos de un vector
+function suma_vector(v : array[], size)
+begin
+    var i;
+    var total;
+    total := 0;
+    for i := 0 to size - 1 step 1
+    begin
+        total := total + v[i];
+        if v[i] < 0 then
+            continue
+        end;
+        if total > 1000 then
+            break
+        end
+    end;
+    return total
+end
+
+// Programa principal
+begin
+    var i;
+    var num;
+    var resultado;
+    
+    // Lectura de datos
+    write "Ingrese un número: ";
+    read num;
+    
+    // Inicialización del vector con valores
+    for i := 0 to 9 step 1
+    begin
+        arr[i] := i * 2 + 1
+    end;
+    
+    // Prueba de operadores relacionales y matemáticos
+    if num >= 0 && num <= 10 then
+    begin
+        resultado := call factorial(num);
+        write "El factorial de ";
+        write num;
+        write " es ";
+        write resultado;
+        
+        // Operaciones matemáticas adicionales
+        if num % 2 = 0 then
+            write "El número es par"
+        else
+            write "El número es impar"
+        end;
+        
+        // Prueba de potenciación
+        x := num ** 2;
+        write "El cuadrado es: ";
+        write x
+    end
+    else
+    begin
+        write "Número fuera de rango"
+    end;
+    
+    // Prueba de la función suma_vector
+    resultado := call suma_vector(arr, 10);
+    write "La suma del vector es: ";
+    write resultado;
+    
+    // Prueba de operadores lógicos
+    if (num > 5) || (num < 0) then
+        write "Condición compleja verdadera"
+    end;
+    
+    if !(num != 5) then
+        write "El número es 5"
+    end
+end
