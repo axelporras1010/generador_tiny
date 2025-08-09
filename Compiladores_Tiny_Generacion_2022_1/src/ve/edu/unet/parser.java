@@ -33,16 +33,30 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\036\000\002\002\003\000\002\002\004\000\002\003" +
-    "\005\000\002\003\003\000\002\004\003\000\002\004\003" +
-    "\000\002\004\003\000\002\004\003\000\002\004\003\000" +
-    "\002\004\003\000\002\005\007\000\002\005\011\000\002" +
-    "\006\006\000\002\016\002\000\002\007\006\000\002\010" +
-    "\004\000\002\011\004\000\002\012\005\000\002\012\005" +
-    "\000\002\012\003\000\002\013\005\000\002\013\005\000" +
-    "\002\013\003\000\002\014\005\000\002\014\005\000\002" +
-    "\014\003\000\002\015\005\000\002\015\003\000\002\015" +
-    "\003\000\002\015\003" });
+    "\000\115\000\002\002\004\000\002\002\004\000\002\002" +
+    "\003\000\002\003\004\000\002\003\003\000\002\004\003" +
+    "\000\002\004\003\000\002\005\005\000\002\005\012\000" +
+    "\002\010\012\000\002\010\011\000\002\012\005\000\002" +
+    "\012\003\000\002\013\003\000\002\013\007\000\002\014" +
+    "\005\000\002\006\005\000\002\015\005\000\002\015\003" +
+    "\000\002\016\003\000\002\016\003\000\002\016\003\000" +
+    "\002\016\003\000\002\016\003\000\002\016\003\000\002" +
+    "\016\003\000\002\016\003\000\002\016\003\000\002\016" +
+    "\003\000\002\016\003\000\002\016\003\000\002\017\007" +
+    "\000\002\017\011\000\002\020\006\000\002\021\015\000" +
+    "\002\021\013\000\002\022\005\000\002\022\010\000\002" +
+    "\023\004\000\002\024\004\000\002\025\007\000\002\025" +
+    "\006\000\002\026\004\000\002\026\003\000\002\027\003" +
+    "\000\002\030\003\000\002\037\005\000\002\037\003\000" +
+    "\002\031\003\000\002\032\005\000\002\032\005\000\002" +
+    "\032\004\000\002\032\003\000\002\033\005\000\002\033" +
+    "\005\000\002\033\005\000\002\033\005\000\002\033\005" +
+    "\000\002\033\005\000\002\033\003\000\002\034\005\000" +
+    "\002\034\005\000\002\034\003\000\002\035\005\000\002" +
+    "\035\005\000\002\035\005\000\002\035\005\000\002\035" +
+    "\003\000\002\036\005\000\002\036\003\000\002\036\003" +
+    "\000\002\036\003\000\002\036\003\000\002\036\006\000" +
+    "\002\036\007\000\002\036\006\000\002\036\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -50,72 +64,235 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\066\000\016\003\017\004\015\010\005\012\004\013" +
-    "\020\014\016\001\002\000\004\014\070\001\002\000\016" +
-    "\003\017\004\015\010\005\012\004\013\020\014\016\001" +
-    "\002\000\014\002\ufffc\006\ufffc\007\ufffc\011\ufffc\027\ufffc" +
-    "\001\002\000\014\002\ufffd\006\ufffd\007\ufffd\011\ufffd\027" +
-    "\ufffd\001\002\000\014\002\ufff9\006\ufff9\007\ufff9\011\ufff9" +
-    "\027\ufff9\001\002\000\014\002\ufffe\006\ufffe\007\ufffe\011" +
-    "\ufffe\027\ufffe\001\002\000\014\002\ufffb\006\ufffb\007\ufffb" +
-    "\011\ufffb\027\ufffb\001\002\000\004\002\064\001\002\000" +
-    "\014\002\ufffa\006\ufffa\007\ufffa\011\ufffa\027\ufffa\001\002" +
-    "\000\012\003\026\014\025\015\024\025\032\001\002\000" +
-    "\004\016\ufff4\001\002\000\014\002\ufff8\006\ufff8\007\ufff8" +
-    "\011\ufff8\027\ufff8\001\002\000\012\003\026\014\025\015" +
-    "\024\025\032\001\002\000\006\002\001\027\022\001\002" +
-    "\000\016\003\017\004\015\010\005\012\004\013\020\014" +
-    "\016\001\002\000\014\002\uffff\006\uffff\007\uffff\011\uffff" +
-    "\027\uffff\001\002\000\034\002\uffe6\005\uffe6\006\uffe6\007" +
-    "\uffe6\011\uffe6\017\uffe6\020\uffe6\021\uffe6\022\uffe6\023\uffe6" +
-    "\024\uffe6\026\uffe6\027\uffe6\001\002\000\034\002\uffe5\005" +
-    "\uffe5\006\uffe5\007\uffe5\011\uffe5\017\uffe5\020\uffe5\021\uffe5" +
-    "\022\uffe5\023\uffe5\024\uffe5\026\uffe5\027\uffe5\001\002\000" +
-    "\034\002\uffe4\005\uffe4\006\uffe4\007\uffe4\011\uffe4\017\uffe4" +
-    "\020\uffe4\021\uffe4\022\uffe4\023\uffe4\024\uffe4\026\uffe4\027" +
-    "\uffe4\001\002\000\034\002\uffeb\005\uffeb\006\uffeb\007\uffeb" +
-    "\011\uffeb\017\uffeb\020\uffeb\021\uffeb\022\uffeb\023\044\024" +
-    "\043\026\uffeb\027\uffeb\001\002\000\034\002\uffe8\005\uffe8" +
-    "\006\uffe8\007\uffe8\011\uffe8\017\uffe8\020\uffe8\021\uffe8\022" +
-    "\uffe8\023\uffe8\024\uffe8\026\uffe8\027\uffe8\001\002\000\030" +
-    "\002\uffee\005\uffee\006\uffee\007\uffee\011\uffee\017\037\020" +
-    "\036\021\040\022\041\026\uffee\027\uffee\001\002\000\012" +
-    "\003\026\014\025\015\024\025\032\001\002\000\014\002" +
-    "\ufff1\006\ufff1\007\ufff1\011\ufff1\027\ufff1\001\002\000\004" +
-    "\026\035\001\002\000\034\002\uffe7\005\uffe7\006\uffe7\007" +
-    "\uffe7\011\uffe7\017\uffe7\020\uffe7\021\uffe7\022\uffe7\023\uffe7" +
-    "\024\uffe7\026\uffe7\027\uffe7\001\002\000\012\003\026\014" +
-    "\025\015\024\025\032\001\002\000\012\003\026\014\025" +
-    "\015\024\025\032\001\002\000\012\003\026\014\025\015" +
-    "\024\025\032\001\002\000\012\003\026\014\025\015\024" +
-    "\025\032\001\002\000\034\002\uffec\005\uffec\006\uffec\007" +
-    "\uffec\011\uffec\017\uffec\020\uffec\021\uffec\022\uffec\023\044" +
-    "\024\043\026\uffec\027\uffec\001\002\000\012\003\026\014" +
-    "\025\015\024\025\032\001\002\000\012\003\026\014\025" +
-    "\015\024\025\032\001\002\000\034\002\uffea\005\uffea\006" +
-    "\uffea\007\uffea\011\uffea\017\uffea\020\uffea\021\uffea\022\uffea" +
-    "\023\uffea\024\uffea\026\uffea\027\uffea\001\002\000\034\002" +
-    "\uffe9\005\uffe9\006\uffe9\007\uffe9\011\uffe9\017\uffe9\020\uffe9" +
-    "\021\uffe9\022\uffe9\023\uffe9\024\uffe9\026\uffe9\027\uffe9\001" +
-    "\002\000\034\002\uffed\005\uffed\006\uffed\007\uffed\011\uffed" +
-    "\017\uffed\020\uffed\021\uffed\022\uffed\023\044\024\043\026" +
-    "\uffed\027\uffed\001\002\000\024\002\uffef\005\uffef\006\uffef" +
-    "\007\uffef\011\uffef\021\040\022\041\026\uffef\027\uffef\001" +
-    "\002\000\024\002\ufff0\005\ufff0\006\ufff0\007\ufff0\011\ufff0" +
-    "\021\040\022\041\026\ufff0\027\ufff0\001\002\000\004\016" +
-    "\053\001\002\000\012\003\026\014\025\015\024\025\032" +
-    "\001\002\000\014\002\ufff3\006\ufff3\007\ufff3\011\ufff3\027" +
-    "\ufff3\001\002\000\004\005\056\001\002\000\016\003\017" +
-    "\004\015\010\005\012\004\013\020\014\016\001\002\000" +
-    "\010\006\060\007\061\027\022\001\002\000\016\003\017" +
-    "\004\015\010\005\012\004\013\020\014\016\001\002\000" +
-    "\014\002\ufff7\006\ufff7\007\ufff7\011\ufff7\027\ufff7\001\002" +
-    "\000\006\007\063\027\022\001\002\000\014\002\ufff6\006" +
-    "\ufff6\007\ufff6\011\ufff6\027\ufff6\001\002\000\004\002\000" +
-    "\001\002\000\006\011\066\027\022\001\002\000\012\003" +
-    "\026\014\025\015\024\025\032\001\002\000\014\002\ufff5" +
-    "\006\ufff5\007\ufff5\011\ufff5\027\ufff5\001\002\000\014\002" +
-    "\ufff2\006\ufff2\007\ufff2\011\ufff2\027\ufff2\001\002" });
+    "\000\243\000\010\014\012\017\014\021\013\001\002\000" +
+    "\010\014\ufffd\017\ufffd\021\ufffd\001\002\000\010\014\ufffb" +
+    "\017\ufffb\021\ufffb\001\002\000\010\014\012\017\014\021" +
+    "\013\001\002\000\004\002\uffff\001\002\000\004\002\243" +
+    "\001\002\000\010\014\ufffc\017\ufffc\021\ufffc\001\002\000" +
+    "\004\061\220\001\002\000\004\061\210\001\002\000\032" +
+    "\003\032\004\023\010\041\012\016\013\024\015\021\016" +
+    "\020\020\045\023\037\026\027\027\017\061\025\001\002" +
+    "\000\012\006\uffed\007\uffed\011\uffed\052\uffed\001\002\000" +
+    "\004\061\207\001\002\000\012\006\uffd4\007\uffd4\011\uffd4" +
+    "\052\uffd4\001\002\000\004\061\202\001\002\000\032\003" +
+    "\060\006\uffd6\007\uffd6\011\uffd6\016\070\047\064\050\067" +
+    "\052\uffd6\061\057\062\053\063\062\064\056\001\002\000" +
+    "\012\006\uffea\007\uffea\011\uffea\052\uffea\001\002\000\022" +
+    "\003\060\016\070\047\064\050\067\061\057\062\053\063" +
+    "\062\064\056\001\002\000\022\003\060\016\070\047\064" +
+    "\050\067\061\057\062\053\063\062\064\056\001\002\000" +
+    "\006\030\163\053\162\001\002\000\012\006\uffe7\007\uffe7" +
+    "\011\uffe7\052\uffe7\001\002\000\012\006\uffd5\007\uffd5\011" +
+    "\uffd5\052\uffd5\001\002\000\006\007\161\052\051\001\002" +
+    "\000\012\006\uffe4\007\uffe4\011\uffe4\052\uffe4\001\002\000" +
+    "\012\006\uffe3\007\uffe3\011\uffe3\052\uffe3\001\002\000\012" +
+    "\006\uffe6\007\uffe6\011\uffe6\052\uffe6\001\002\000\012\006" +
+    "\uffee\007\uffee\011\uffee\052\uffee\001\002\000\012\006\uffec" +
+    "\007\uffec\011\uffec\052\uffec\001\002\000\012\006\uffe9\007" +
+    "\uffe9\011\uffe9\052\uffe9\001\002\000\004\061\144\001\002" +
+    "\000\012\006\uffe8\007\uffe8\011\uffe8\052\uffe8\001\002\000" +
+    "\032\003\032\004\023\010\041\012\016\013\024\015\021" +
+    "\016\020\020\045\023\037\026\027\027\017\061\025\001" +
+    "\002\000\012\006\uffeb\007\uffeb\011\uffeb\052\uffeb\001\002" +
+    "\000\012\006\uffef\007\uffef\011\uffef\052\uffef\001\002\000" +
+    "\012\006\uffe5\007\uffe5\011\uffe5\052\uffe5\001\002\000\004" +
+    "\061\046\001\002\000\004\052\047\001\002\000\012\006" +
+    "\ufff1\007\ufff1\011\ufff1\052\ufff1\001\002\000\006\011\052" +
+    "\052\051\001\002\000\032\003\032\004\023\010\041\012" +
+    "\016\013\024\015\021\016\020\020\045\023\037\026\027" +
+    "\027\017\061\025\001\002\000\022\003\060\016\070\047" +
+    "\064\050\067\061\057\062\053\063\062\064\056\001\002" +
+    "\000\064\005\uffbc\006\uffbc\007\uffbc\011\uffbc\017\uffbc\024" +
+    "\uffbc\025\uffbc\031\uffbc\032\uffbc\033\uffbc\034\uffbc\035\uffbc" +
+    "\036\uffbc\037\uffbc\040\uffbc\041\uffbc\042\uffbc\043\uffbc\044" +
+    "\uffbc\045\uffbc\046\uffbc\051\uffbc\052\uffbc\054\uffbc\057\uffbc" +
+    "\001\002\000\062\005\uffc3\006\uffc3\007\uffc3\011\uffc3\017" +
+    "\uffc3\024\uffc3\025\uffc3\031\uffc3\032\uffc3\033\uffc3\034\uffc3" +
+    "\035\120\036\117\037\uffc3\040\uffc3\041\uffc3\042\uffc3\043" +
+    "\116\045\uffc3\046\uffc3\051\uffc3\052\uffc3\054\uffc3\057\uffc3" +
+    "\001\002\000\012\006\uffe0\007\uffe0\011\uffe0\052\uffe0\001" +
+    "\002\000\064\005\uffba\006\uffba\007\uffba\011\uffba\017\uffba" +
+    "\024\uffba\025\uffba\031\uffba\032\uffba\033\uffba\034\uffba\035" +
+    "\uffba\036\uffba\037\uffba\040\uffba\041\uffba\042\uffba\043\uffba" +
+    "\044\uffba\045\uffba\046\uffba\051\uffba\052\uffba\054\uffba\057" +
+    "\uffba\001\002\000\066\005\uffb9\006\uffb9\007\uffb9\011\uffb9" +
+    "\017\uffb9\024\uffb9\025\uffb9\031\uffb9\032\uffb9\033\uffb9\034" +
+    "\uffb9\035\uffb9\036\uffb9\037\uffb9\040\uffb9\041\uffb9\042\uffb9" +
+    "\043\uffb9\044\uffb9\045\uffb9\046\uffb9\051\uffb9\052\uffb9\053" +
+    "\140\054\uffb9\057\uffb9\001\002\000\064\005\uffb5\006\uffb5" +
+    "\007\uffb5\011\uffb5\017\uffb5\024\uffb5\025\uffb5\031\uffb5\032" +
+    "\uffb5\033\uffb5\034\uffb5\035\uffb5\036\uffb5\037\uffb5\040\uffb5" +
+    "\041\uffb5\042\uffb5\043\uffb5\044\uffb5\045\uffb5\046\uffb5\051" +
+    "\uffb5\052\uffb5\054\uffb5\057\uffb5\001\002\000\064\005\uffbe" +
+    "\006\uffbe\007\uffbe\011\uffbe\017\uffbe\024\uffbe\025\uffbe\031" +
+    "\uffbe\032\uffbe\033\uffbe\034\uffbe\035\uffbe\036\uffbe\037\uffbe" +
+    "\040\uffbe\041\uffbe\042\uffbe\043\uffbe\044\136\045\uffbe\046" +
+    "\uffbe\051\uffbe\052\uffbe\054\uffbe\057\uffbe\001\002\000\064" +
+    "\005\uffbb\006\uffbb\007\uffbb\011\uffbb\017\uffbb\024\uffbb\025" +
+    "\uffbb\031\uffbb\032\uffbb\033\uffbb\034\uffbb\035\uffbb\036\uffbb" +
+    "\037\uffbb\040\uffbb\041\uffbb\042\uffbb\043\uffbb\044\uffbb\045" +
+    "\uffbb\046\uffbb\051\uffbb\052\uffbb\054\uffbb\057\uffbb\001\002" +
+    "\000\034\005\uffd1\006\uffd1\007\uffd1\011\uffd1\017\uffd1\024" +
+    "\uffd1\025\uffd1\045\132\046\133\051\uffd1\052\uffd1\054\uffd1" +
+    "\057\uffd1\001\002\000\020\003\060\016\070\050\067\061" +
+    "\057\062\053\063\062\064\056\001\002\000\054\005\uffc6" +
+    "\006\uffc6\007\uffc6\011\uffc6\017\uffc6\024\uffc6\025\uffc6\031" +
+    "\104\032\103\033\106\034\110\037\105\040\107\041\111" +
+    "\042\112\045\uffc6\046\uffc6\051\uffc6\052\uffc6\054\uffc6\057" +
+    "\uffc6\001\002\000\034\005\uffcd\006\uffcd\007\uffcd\011\uffcd" +
+    "\017\uffcd\024\uffcd\025\uffcd\045\uffcd\046\uffcd\051\uffcd\052" +
+    "\uffcd\054\uffcd\057\uffcd\001\002\000\022\003\060\016\070" +
+    "\047\064\050\067\061\057\062\053\063\062\064\056\001" +
+    "\002\000\004\061\071\001\002\000\004\050\072\001\002" +
+    "\000\024\003\060\016\070\047\064\050\067\051\075\061" +
+    "\057\062\053\063\062\064\056\001\002\000\006\051\uffd2" +
+    "\057\uffd2\001\002\000\006\051\077\057\076\001\002\000" +
+    "\064\005\uffb6\006\uffb6\007\uffb6\011\uffb6\017\uffb6\024\uffb6" +
+    "\025\uffb6\031\uffb6\032\uffb6\033\uffb6\034\uffb6\035\uffb6\036" +
+    "\uffb6\037\uffb6\040\uffb6\041\uffb6\042\uffb6\043\uffb6\044\uffb6" +
+    "\045\uffb6\046\uffb6\051\uffb6\052\uffb6\054\uffb6\057\uffb6\001" +
+    "\002\000\022\003\060\016\070\047\064\050\067\061\057" +
+    "\062\053\063\062\064\056\001\002\000\064\005\uffb7\006" +
+    "\uffb7\007\uffb7\011\uffb7\017\uffb7\024\uffb7\025\uffb7\031\uffb7" +
+    "\032\uffb7\033\uffb7\034\uffb7\035\uffb7\036\uffb7\037\uffb7\040" +
+    "\uffb7\041\uffb7\042\uffb7\043\uffb7\044\uffb7\045\uffb7\046\uffb7" +
+    "\051\uffb7\052\uffb7\054\uffb7\057\uffb7\001\002\000\006\051" +
+    "\uffd3\057\uffd3\001\002\000\004\051\102\001\002\000\064" +
+    "\005\uffbd\006\uffbd\007\uffbd\011\uffbd\017\uffbd\024\uffbd\025" +
+    "\uffbd\031\uffbd\032\uffbd\033\uffbd\034\uffbd\035\uffbd\036\uffbd" +
+    "\037\uffbd\040\uffbd\041\uffbd\042\uffbd\043\uffbd\044\uffbd\045" +
+    "\uffbd\046\uffbd\051\uffbd\052\uffbd\054\uffbd\057\uffbd\001\002" +
+    "\000\020\003\060\016\070\050\067\061\057\062\053\063" +
+    "\062\064\056\001\002\000\020\003\060\016\070\050\067" +
+    "\061\057\062\053\063\062\064\056\001\002\000\020\003" +
+    "\060\016\070\050\067\061\057\062\053\063\062\064\056" +
+    "\001\002\000\020\003\060\016\070\050\067\061\057\062" +
+    "\053\063\062\064\056\001\002\000\020\003\060\016\070" +
+    "\050\067\061\057\062\053\063\062\064\056\001\002\000" +
+    "\020\003\060\016\070\050\067\061\057\062\053\063\062" +
+    "\064\056\001\002\000\020\003\060\016\070\050\067\061" +
+    "\057\062\053\063\062\064\056\001\002\000\020\003\060" +
+    "\016\070\050\067\061\057\062\053\063\062\064\056\001" +
+    "\002\000\040\005\uffc7\006\uffc7\007\uffc7\011\uffc7\017\uffc7" +
+    "\024\uffc7\025\uffc7\033\106\034\110\045\uffc7\046\uffc7\051" +
+    "\uffc7\052\uffc7\054\uffc7\057\uffc7\001\002\000\040\005\uffc9" +
+    "\006\uffc9\007\uffc9\011\uffc9\017\uffc9\024\uffc9\025\uffc9\033" +
+    "\106\034\110\045\uffc9\046\uffc9\051\uffc9\052\uffc9\054\uffc9" +
+    "\057\uffc9\001\002\000\062\005\uffc4\006\uffc4\007\uffc4\011" +
+    "\uffc4\017\uffc4\024\uffc4\025\uffc4\031\uffc4\032\uffc4\033\uffc4" +
+    "\034\uffc4\035\120\036\117\037\uffc4\040\uffc4\041\uffc4\042" +
+    "\uffc4\043\116\045\uffc4\046\uffc4\051\uffc4\052\uffc4\054\uffc4" +
+    "\057\uffc4\001\002\000\020\003\060\016\070\050\067\061" +
+    "\057\062\053\063\062\064\056\001\002\000\020\003\060" +
+    "\016\070\050\067\061\057\062\053\063\062\064\056\001" +
+    "\002\000\020\003\060\016\070\050\067\061\057\062\053" +
+    "\063\062\064\056\001\002\000\062\005\uffc2\006\uffc2\007" +
+    "\uffc2\011\uffc2\017\uffc2\024\uffc2\025\uffc2\031\uffc2\032\uffc2" +
+    "\033\uffc2\034\uffc2\035\uffc2\036\uffc2\037\uffc2\040\uffc2\041" +
+    "\uffc2\042\uffc2\043\uffc2\045\uffc2\046\uffc2\051\uffc2\052\uffc2" +
+    "\054\uffc2\057\uffc2\001\002\000\062\005\uffc1\006\uffc1\007" +
+    "\uffc1\011\uffc1\017\uffc1\024\uffc1\025\uffc1\031\uffc1\032\uffc1" +
+    "\033\uffc1\034\uffc1\035\uffc1\036\uffc1\037\uffc1\040\uffc1\041" +
+    "\uffc1\042\uffc1\043\uffc1\045\uffc1\046\uffc1\051\uffc1\052\uffc1" +
+    "\054\uffc1\057\uffc1\001\002\000\062\005\uffc0\006\uffc0\007" +
+    "\uffc0\011\uffc0\017\uffc0\024\uffc0\025\uffc0\031\uffc0\032\uffc0" +
+    "\033\uffc0\034\uffc0\035\uffc0\036\uffc0\037\uffc0\040\uffc0\041" +
+    "\uffc0\042\uffc0\043\uffc0\045\uffc0\046\uffc0\051\uffc0\052\uffc0" +
+    "\054\uffc0\057\uffc0\001\002\000\040\005\uffcb\006\uffcb\007" +
+    "\uffcb\011\uffcb\017\uffcb\024\uffcb\025\uffcb\033\106\034\110" +
+    "\045\uffcb\046\uffcb\051\uffcb\052\uffcb\054\uffcb\057\uffcb\001" +
+    "\002\000\062\005\uffc5\006\uffc5\007\uffc5\011\uffc5\017\uffc5" +
+    "\024\uffc5\025\uffc5\031\uffc5\032\uffc5\033\uffc5\034\uffc5\035" +
+    "\120\036\117\037\uffc5\040\uffc5\041\uffc5\042\uffc5\043\116" +
+    "\045\uffc5\046\uffc5\051\uffc5\052\uffc5\054\uffc5\057\uffc5\001" +
+    "\002\000\040\005\uffca\006\uffca\007\uffca\011\uffca\017\uffca" +
+    "\024\uffca\025\uffca\033\106\034\110\045\uffca\046\uffca\051" +
+    "\uffca\052\uffca\054\uffca\057\uffca\001\002\000\040\005\uffc8" +
+    "\006\uffc8\007\uffc8\011\uffc8\017\uffc8\024\uffc8\025\uffc8\033" +
+    "\106\034\110\045\uffc8\046\uffc8\051\uffc8\052\uffc8\054\uffc8" +
+    "\057\uffc8\001\002\000\040\005\uffcc\006\uffcc\007\uffcc\011" +
+    "\uffcc\017\uffcc\024\uffcc\025\uffcc\033\106\034\110\045\uffcc" +
+    "\046\uffcc\051\uffcc\052\uffcc\054\uffcc\057\uffcc\001\002\000" +
+    "\034\005\uffce\006\uffce\007\uffce\011\uffce\017\uffce\024\uffce" +
+    "\025\uffce\045\uffce\046\uffce\051\uffce\052\uffce\054\uffce\057" +
+    "\uffce\001\002\000\020\003\060\016\070\050\067\061\057" +
+    "\062\053\063\062\064\056\001\002\000\020\003\060\016" +
+    "\070\050\067\061\057\062\053\063\062\064\056\001\002" +
+    "\000\034\005\uffd0\006\uffd0\007\uffd0\011\uffd0\017\uffd0\024" +
+    "\uffd0\025\uffd0\045\uffd0\046\uffd0\051\uffd0\052\uffd0\054\uffd0" +
+    "\057\uffd0\001\002\000\034\005\uffcf\006\uffcf\007\uffcf\011" +
+    "\uffcf\017\uffcf\024\uffcf\025\uffcf\045\uffcf\046\uffcf\051\uffcf" +
+    "\052\uffcf\054\uffcf\057\uffcf\001\002\000\020\003\060\016" +
+    "\070\050\067\061\057\062\053\063\062\064\056\001\002" +
+    "\000\062\005\uffbf\006\uffbf\007\uffbf\011\uffbf\017\uffbf\024" +
+    "\uffbf\025\uffbf\031\uffbf\032\uffbf\033\uffbf\034\uffbf\035\uffbf" +
+    "\036\uffbf\037\uffbf\040\uffbf\041\uffbf\042\uffbf\043\uffbf\045" +
+    "\uffbf\046\uffbf\051\uffbf\052\uffbf\054\uffbf\057\uffbf\001\002" +
+    "\000\022\003\060\016\070\047\064\050\067\061\057\062" +
+    "\053\063\062\064\056\001\002\000\004\054\142\001\002" +
+    "\000\064\005\uffb8\006\uffb8\007\uffb8\011\uffb8\017\uffb8\024" +
+    "\uffb8\025\uffb8\031\uffb8\032\uffb8\033\uffb8\034\uffb8\035\uffb8" +
+    "\036\uffb8\037\uffb8\040\uffb8\041\uffb8\042\uffb8\043\uffb8\044" +
+    "\uffb8\045\uffb8\046\uffb8\051\uffb8\052\uffb8\054\uffb8\057\uffb8" +
+    "\001\002\000\012\006\ufff0\007\ufff0\011\ufff0\052\ufff0\001" +
+    "\002\000\004\030\145\001\002\000\022\003\060\016\070" +
+    "\047\064\050\067\061\057\062\053\063\062\064\056\001" +
+    "\002\000\004\024\147\001\002\000\022\003\060\016\070" +
+    "\047\064\050\067\061\057\062\053\063\062\064\056\001" +
+    "\002\000\006\017\152\025\151\001\002\000\022\003\060" +
+    "\016\070\047\064\050\067\061\057\062\053\063\062\064" +
+    "\056\001\002\000\032\003\032\004\023\010\041\012\016" +
+    "\013\024\015\021\016\020\020\045\023\037\026\027\027" +
+    "\017\061\025\001\002\000\006\007\154\052\051\001\002" +
+    "\000\012\006\uffde\007\uffde\011\uffde\052\uffde\001\002\000" +
+    "\004\017\156\001\002\000\032\003\032\004\023\010\041" +
+    "\012\016\013\024\015\021\016\020\020\045\023\037\026" +
+    "\027\027\017\061\025\001\002\000\006\007\160\052\051" +
+    "\001\002\000\012\006\uffdf\007\uffdf\011\uffdf\052\uffdf\001" +
+    "\002\000\004\002\ufff2\001\002\000\022\003\060\016\070" +
+    "\047\064\050\067\061\057\062\053\063\062\064\056\001" +
+    "\002\000\022\003\060\016\070\047\064\050\067\061\057" +
+    "\062\053\063\062\064\056\001\002\000\012\006\uffdd\007" +
+    "\uffdd\011\uffdd\052\uffdd\001\002\000\004\054\166\001\002" +
+    "\000\004\030\167\001\002\000\022\003\060\016\070\047" +
+    "\064\050\067\061\057\062\053\063\062\064\056\001\002" +
+    "\000\012\006\uffdc\007\uffdc\011\uffdc\052\uffdc\001\002\000" +
+    "\012\006\uffda\007\uffda\011\uffda\052\uffda\001\002\000\004" +
+    "\005\173\001\002\000\032\003\032\004\023\010\041\012" +
+    "\016\013\024\015\021\016\020\020\045\023\037\026\027" +
+    "\027\017\061\025\001\002\000\010\006\175\007\176\052" +
+    "\051\001\002\000\032\003\032\004\023\010\041\012\016" +
+    "\013\024\015\021\016\020\020\045\023\037\026\027\027" +
+    "\017\061\025\001\002\000\012\006\uffe2\007\uffe2\011\uffe2" +
+    "\052\uffe2\001\002\000\006\007\200\052\051\001\002\000" +
+    "\012\006\uffe1\007\uffe1\011\uffe1\052\uffe1\001\002\000\012" +
+    "\006\uffd7\007\uffd7\011\uffd7\052\uffd7\001\002\000\004\050" +
+    "\203\001\002\000\024\003\060\016\070\047\064\050\067" +
+    "\051\205\061\057\062\053\063\062\064\056\001\002\000" +
+    "\006\051\206\057\076\001\002\000\012\006\uffd8\007\uffd8" +
+    "\011\uffd8\052\uffd8\001\002\000\012\006\uffd9\007\uffd9\011" +
+    "\uffd9\052\uffd9\001\002\000\012\006\uffdb\007\uffdb\011\uffdb" +
+    "\052\uffdb\001\002\000\006\052\212\060\211\001\002\000" +
+    "\004\022\213\001\002\000\010\014\ufffa\017\ufffa\021\ufffa" +
+    "\001\002\000\004\053\214\001\002\000\004\062\215\001" +
+    "\002\000\004\054\216\001\002\000\004\052\217\001\002" +
+    "\000\010\014\ufff9\017\ufff9\021\ufff9\001\002\000\004\050" +
+    "\221\001\002\000\006\051\223\061\222\001\002\000\010" +
+    "\051\ufff4\057\ufff4\060\237\001\002\000\004\017\234\001" +
+    "\002\000\006\051\227\057\226\001\002\000\006\051\ufff5" +
+    "\057\ufff5\001\002\000\004\061\222\001\002\000\004\017" +
+    "\230\001\002\000\032\003\032\004\023\010\041\012\016" +
+    "\013\024\015\021\016\020\020\045\023\037\026\027\027" +
+    "\017\061\025\001\002\000\006\007\232\052\051\001\002" +
+    "\000\010\014\ufff8\017\ufff8\021\ufff8\001\002\000\006\051" +
+    "\ufff6\057\ufff6\001\002\000\032\003\032\004\023\010\041" +
+    "\012\016\013\024\015\021\016\020\020\045\023\037\026" +
+    "\027\027\017\061\025\001\002\000\006\007\236\052\051" +
+    "\001\002\000\010\014\ufff7\017\ufff7\021\ufff7\001\002\000" +
+    "\004\022\240\001\002\000\004\053\241\001\002\000\004" +
+    "\054\242\001\002\000\006\051\ufff3\057\ufff3\001\002\000" +
+    "\004\002\000\001\002\000\004\002\001\001\002\000\010" +
+    "\014\ufffe\017\ufffe\021\ufffe\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -123,34 +300,97 @@ public class parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\066\000\022\002\012\003\020\004\010\005\006\006" +
-    "\005\007\011\010\013\011\007\001\001\000\002\001\001" +
-    "\000\020\003\064\004\010\005\006\006\005\007\011\010" +
-    "\013\011\007\001\001\000\002\001\001\000\002\001\001" +
+    "\000\243\000\016\002\007\003\005\004\003\005\010\010" +
+    "\004\014\006\001\001\000\002\001\001\000\002\001\001" +
+    "\000\012\004\244\005\010\010\004\014\243\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\034\006\030\015\027\016" +
+    "\042\017\033\020\014\021\034\022\041\023\021\024\035" +
+    "\025\037\026\025\027\032\030\043\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\016\031\200\032\062\033\065\034\064\035\053\036" +
+    "\060\001\001\000\002\001\001\000\016\031\171\032\062" +
+    "\033\065\034\064\035\053\036\060\001\001\000\016\031" +
+    "\170\032\062\033\065\034\064\035\053\036\060\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\012\012\054\013\030" +
-    "\014\026\015\027\001\001\000\004\016\051\001\001\000" +
-    "\002\001\001\000\012\012\032\013\030\014\026\015\027" +
-    "\001\001\000\002\001\001\000\016\004\022\005\006\006" +
-    "\005\007\011\010\013\011\007\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\012" +
-    "\012\033\013\030\014\026\015\027\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\010\013\050" +
-    "\014\026\015\027\001\001\000\010\013\047\014\026\015" +
-    "\027\001\001\000\006\014\046\015\027\001\001\000\006" +
-    "\014\041\015\027\001\001\000\002\001\001\000\004\015" +
-    "\045\001\001\000\004\015\044\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\012\012\053\013\030" +
-    "\014\026\015\027\001\001\000\002\001\001\000\002\001" +
-    "\001\000\020\003\056\004\010\005\006\006\005\007\011" +
-    "\010\013\011\007\001\001\000\002\001\001\000\020\003" +
-    "\061\004\010\005\006\006\005\007\011\010\013\011\007" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\012\012\066" +
-    "\013\030\014\026\015\027\001\001\000\002\001\001\000" +
-    "\002\001\001" });
+    "\001\000\002\001\001\000\002\001\001\000\034\006\030" +
+    "\015\047\016\042\017\033\020\014\021\034\022\041\023" +
+    "\021\024\035\025\037\026\025\027\032\030\043\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\032\006\030\016\142\017\033\020\014\021" +
+    "\034\022\041\023\021\024\035\025\037\026\025\027\032" +
+    "\030\043\001\001\000\016\031\054\032\062\033\065\034" +
+    "\064\035\053\036\060\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\012\033\130\034\064\035\053\036" +
+    "\060\001\001\000\002\001\001\000\002\001\001\000\016" +
+    "\031\100\032\062\033\065\034\064\035\053\036\060\001" +
+    "\001\000\002\001\001\000\002\001\001\000\020\031\072" +
+    "\032\062\033\065\034\064\035\053\036\060\037\073\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\016\031\077\032\062\033\065\034\064\035\053\036" +
+    "\060\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\010\034\127\035\053\036" +
+    "\060\001\001\000\010\034\126\035\053\036\060\001\001" +
+    "\000\010\034\125\035\053\036\060\001\001\000\006\035" +
+    "\124\036\060\001\001\000\010\034\123\035\053\036\060" +
+    "\001\001\000\006\035\114\036\060\001\001\000\010\034" +
+    "\113\035\053\036\060\001\001\000\010\034\112\035\053" +
+    "\036\060\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\004\036\122\001\001\000\004\036\121" +
+    "\001\001\000\004\036\120\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\012\033\134\034\064\035\053" +
+    "\036\060\001\001\000\012\033\133\034\064\035\053\036" +
+    "\060\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\036\136\001\001\000\002\001\001\000\016\031\140\032" +
+    "\062\033\065\034\064\035\053\036\060\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\016\031\145\032\062\033\065\034\064\035\053" +
+    "\036\060\001\001\000\002\001\001\000\016\031\147\032" +
+    "\062\033\065\034\064\035\053\036\060\001\001\000\002" +
+    "\001\001\000\016\031\154\032\062\033\065\034\064\035" +
+    "\053\036\060\001\001\000\034\006\030\015\152\016\042" +
+    "\017\033\020\014\021\034\022\041\023\021\024\035\025" +
+    "\037\026\025\027\032\030\043\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\034\006\030\015" +
+    "\156\016\042\017\033\020\014\021\034\022\041\023\021" +
+    "\024\035\025\037\026\025\027\032\030\043\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\016" +
+    "\031\164\032\062\033\065\034\064\035\053\036\060\001" +
+    "\001\000\016\031\163\032\062\033\065\034\064\035\053" +
+    "\036\060\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\016\031\167\032\062\033\065\034\064" +
+    "\035\053\036\060\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\034\006\030\015\173\016\042" +
+    "\017\033\020\014\021\034\022\041\023\021\024\035\025" +
+    "\037\026\025\027\032\030\043\001\001\000\002\001\001" +
+    "\000\034\006\030\015\176\016\042\017\033\020\014\021" +
+    "\034\022\041\023\021\024\035\025\037\026\025\027\032" +
+    "\030\043\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\020" +
+    "\031\072\032\062\033\065\034\064\035\053\036\060\037" +
+    "\203\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\006\012\223\013\224\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\004\013\232\001\001\000\002\001\001\000\034" +
+    "\006\030\015\230\016\042\017\033\020\014\021\034\022" +
+    "\041\023\021\024\035\025\037\026\025\027\032\030\043" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\034\006\030\015\234\016\042\017\033\020\014" +
+    "\021\034\022\041\023\021\024\035\025\037\026\025\027" +
+    "\032\030\043\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -191,17 +431,17 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
 /***********
-SymbolFactory es una nueva caracteristica que ha sido a�adida a las version 11a de cup, la cual facilita la implementacion de clases Symbol personalizadas
-, esto debido a que dicha clase no provee mucha informaci�n de contexto que podria ser util para el analisis semantico o ayudar en la construccion del AST
+SymbolFactory es una nueva caracteristica que ha sido añadida a las version 11a de cup, la cual facilita la implementacion de clases Symbol personalizadas
+, esto debido a que dicha clase no provee mucha información de contexto que podria ser util para el analisis semantico o ayudar en la construccion del AST
 Mas informacion en: http//4thmouse.com/index.php/2007/02/15/using-custom-symbols-in-cup/
 ***********/
 	public static void main(String args[]) throws Exception {
 		SymbolFactory sf = new DefaultSymbolFactory();
 		parser parser_obj;
 		if (args.length==0) 
-			parser_obj=new parser(new Lexico(new InputStreamReader(System.in),sf),sf);
+			parser_obj=new parser(new LexicoExtendido(new InputStreamReader(System.in),sf),sf);
 		else
-			parser_obj=new parser(new Lexico(new InputStreamReader(new java.io.FileInputStream(args[0])),sf),sf);
+			parser_obj=new parser(new LexicoExtendido(new InputStreamReader(new java.io.FileInputStream(args[0])),sf),sf);
 
 		parser_obj.parse();
 		NodoBase root=parser_obj.action_obj.getASTroot();
@@ -255,16 +495,19 @@ class CUP$parser$actions {
       switch (CUP$parser$act_num)
         {
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 0: // program ::= stmt_seq 
+          case 0: // program ::= declaration_seq main 
             {
               Object RESULT =null;
-		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 1"); 
-					ast = s;
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("program",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int dleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int dright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase d = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase m = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t regla programa completo"); 
+              ast = new NodoPrograma(d, m);
+           
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("program",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
@@ -283,461 +526,1173 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // stmt_seq ::= stmt_seq SEMI stmt 
+          case 2: // program ::= main 
+            {
+              Object RESULT =null;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase m = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t regla programa solo main"); 
+              ast = new NodoPrograma(null, m);
+           
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("program",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 3: // declaration_seq ::= declaration_seq declaration 
             {
               NodoBase RESULT =null;
-		int inileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int iniright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		NodoBase ini = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int seqleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int seqright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase seq = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int declleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int declright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase decl = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t secuencia declaraciones"); 
+                      NodoBase current = seq;
+                      if(current != null){
+                          while(current.TieneHermano()){
+                              current = current.getHermanoDerecha();
+                          }
+                          current.setHermanoDerecha(decl);
+                          RESULT = seq;
+                      } else {
+                          RESULT = decl;
+                      }
+                   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("declaration_seq",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 4: // declaration_seq ::= declaration 
+            {
+              NodoBase RESULT =null;
+		int declleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int declright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase decl = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t declaracion unica"); 
+                      RESULT = decl;
+                   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("declaration_seq",1, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 5: // declaration ::= global_declaration 
+            {
+              NodoBase RESULT =null;
+		int gleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int gright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase g = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = g; 
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("declaration",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 6: // declaration ::= function_declaration 
+            {
+              NodoBase RESULT =null;
+		int fleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int fright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase f = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = f; 
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("declaration",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 7: // global_declaration ::= GLOBAL ID SEMI 
+            {
+              NodoBase RESULT =null;
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t declaracion global variable"); 
+                         RESULT = new NodoDeclaracion(var.toString(), true);
+                      
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("global_declaration",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // global_declaration ::= GLOBAL ID COLON ARRAY LBRACKET NUM RBRACKET SEMI 
+            {
+              NodoBase RESULT =null;
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
+		int sizeleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int sizeright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String size = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		 if(debug) System.out.println("\t declaracion global array"); 
+                         RESULT = new NodoDeclaracion(var.toString(), true, new NodoValor(Integer.parseInt(size)));
+                      
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("global_declaration",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 9: // function_declaration ::= FUNCTION ID LPAREN parameter_list RPAREN BEGIN stmt_seq END 
+            {
+              NodoBase RESULT =null;
+		int nameleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
+		int nameright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
+		String name = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
+		int paramsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int paramsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		NodoBase params = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		int bodyleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int bodyright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase body = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t declaracion funcion con parametros"); 
+                           RESULT = new NodoFuncion(name.toString(), params, body, null);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("function_declaration",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // function_declaration ::= FUNCTION ID LPAREN RPAREN BEGIN stmt_seq END 
+            {
+              NodoBase RESULT =null;
+		int nameleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int nameright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		String name = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		int bodyleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int bodyright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase body = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t declaracion funcion sin parametros"); 
+                           RESULT = new NodoFuncion(name.toString(), null, body, null);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("function_declaration",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 11: // parameter_list ::= parameter_list COMMA parameter 
+            {
+              NodoBase RESULT =null;
+		int listleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int listright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase list = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int paramleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int paramright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase param = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t lista parametros"); 
+                     NodoBase current = list;
+                     if(current != null){
+                         while(current.TieneHermano()){
+                             current = current.getHermanoDerecha();
+                         }
+                         current.setHermanoDerecha(param);
+                         RESULT = list;
+                     } else {
+                         RESULT = param;
+                     }
+                  
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("parameter_list",8, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 12: // parameter_list ::= parameter 
+            {
+              NodoBase RESULT =null;
+		int paramleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int paramright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase param = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = param; 
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("parameter_list",8, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 13: // parameter ::= ID 
+            {
+              NodoBase RESULT =null;
+		int nameleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int nameright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String name = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new NodoDeclaracion(name.toString(), false); 
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("parameter",9, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 14: // parameter ::= ID COLON ARRAY LBRACKET RBRACKET 
+            {
+              NodoBase RESULT =null;
+		int nameleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int nameright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		String name = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		 RESULT = new NodoDeclaracion(name.toString(), false, null); 
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("parameter",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 15: // main ::= BEGIN stmt_seq END 
+            {
+              NodoBase RESULT =null;
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t programa principal"); 
+           RESULT = s;
+        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("main",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 16: // var_declaration ::= VAR ID SEMI 
+            {
+              NodoBase RESULT =null;
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t declaracion variable local"); 
+                      RESULT = new NodoDeclaracion(var.toString(), false);
+                   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("var_declaration",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 17: // stmt_seq ::= stmt_seq SEMI stmt 
+            {
+              NodoBase RESULT =null;
+		int seqleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int seqright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase seq = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int sentleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int sentright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		NodoBase sent = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 2a"); 
-						NodoBase hijoActual = ini;
-						if(hijoActual !=null){
-							while(hijoActual.TieneHermano()){
-								hijoActual = hijoActual.getHermanoDerecha();
-							}
-							hijoActual.setHermanoDerecha(sent);
-							RESULT=ini;
-						}else{
-							RESULT=sent;
-						}
-						
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt_seq",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		 if(debug) System.out.println("\t secuencia sentencias"); 
+               NodoBase current = seq;
+               if(current != null){
+                   while(current.TieneHermano()){
+                       current = current.getHermanoDerecha();
+                   }
+                   current.setHermanoDerecha(sent);
+                   RESULT = seq;
+               } else {
+                   RESULT = sent;
+               }
+            
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt_seq",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // stmt_seq ::= stmt 
+          case 18: // stmt_seq ::= stmt 
             {
               NodoBase RESULT =null;
 		int sentleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int sentright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		NodoBase sent = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 2b"); 
-				RESULT=sent;				
-				
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt_seq",1, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		 if(debug) System.out.println("\t sentencia unica"); 
+               RESULT = sent;
+            
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt_seq",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // stmt ::= if_stmt 
+          case 19: // stmt ::= if_stmt 
             {
               NodoBase RESULT =null;
-		int sifleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int sifright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase sif = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 3a"); 
-					RESULT=sif;
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // stmt ::= repeat_stmt 
+          case 20: // stmt ::= repeat_stmt 
             {
               NodoBase RESULT =null;
-		int srepleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int srepright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase srep = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 3b"); 
-						RESULT=srep;
-						
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // stmt ::= assign_stmt 
+          case 21: // stmt ::= for_stmt 
             {
               NodoBase RESULT =null;
-		int sasileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int sasiright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase sasi = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 3c"); 
-						RESULT=sasi;
-						
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // stmt ::= read_stmt 
+          case 22: // stmt ::= assign_stmt 
             {
               NodoBase RESULT =null;
-		int slecleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int slecright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase slec = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 3d"); 
-					RESULT=slec;
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // stmt ::= write_stmt 
+          case 23: // stmt ::= read_stmt 
             {
               NodoBase RESULT =null;
-		int sescleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int sescright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase sesc = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 3e"); 
-					RESULT=sesc;
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // stmt ::= error 
+          case 24: // stmt ::= write_stmt 
             {
               NodoBase RESULT =null;
-		 if(debug) System.out.println("\t regla 3f"); 
-				System.out.println("Ocurrio error en cup # 0004 B");
-				RESULT=null;
-				
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // if_stmt ::= IF exp THEN stmt_seq END 
+          case 25: // stmt ::= call_stmt 
             {
               NodoBase RESULT =null;
-		int exleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
-		int exright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
-		NodoBase ex = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		int pthenleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int pthenright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		NodoBase pthen = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if(debug) System.out.println("\t regla 4a"); 
-		RESULT = new NodoIf(ex,pthen);
-		
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("if_stmt",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // if_stmt ::= IF exp THEN stmt_seq ELSE stmt_seq END 
+          case 26: // stmt ::= return_stmt 
             {
               NodoBase RESULT =null;
-		int exleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
-		int exright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
-		NodoBase ex = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
-		int pthenleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
-		int pthenright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
-		NodoBase pthen = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		int pelseleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int pelseright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		NodoBase pelse = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if(debug) System.out.println("\t regla 4b"); 
-		RESULT = new NodoIf(ex,pthen,pelse);		
-		
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("if_stmt",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // repeat_stmt ::= REPEAT stmt_seq UNTIL exp 
+          case 27: // stmt ::= break_stmt 
             {
               NodoBase RESULT =null;
-		int cuerpoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int cuerporight = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		NodoBase cuerpo = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int pruebaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int pruebaright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase prueba = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 5"); 
-							RESULT = new NodoRepeat(cuerpo,prueba);
-							
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("repeat_stmt",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // NT$0 ::= 
+          case 28: // stmt ::= continue_stmt 
             {
               NodoBase RESULT =null;
-		int variableleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int variableright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		String variable = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
- if(debug) System.out.println("\t regla 6 parte del medio"); 
-				/*lineanum=1000; //Pasar/Obtener la linea correcta por el Simbolo
-				String nombre = variable.getName();*/
-				
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$0",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // assign_stmt ::= ID NT$0 ASSIGN exp 
+          case 29: // stmt ::= var_declaration 
             {
               NodoBase RESULT =null;
-              // propagate RESULT from NT$0
-                RESULT = (NodoBase) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int variableleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
-		int variableright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
-		String variable = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		int exleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase ex = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 6 parte final");
-					if(variable!=null)
-					RESULT = new NodoAsignacion(variable.toString(),ex);
-					else{
-					RESULT = null;
-					System.out.println("Ocurrio error en cup # 0001");
-					}
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("assign_stmt",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase s = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=s;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // read_stmt ::= READ ID 
+          case 30: // stmt ::= error 
             {
               NodoBase RESULT =null;
-		int variableleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int variableright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		String variable = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 7"); 
-					System.out.println("Leyendo Variable");
-					if(variable!=null)
-					RESULT = new NodoLeer(variable.toString());
-					else{
-					RESULT = null;
-					System.out.println("Ocurrio error en cup # 0002");
-					}
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("read_stmt",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		 if(debug) System.out.println("\t error en sentencia"); 
+            System.out.println("Error sintáctico en sentencia");
+            RESULT = null;
+         
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("stmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // write_stmt ::= WRITE exp 
+          case 31: // if_stmt ::= IF exp THEN stmt_seq END 
             {
               NodoBase RESULT =null;
-		int exleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase ex = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 8"); 
-					RESULT= new NodoEscribir(ex);
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("write_stmt",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int condleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int condright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		NodoBase cond = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int then_partleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int then_partright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase then_part = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t if simple"); 
+              RESULT = new NodoIf(cond, then_part);
+           
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("if_stmt",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // exp ::= simple_exp LT simple_exp 
+          case 32: // if_stmt ::= IF exp THEN stmt_seq ELSE stmt_seq END 
             {
               NodoBase RESULT =null;
-		int exIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int exIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		NodoBase exI = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase exD = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 9a"); 
-								RESULT = new NodoOperacion(exI,tipoOp.menor,exD);
-								
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",8, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int condleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int condright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		NodoBase cond = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		int then_partleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int then_partright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		NodoBase then_part = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int else_partleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int else_partright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase else_part = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t if-else"); 
+              RESULT = new NodoIf(cond, then_part, else_part);
+           
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("if_stmt",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // exp ::= simple_exp EQ simple_exp 
+          case 33: // repeat_stmt ::= REPEAT stmt_seq UNTIL exp 
             {
               NodoBase RESULT =null;
-		int exIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int exIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		NodoBase exI = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase exD = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 9b"); 
-							RESULT = new NodoOperacion(exI,tipoOp.igual,exD);
-							
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",8, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int bodyleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int bodyright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase body = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int condleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int condright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase cond = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t repeat-until"); 
+                  RESULT = new NodoRepeat(body, cond);
+               
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("repeat_stmt",14, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // exp ::= simple_exp 
+          case 34: // for_stmt ::= FOR ID ASSIGN exp TO exp STEP exp BEGIN stmt_seq END 
             {
               NodoBase RESULT =null;
-		int exleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase ex = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 9c"); 
-					RESULT = ex;
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",8, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-9)).value;
+		int initleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)).left;
+		int initright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)).right;
+		NodoBase init = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-7)).value;
+		int final_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int final_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		NodoBase final_val = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		int stepleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int stepright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		NodoBase step = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int bodyleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int bodyright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase body = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t for con step"); 
+               RESULT = new NodoFor(var.toString(), init, final_val, step, body);
+            
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("for_stmt",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // simple_exp ::= simple_exp PLUS term 
+          case 35: // for_stmt ::= FOR ID ASSIGN exp TO exp BEGIN stmt_seq END 
             {
               NodoBase RESULT =null;
-		int exIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int exIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		NodoBase exI = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase exD = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 10a"); 
-							RESULT = new NodoOperacion(exI,tipoOp.mas,exD);
-							
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("simple_exp",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-7)).value;
+		int initleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int initright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		NodoBase init = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		int final_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int final_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		NodoBase final_val = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int bodyleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int bodyright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase body = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t for sin step"); 
+               RESULT = new NodoFor(var.toString(), init, final_val, new NodoValor(1), body);
+            
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("for_stmt",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // simple_exp ::= simple_exp MINUS term 
+          case 36: // assign_stmt ::= ID ASSIGN exp 
             {
               NodoBase RESULT =null;
-		int exIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int exIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		NodoBase exI = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase exD = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 10b"); 
-							RESULT = new NodoOperacion(exI,tipoOp.menos,exD);
-							
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("simple_exp",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int valueleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int valueright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase value = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t asignacion variable"); 
+                  RESULT = new NodoAsignacion(var.toString(), value);
+               
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("assign_stmt",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // simple_exp ::= term 
+          case 37: // assign_stmt ::= ID LBRACKET exp RBRACKET ASSIGN exp 
             {
               NodoBase RESULT =null;
-		int exleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase ex = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 10c"); 
-				RESULT=ex;
-				
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("simple_exp",9, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		int indexleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int indexright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		NodoBase index = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int valueleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int valueright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase value = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t asignacion array"); 
+                  RESULT = new NodoAsignacion(var.toString(), value, index);
+               
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("assign_stmt",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 23: // term ::= term TIMES factor 
+          case 38: // read_stmt ::= READ ID 
             {
               NodoBase RESULT =null;
-		int exIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int exIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		NodoBase exI = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase exD = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 11a"); 
-							RESULT = new NodoOperacion(exI,tipoOp.por,exD);
-							
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("term",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t read variable"); 
+                RESULT = new NodoLeer(var.toString());
+             
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("read_stmt",17, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 24: // term ::= term OVER factor 
+          case 39: // write_stmt ::= WRITE exp 
             {
               NodoBase RESULT =null;
-		int exIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int exIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		NodoBase exI = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase exD = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 11b"); 
-						RESULT = new NodoOperacion(exI,tipoOp.entre,exD);
-						
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("term",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int valueleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int valueright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase value = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t write expresion"); 
+                 RESULT = new NodoEscribir(value);
+              
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("write_stmt",18, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 25: // term ::= factor 
+          case 40: // call_stmt ::= CALL ID LPAREN argument_list RPAREN 
             {
               NodoBase RESULT =null;
-		int exleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		NodoBase ex = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 11c"); 
-					RESULT=ex;
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("term",10, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int funcleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int funcright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		String func = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int argsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int argsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase args = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t llamada funcion con argumentos"); 
+                RESULT = new NodoLlamadaFuncion(func.toString(), args);
+             
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("call_stmt",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 26: // factor ::= LPAREN exp RPAREN 
+          case 41: // call_stmt ::= CALL ID LPAREN RPAREN 
             {
               NodoBase RESULT =null;
-		int exleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int exright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		NodoBase ex = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if(debug) System.out.println("\t regla 12a"); 
-							RESULT = ex;
-							
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int funcleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int funcright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String func = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		 if(debug) System.out.println("\t llamada funcion sin argumentos"); 
+                RESULT = new NodoLlamadaFuncion(func.toString());
+             
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("call_stmt",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 27: // factor ::= NUM 
+          case 42: // return_stmt ::= RETURN exp 
             {
               NodoBase RESULT =null;
-		int valorleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int valorright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		String valor = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 12b"); 
-					System.out.println("Devolvi nodo numero entero");
-					if(valor!=null){
-						RESULT= new NodoValor(Integer.parseInt(valor));
-					}else{
-						RESULT = null;
-						System.out.println("Ocurrio error en cup # 0005");
-					}
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int valueleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int valueright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase value = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t return con valor"); 
+                  RESULT = new NodoReturn(value);
+               
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("return_stmt",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 28: // factor ::= ID 
+          case 43: // return_stmt ::= RETURN 
             {
               NodoBase RESULT =null;
-		int variableleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int variableright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		String variable = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(debug) System.out.println("\t regla 12c"); 
-					if(variable!=null){
-						System.out.println("Construyendo Nodo ID para Lexema: "+ variable.toString());
-						RESULT= new NodoIdentificador(variable.toString());		
-					}else{
-						RESULT = null;
-						System.out.println("Ocurrio error en cup # 0005");
-					}
-					
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		 if(debug) System.out.println("\t return sin valor"); 
+                  RESULT = new NodoReturn();
+               
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("return_stmt",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 29: // factor ::= error 
+          case 44: // break_stmt ::= BREAK 
             {
               NodoBase RESULT =null;
-		 if(debug) System.out.println("\t regla 12d"); 
-				System.out.println("Ocurrio error en cup # 0003");
-				RESULT=null;
-				
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		 if(debug) System.out.println("\t break"); 
+                 RESULT = new NodoBreak();
+              
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("break_stmt",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 45: // continue_stmt ::= CONTINUE 
+            {
+              NodoBase RESULT =null;
+		 if(debug) System.out.println("\t continue"); 
+                    RESULT = new NodoContinue();
+                 
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("continue_stmt",22, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 46: // argument_list ::= argument_list COMMA exp 
+            {
+              NodoBase RESULT =null;
+		int listleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int listright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase list = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int argleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int argright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase arg = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t lista argumentos"); 
+                    NodoBase current = list;
+                    if(current != null){
+                        while(current.TieneHermano()){
+                            current = current.getHermanoDerecha();
+                        }
+                        current.setHermanoDerecha(arg);
+                        RESULT = list;
+                    } else {
+                        RESULT = arg;
+                    }
+                 
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("argument_list",29, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 47: // argument_list ::= exp 
+            {
+              NodoBase RESULT =null;
+		int argleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int argright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase arg = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = arg; 
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("argument_list",29, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 48: // exp ::= logical_exp 
+            {
+              NodoBase RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase e = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=e;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("exp",23, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 49: // logical_exp ::= logical_exp OR relational_exp 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t operacion OR"); 
+                  RESULT = new NodoOperacion(left, tipoOp.or, right);
+               
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_exp",24, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 50: // logical_exp ::= logical_exp AND relational_exp 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t operacion AND"); 
+                  RESULT = new NodoOperacion(left, tipoOp.and, right);
+               
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_exp",24, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 51: // logical_exp ::= NOT relational_exp 
+            {
+              NodoBase RESULT =null;
+		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase expr = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t operacion NOT"); 
+                  RESULT = new NodoOperacion(null, tipoOp.not, expr);
+               
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_exp",24, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 52: // logical_exp ::= relational_exp 
+            {
+              NodoBase RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase e = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=e;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_exp",24, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 53: // relational_exp ::= simple_exp LT simple_exp 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t operacion menor"); 
+                     RESULT = new NodoOperacion(left, tipoOp.menor, right);
+                  
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("relational_exp",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 54: // relational_exp ::= simple_exp LE simple_exp 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t operacion menor igual"); 
+                     RESULT = new NodoOperacion(left, tipoOp.menorigual, right);
+                  
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("relational_exp",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 55: // relational_exp ::= simple_exp GT simple_exp 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t operacion mayor"); 
+                     RESULT = new NodoOperacion(left, tipoOp.mayor, right);
+                  
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("relational_exp",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 56: // relational_exp ::= simple_exp GE simple_exp 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t operacion mayor igual"); 
+                     RESULT = new NodoOperacion(left, tipoOp.mayorigual, right);
+                  
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("relational_exp",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 57: // relational_exp ::= simple_exp EQ simple_exp 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t operacion igual"); 
+                     RESULT = new NodoOperacion(left, tipoOp.igual, right);
+                  
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("relational_exp",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 58: // relational_exp ::= simple_exp NE simple_exp 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t operacion diferente"); 
+                     RESULT = new NodoOperacion(left, tipoOp.diferente, right);
+                  
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("relational_exp",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 59: // relational_exp ::= simple_exp 
+            {
+              NodoBase RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase e = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=e;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("relational_exp",25, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 60: // simple_exp ::= simple_exp PLUS term 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t suma"); 
+                 RESULT = new NodoOperacion(left, tipoOp.mas, right);
+              
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("simple_exp",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 61: // simple_exp ::= simple_exp MINUS term 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t resta"); 
+                 RESULT = new NodoOperacion(left, tipoOp.menos, right);
+              
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("simple_exp",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 62: // simple_exp ::= term 
+            {
+              NodoBase RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase e = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=e;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("simple_exp",26, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 63: // term ::= term TIMES factor 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t multiplicacion"); 
+           RESULT = new NodoOperacion(left, tipoOp.por, right);
+        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("term",27, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 64: // term ::= term OVER factor 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t division"); 
+           RESULT = new NodoOperacion(left, tipoOp.entre, right);
+        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("term",27, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 65: // term ::= term MOD factor 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t modulo"); 
+           RESULT = new NodoOperacion(left, tipoOp.modulo, right);
+        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("term",27, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 66: // term ::= factor POW factor 
+            {
+              NodoBase RESULT =null;
+		int leftleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int leftright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		NodoBase left = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int rightleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int rightright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase right = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t potencia"); 
+           RESULT = new NodoOperacion(left, tipoOp.potencia, right);
+        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("term",27, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 67: // term ::= factor 
+            {
+              NodoBase RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		NodoBase e = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT=e;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("term",27, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 68: // factor ::= LPAREN exp RPAREN 
+            {
+              NodoBase RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase e = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t expresion parentesis"); 
+             RESULT = e;
+          
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",28, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 69: // factor ::= NUM 
+            {
+              NodoBase RESULT =null;
+		int valueleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int valueright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String value = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t numero entero"); 
+             if(value != null){
+                 RESULT = new NodoValor(Integer.parseInt(value));
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: valor numérico nulo");
+             }
+          
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",28, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 70: // factor ::= REAL 
+            {
+              NodoBase RESULT =null;
+		int valueleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int valueright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String value = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t numero real"); 
+             if(value != null){
+                 RESULT = new NodoValor(Double.parseDouble(value));
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: valor real nulo");
+             }
+          
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",28, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 71: // factor ::= STRING 
+            {
+              NodoBase RESULT =null;
+		int valueleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int valueright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String value = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t cadena texto"); 
+             if(value != null){
+                 RESULT = new NodoString(value);
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: cadena nula");
+             }
+          
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",28, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 72: // factor ::= ID 
+            {
+              NodoBase RESULT =null;
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if(debug) System.out.println("\t identificador"); 
+             if(var != null){
+                 RESULT = new NodoIdentificador(var.toString());
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: identificador nulo");
+             }
+          
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",28, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 73: // factor ::= ID LBRACKET exp RBRACKET 
+            {
+              NodoBase RESULT =null;
+		int varleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		String var = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int indexleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int indexright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase index = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t acceso array"); 
+             if(var != null){
+                 RESULT = new NodoIdentificador(var.toString(), index);
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: identificador array nulo");
+             }
+          
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",28, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 74: // factor ::= CALL ID LPAREN argument_list RPAREN 
+            {
+              NodoBase RESULT =null;
+		int funcleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int funcright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		String func = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int argsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int argsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		NodoBase args = (NodoBase)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if(debug) System.out.println("\t llamada funcion en expresion"); 
+             RESULT = new NodoLlamadaFuncion(func.toString(), args);
+          
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",28, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 75: // factor ::= CALL ID LPAREN RPAREN 
+            {
+              NodoBase RESULT =null;
+		int funcleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int funcright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String func = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		 if(debug) System.out.println("\t llamada funcion sin args en expresion"); 
+             RESULT = new NodoLlamadaFuncion(func.toString());
+          
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",28, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 76: // factor ::= error 
+            {
+              NodoBase RESULT =null;
+		 if(debug) System.out.println("\t error en factor"); 
+             System.out.println("Error sintáctico en expresión");
+             RESULT = null;
+          
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",28, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
