@@ -18,7 +18,7 @@ mv *.java ../ve/edu/unet/
 cd ../ve/edu/unet
 
 echo "4. Compilando clases Java..."
-javac -cp ../../especificacion/java-cup-11b-runtime.jar *.java nodosAST/*.java
+javac -cp ./java-cup-11b-runtime.jar *.java nodosAST/*.java
 
 echo "5. Copiando archivos de runtime..."
 cp ../../especificacion/java-cup-11b-runtime.jar .
