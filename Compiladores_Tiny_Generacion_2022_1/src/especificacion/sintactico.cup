@@ -69,9 +69,14 @@ terminal OVER;
 terminal LPAREN;
 terminal RPAREN;
 terminal SEMI;
+terminal BEGIN;
+terminal END;
 
 /* Simbolos No Terminales */
 non terminal program;
+non terminal main;
+non terminal function_block;
+non terminal global_block;
 non terminal NodoBase stmt_seq;
 non terminal NodoBase stmt;
 non terminal NodoBase if_stmt;
@@ -83,6 +88,7 @@ non terminal NodoBase exp;
 non terminal NodoBase simple_exp;
 non terminal NodoBase term;
 non terminal NodoBase factor;
+non terminal NodoBase function_stmt;
 
 /* Precedencia de operadores */
 precedence left PLUS;
@@ -90,11 +96,49 @@ precedence left MINUS;
 precedence left TIMES;
 
 
+program ::= global_block:g function_block:f main:m {: if(debug) System.out.println("\t regla 0a"); 
+												ast = new NodoPrograma(g,f,m);
+												:}
+			 | global_block:g  main:m {: if(debug) System.out.println("\t regla 0a"); 
+										ast = new NodoPrograma(g,m);
+									:}
+;
+
 /* REGLAS GRAMATICALES */
-program     ::= stmt_seq:s	{: if(debug) System.out.println("\t regla 1"); 
-					ast = s;
+
+global_block     ::=BEGIN stmt_seq:s END	{: if(debug) System.out.println("\t regla 1a"); 
+					RESULT = s;
 					:}
 		;
+
+function_block     ::=  function_seq:ini function_stmt:f	
+					{: if(debug) System.out.println("\t regla 1b-a"); 
+						NodoBase hijoActual = ini;
+						if(hijoActual !=null){
+							while(hijoActual.TieneHermano()){
+								hijoActual = hijoActual.getHermanoDerecha();
+							}
+							hijoActual.setHermanoDerecha(f);
+							RESULT=ini;
+						}else{
+							RESULT=f;
+						}
+						:}
+					|  function_stmt:f	{: if(debug) System.out.println("\t regla 1b-b"); 
+					RESULT = f;
+					:} 
+		;	
+
+function_stmt ::= BEGIN stmt_seq:s RETURN exp:e END 	{: if(debug) System.out.println("\t regla 1a"); 
+					RESULT = new NodoFuncion(s,e);
+					:}		
+
+main     ::=BEGIN stmt_seq:s END	{: if(debug) System.out.println("\t regla 1a"); 
+					RESULT = s;
+					:}
+		;
+
+
 
 stmt_seq    ::= stmt_seq:ini SEMI stmt:sent	{: if(debug) System.out.println("\t regla 2a"); 
 						NodoBase hijoActual = ini;
@@ -230,7 +274,16 @@ factor      ::= LPAREN exp:ex RPAREN	{: if(debug) System.out.println("\t regla 1
 						RESULT = null;
 						System.out.println("Ocurrio error en cup # 0005");
 					}
-					:}
+					:} 
+		| ID:variable LBRACKET exp:ex RBRACKET	{: if(debug) System.out.println("\t regla 12c"); 
+					if(variable!=null){
+						System.out.println("Construyendo Nodo ID para Lexema: "+ variable.toString());
+						RESULT= new NodoIdentificador(variable.toString(), ex);		
+					}else{
+						RESULT = null;
+						System.out.println("Ocurrio error en cup # 0005");
+					}
+					:}			
 		| error	{: if(debug) System.out.println("\t regla 12d"); 
 				System.out.println("Ocurrio error en cup # 0003");
 				RESULT=null;

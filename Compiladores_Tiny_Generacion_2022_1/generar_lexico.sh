@@ -15,6 +15,7 @@ echo "El archivo LexicoExtendido.java ha sido creado."
 # Volver al directorio raíz
 cd ../..
 
-echo "Para probar el analizador léxico:"
-echo "1. Compilar: javac -cp src/especificacion/java-cup-11b-runtime.jar src/ve/edu/unet/LexicoExtendido.java"
-echo "2. Ejecutar: java -cp .:src/especificacion/java-cup-11b-runtime.jar ve.edu.unet.LexicoExtendido < ejemplo_fuente/programa_extendido.tiny"
+#echo "Para probar el analizador léxico:"
+#echo "1. Compilar: javac -cp src/especificacion/java-cup-11b-runtime.jar src/ve/edu/unet/sym.java src/ve/edu/unet/LexicoExtendido.java"
+#echo "2. CompilarPrueba:  javac -cp src/especificacion/java-cup-11b-runtime.jar src/ve/edu/unet/sym.java src/ve/edu/unet/LexicoExtendido.java src/ve/edu/unet/PruebaLexico.java"
+#echo "2. Ejecutar: java -cp "src;src/especificacion/java-cup-11b-runtime.jar" ve.edu.unet.PruebaLexico ejemplo_fuente/programa_extendido.tiny"
