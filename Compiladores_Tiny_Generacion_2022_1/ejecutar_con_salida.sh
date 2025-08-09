@@ -2,6 +2,10 @@
 
 echo "=== Compilando y Ejecutando Programa Extendido ==="
 
+# Cambiar al directorio del script si no estamos ya ahí
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
 # Crear directorio de salida si no existe
 mkdir -p salida
 

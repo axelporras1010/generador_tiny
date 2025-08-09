@@ -1,2 +1,461 @@
-Error: Could not find or load main class ve.edu.unet.parser
-Caused by: java.lang.ClassNotFoundException: ve.edu.unet.parser
+token COMENTARIO
+token COMENTARIO_LINEA
+token GLOBAL
+token ID
+token SEMI
+token GLOBAL
+	 declaracion global variable
+	 declaracion unica
+token ID
+token COLON
+token ARRAY
+token LBRACKET
+token NUM
+token RBRACKET
+token SEMI
+token COMENTARIO_LINEA
+token FUNCTION
+	 declaracion global array
+	 secuencia declaraciones
+token ID
+token LPAREN
+token ID
+token RPAREN
+token BEGIN
+token VAR
+token ID
+token SEMI
+token IF
+Syntax error
+instead expected token classes are []
+token ID
+token LE
+token NUM
+token THEN
+token ID
+token ASSIGN
+token NUM
+token ELSE
+token ID
+token ASSIGN
+token ID
+token TIMES
+token CALL
+token ID
+token LPAREN
+token ID
+token MINUS
+token NUM
+token RPAREN
+token END
+token SEMI
+token RETURN
+token ID
+token END
+	 error en sentencia
+Error sintáctico en sentencia
+	 sentencia unica
+	 identificador
+	 return con valor
+	 secuencia sentencias
+token COMENTARIO_LINEA
+token FUNCTION
+	 declaracion funcion con parametros
+	 secuencia declaraciones
+token ID
+token LPAREN
+token ID
+token COLON
+token ARRAY
+token LBRACKET
+token RBRACKET
+token COMMA
+token ID
+token RPAREN
+	 lista parametros
+token BEGIN
+token VAR
+token ID
+token SEMI
+token VAR
+Syntax error
+instead expected token classes are [END, SEMI]
+token ID
+token SEMI
+token ID
+token ASSIGN
+token NUM
+	 error en sentencia
+Error sintáctico en sentencia
+	 sentencia unica
+token SEMI
+	 numero entero
+	 asignacion variable
+	 secuencia sentencias
+token FOR
+token ID
+token ASSIGN
+token NUM
+token TO
+	 numero entero
+token ID
+token MINUS
+	 identificador
+token NUM
+token STEP
+	 numero entero
+	 resta
+token NUM
+token BEGIN
+	 numero entero
+token ID
+token ASSIGN
+token ID
+token PLUS
+	 identificador
+token ID
+token LBRACKET
+token ID
+token RBRACKET
+	 identificador
+token SEMI
+	 acceso array
+	 suma
+	 asignacion variable
+	 sentencia unica
+token IF
+token ID
+token LBRACKET
+token ID
+token RBRACKET
+	 identificador
+token LT
+	 acceso array
+token NUM
+token THEN
+	 numero entero
+	 operacion menor
+token CONTINUE
+token END
+	 continue
+	 sentencia unica
+token SEMI
+	 if simple
+	 secuencia sentencias
+token IF
+token ID
+token GT
+	 identificador
+token NUM
+token THEN
+	 numero entero
+	 operacion mayor
+token BREAK
+token END
+	 break
+	 sentencia unica
+token END
+	 if simple
+	 secuencia sentencias
+token SEMI
+	 for con step
+	 secuencia sentencias
+token RETURN
+token ID
+token END
+	 identificador
+	 return con valor
+	 secuencia sentencias
+token COMENTARIO_LINEA
+token BEGIN
+	 declaracion funcion con parametros
+	 secuencia declaraciones
+token VAR
+token ID
+token SEMI
+token VAR
+Syntax error
+instead expected token classes are [END, SEMI]
+token ID
+token SEMI
+token VAR
+token ID
+token SEMI
+	 error en sentencia
+Error sintáctico en sentencia
+	 sentencia unica
+token COMENTARIO_LINEA
+token WRITE
+Syntax error
+instead expected token classes are [END, SEMI]
+token STRING
+token SEMI
+token READ
+token ID
+token SEMI
+	 error en sentencia
+Error sintáctico en sentencia
+	 secuencia sentencias
+	 read variable
+	 secuencia sentencias
+token COMENTARIO_LINEA
+token FOR
+token ID
+token ASSIGN
+token NUM
+token TO
+	 numero entero
+token NUM
+token STEP
+	 numero entero
+token NUM
+token BEGIN
+	 numero entero
+token ID
+token LBRACKET
+token ID
+token RBRACKET
+	 identificador
+token ASSIGN
+token ID
+token TIMES
+	 identificador
+token NUM
+token PLUS
+	 numero entero
+	 multiplicacion
+token NUM
+token END
+	 numero entero
+	 suma
+	 asignacion array
+	 sentencia unica
+token SEMI
+	 for con step
+	 secuencia sentencias
+token COMENTARIO_LINEA
+token IF
+token ID
+token GE
+	 identificador
+token NUM
+token AND
+	 numero entero
+	 operacion mayor igual
+token ID
+token LE
+	 identificador
+token NUM
+token THEN
+	 numero entero
+	 operacion menor igual
+	 operacion AND
+token BEGIN
+Syntax error
+instead expected token classes are [error, IF, REPEAT, READ, WRITE, RETURN, CALL, VAR, FOR, BREAK, CONTINUE, ID]
+token ID
+token ASSIGN
+token CALL
+token ID
+token LPAREN
+token ID
+token RPAREN
+token SEMI
+token WRITE
+token STRING
+token SEMI
+	 error en sentencia
+Error sintáctico en sentencia
+	 sentencia unica
+	 cadena texto
+	 write expresion
+	 secuencia sentencias
+token WRITE
+token ID
+token SEMI
+	 identificador
+	 write expresion
+	 secuencia sentencias
+token WRITE
+token STRING
+token SEMI
+	 cadena texto
+	 write expresion
+	 secuencia sentencias
+token WRITE
+token ID
+token SEMI
+	 identificador
+	 write expresion
+	 secuencia sentencias
+token COMENTARIO_LINEA
+token IF
+token ID
+token MOD
+	 identificador
+token NUM
+token EQ
+	 numero entero
+	 modulo
+token NUM
+token THEN
+	 numero entero
+	 operacion igual
+token WRITE
+token STRING
+token ELSE
+	 cadena texto
+	 write expresion
+	 sentencia unica
+token WRITE
+token STRING
+token END
+	 cadena texto
+	 write expresion
+	 sentencia unica
+token SEMI
+	 if-else
+	 secuencia sentencias
+token COMENTARIO_LINEA
+token ID
+token ASSIGN
+token ID
+token POW
+	 identificador
+token NUM
+token SEMI
+	 numero entero
+	 potencia
+	 asignacion variable
+	 secuencia sentencias
+token WRITE
+token STRING
+token SEMI
+	 cadena texto
+	 write expresion
+	 secuencia sentencias
+token WRITE
+token ID
+token END
+	 identificador
+	 write expresion
+	 secuencia sentencias
+token ELSE
+	 if simple
+	 secuencia sentencias
+Syntax error
+instead expected token classes are [END, SEMI]
+token BEGIN
+token WRITE
+token STRING
+token END
+token SEMI
+token COMENTARIO_LINEA
+token ID
+token ASSIGN
+token CALL
+	 error en sentencia
+Error sintáctico en sentencia
+	 sentencia unica
+token ID
+token LPAREN
+token ID
+token COMMA
+	 identificador
+token NUM
+token RPAREN
+	 numero entero
+	 lista argumentos
+token SEMI
+	 llamada funcion en expresion
+	 asignacion variable
+	 secuencia sentencias
+token WRITE
+token STRING
+token SEMI
+	 cadena texto
+	 write expresion
+	 secuencia sentencias
+token WRITE
+token ID
+token SEMI
+	 identificador
+	 write expresion
+	 secuencia sentencias
+token COMENTARIO_LINEA
+token IF
+token LPAREN
+token ID
+token GT
+	 identificador
+token NUM
+token RPAREN
+	 numero entero
+	 operacion mayor
+token OR
+	 expresion parentesis
+token LPAREN
+token ID
+token LT
+	 identificador
+token NUM
+token RPAREN
+	 numero entero
+	 operacion menor
+token THEN
+	 expresion parentesis
+	 operacion OR
+token WRITE
+token STRING
+token END
+	 cadena texto
+	 write expresion
+	 sentencia unica
+token SEMI
+	 if simple
+	 secuencia sentencias
+token IF
+token NOT
+token LPAREN
+token ID
+token NE
+	 identificador
+token NUM
+token RPAREN
+	 numero entero
+	 operacion diferente
+token THEN
+	 expresion parentesis
+	 operacion NOT
+token WRITE
+token STRING
+token END
+	 cadena texto
+	 write expresion
+	 sentencia unica
+token END
+	 if simple
+	 secuencia sentencias
+	 programa principal
+	 regla programa completo
+
+IMPRESION DEL AST GENERADO
+
+  Tipo de nodo desconocido
+*** Tabla de Simbolos ***
+
+
+------ CODIGO OBJETO DEL LENGUAJE TINY GENERADO PARA LA TM ------
+
+
+*      Compilacion TINY para el codigo objeto TM
+*      Archivo: NOMBRE_ARREGLAR
+*      Preludio estandar:
+0:       LD       6,0(0)      cargar la maxima direccion desde la localidad 0
+1:       ST       0,0(0)      limpio el registro de la localidad 0
+BUG: Tipo de nodo a generar desconocido
+*      Fin de la ejecucion.
+2:       HALT       0,0,0      
+
+
+------ FIN DEL CODIGO OBJETO DEL LENGUAJE TINY GENERADO PARA LA TM ------
