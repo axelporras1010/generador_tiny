@@ -1,2 +1,0 @@
-Error: Could not find or load main class parser
-Caused by: java.lang.NoClassDefFoundError: parser (wrong name: ve/edu/unet/parser)
