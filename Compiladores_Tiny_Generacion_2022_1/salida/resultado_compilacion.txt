@@ -1,2 +1,0 @@
-Error: Could not find or load main class ve.edu.unet.parser
-Caused by: java.lang.ClassNotFoundException: ve.edu.unet.parser

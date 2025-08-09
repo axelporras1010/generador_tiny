@@ -2,28 +2,34 @@
 
 echo "=== Compilando Compilador Tiny Extendido ==="
 
-# Navegar al directorio de especificación
-cd src/especificacion
+# Cambiar al directorio del script si no estamos ya ahí
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+# Detectar el separador de classpath según el OS
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+    CLASSPATH_SEP=";"
+else
+    CLASSPATH_SEP=":"
+fi
 
 echo "1. Generando analizador léxico con JFlex..."
-java -jar jflex-full-1.8.2.jar lexico_extendido.flex
+java -jar tools/jflex-full-1.8.2.jar -d src/ve/edu/unet grammar/lexico_extendido.flex
 
 echo "2. Generando analizador sintáctico con CUP..."
-java -jar java-cup-11b.jar -parser parser -symbols sym sintactico.cup
+java -jar tools/java-cup-11b.jar -destdir src/ve/edu/unet -parser parser -symbols sym grammar/sintactico.cup
 
-echo "3. Moviendo archivos generados..."
-mv *.java ../ve/edu/unet/
+echo "3. Compilando clases Java..."
+cd src/ve/edu/unet
+javac -cp ../../../../lib/java-cup-11b-runtime.jar *.java nodosAST/*.java
 
-# Navegar al directorio fuente
-cd ../ve/edu/unet
-
-echo "4. Compilando clases Java..."
-javac -cp ./java-cup-11b-runtime.jar *.java nodosAST/*.java
-
-echo "5. Copiando archivos de runtime..."
-cp ../../especificacion/java-cup-11b-runtime.jar .
+echo "4. Volviendo al directorio raíz..."
+cd ../../../..
 
 echo "=== Compilación completada ==="
 
-echo "Para probar, ejecuta:"
-echo "java -cp .:java-cup-11b-runtime.jar parser ../../../ejemplo_fuente/programa_extendido.tiny"
+echo ""
+echo "Para probar el compilador:"
+echo "java -cp \"src${CLASSPATH_SEP}lib/java-cup-11b-runtime.jar\" ve.edu.unet.parser ejemplo_fuente/programa_extendido.tiny"
+echo ""
+echo "O usar el script: ./ejecutar_con_salida.sh"
