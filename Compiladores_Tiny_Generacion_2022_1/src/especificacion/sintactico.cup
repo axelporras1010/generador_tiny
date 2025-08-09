@@ -8,17 +8,17 @@ import java.io.InputStreamReader;
 parser code {:
 
 /***********
-SymbolFactory es una nueva caracteristica que ha sido a�adida a las version 11a de cup, la cual facilita la implementacion de clases Symbol personalizadas
-, esto debido a que dicha clase no provee mucha informaci�n de contexto que podria ser util para el analisis semantico o ayudar en la construccion del AST
+SymbolFactory es una nueva caracteristica que ha sido añadida a las version 11a de cup, la cual facilita la implementacion de clases Symbol personalizadas
+, esto debido a que dicha clase no provee mucha información de contexto que podria ser util para el analisis semantico o ayudar en la construccion del AST
 Mas informacion en: http//4thmouse.com/index.php/2007/02/15/using-custom-symbols-in-cup/
 ***********/
 	public static void main(String args[]) throws Exception {
 		SymbolFactory sf = new DefaultSymbolFactory();
 		parser parser_obj;
 		if (args.length==0) 
-			parser_obj=new parser(new Lexico(new InputStreamReader(System.in),sf),sf);
+			parser_obj=new parser(new LexicoExtendido(new InputStreamReader(System.in),sf),sf);
 		else
-			parser_obj=new parser(new Lexico(new InputStreamReader(new java.io.FileInputStream(args[0])),sf),sf);
+			parser_obj=new parser(new LexicoExtendido(new InputStreamReader(new java.io.FileInputStream(args[0])),sf),sf);
 
 		parser_obj.parse();
 		NodoBase root=parser_obj.action_obj.getASTroot();
@@ -49,243 +49,475 @@ action code {:
 
 /* Simbolos Terminales */
 
-terminal IF;
-terminal THEN;
-terminal ELSE;
-terminal END;
-terminal REPEAT;
-terminal UNTIL;
-terminal READ;
-terminal WRITE;
-terminal String ID;
-terminal String NUM;
-terminal ASSIGN;
-terminal EQ;
-terminal LT;
-terminal PLUS;
-terminal MINUS;
-terminal TIMES;
-terminal OVER;
-terminal LPAREN;
-terminal RPAREN;
-terminal SEMI;
-terminal BEGIN;
-terminal END;
+// Palabras reservadas originales
+terminal IF, THEN, ELSE, END, REPEAT, UNTIL, READ, WRITE;
+
+// Nuevas palabras reservadas para funciones
+terminal FUNCTION, RETURN, CALL;
+
+// Nuevas palabras reservadas para ámbitos
+terminal BEGIN, VAR, GLOBAL;
+
+// Nuevas palabras reservadas para vectores
+terminal ARRAY;
+
+// Instrucción especial: FOR LOOP
+terminal FOR, TO, STEP, BREAK, CONTINUE;
+
+// Operadores originales
+terminal ASSIGN, EQ, LT, PLUS, MINUS, TIMES, OVER;
+
+// Nuevos operadores relacionales
+terminal GT, LE, GE, NE;
+
+// Nuevos operadores matemáticos
+terminal MOD, POW;
+
+// Operadores lógicos
+terminal AND, OR, NOT;
+
+// Delimitadores
+terminal LPAREN, RPAREN, SEMI, LBRACKET, RBRACKET, LBRACE, RBRACE, COMMA, COLON;
+
+// Tipos de datos
+terminal String ID, NUM, REAL, STRING;
 
 /* Simbolos No Terminales */
 non terminal program;
-non terminal main;
-non terminal function_block;
-non terminal global_block;
+non terminal NodoBase declaration_seq;
+non terminal NodoBase declaration;
+non terminal NodoBase global_declaration;
+non terminal NodoBase var_declaration;
+non terminal NodoBase array_declaration;
+non terminal NodoBase function_declaration;
+non terminal NodoBase function_seq;
+non terminal NodoBase parameter_list;
+non terminal NodoBase parameter;
+non terminal NodoBase main;
 non terminal NodoBase stmt_seq;
 non terminal NodoBase stmt;
 non terminal NodoBase if_stmt;
 non terminal NodoBase repeat_stmt;
+non terminal NodoBase for_stmt;
 non terminal NodoBase assign_stmt;
 non terminal NodoBase read_stmt;
 non terminal NodoBase write_stmt;
+non terminal NodoBase call_stmt;
+non terminal NodoBase return_stmt;
+non terminal NodoBase break_stmt;
+non terminal NodoBase continue_stmt;
 non terminal NodoBase exp;
+non terminal NodoBase logical_exp;
+non terminal NodoBase relational_exp;
 non terminal NodoBase simple_exp;
 non terminal NodoBase term;
 non terminal NodoBase factor;
-non terminal NodoBase function_stmt;
+non terminal NodoBase argument_list;
 
 /* Precedencia de operadores */
-precedence left PLUS;
-precedence left MINUS;
-precedence left TIMES;
+precedence left OR;
+precedence left AND;
+precedence right NOT;
+precedence left EQ, NE, LT, LE, GT, GE;
+precedence left PLUS, MINUS;
+precedence left TIMES, OVER, MOD;
+precedence right POW;
 
-
-program ::= global_block:g function_block:f main:m {: if(debug) System.out.println("\t regla 0a"); 
-												ast = new NodoPrograma(g,f,m);
-												:}
-			 | global_block:g  main:m {: if(debug) System.out.println("\t regla 0a"); 
-										ast = new NodoPrograma(g,m);
-									:}
+// Regla principal del programa
+program ::= declaration_seq:d main:m 
+           {: if(debug) System.out.println("\t regla programa completo"); 
+              ast = new NodoPrograma(d, m);
+           :}
+         | main:m 
+           {: if(debug) System.out.println("\t regla programa solo main"); 
+              ast = new NodoPrograma(null, m);
+           :}
 ;
 
-/* REGLAS GRAMATICALES */
+// Secuencia de declaraciones (globales y funciones)
+declaration_seq ::= declaration_seq:seq declaration:decl
+                   {: if(debug) System.out.println("\t secuencia declaraciones"); 
+                      NodoBase current = seq;
+                      if(current != null){
+                          while(current.TieneHermano()){
+                              current = current.getHermanoDerecha();
+                          }
+                          current.setHermanoDerecha(decl);
+                          RESULT = seq;
+                      } else {
+                          RESULT = decl;
+                      }
+                   :}
+                 | declaration:decl
+                   {: if(debug) System.out.println("\t declaracion unica"); 
+                      RESULT = decl;
+                   :}
+;
 
-global_block     ::=BEGIN stmt_seq:s END	{: if(debug) System.out.println("\t regla 1a"); 
-					RESULT = s;
-					:}
-		;
+// Tipos de declaraciones
+declaration ::= global_declaration:g
+               {: RESULT = g; :}
+             | function_declaration:f
+               {: RESULT = f; :}
+;
 
-function_block     ::=  function_seq:ini function_stmt:f	
-					{: if(debug) System.out.println("\t regla 1b-a"); 
-						NodoBase hijoActual = ini;
-						if(hijoActual !=null){
-							while(hijoActual.TieneHermano()){
-								hijoActual = hijoActual.getHermanoDerecha();
-							}
-							hijoActual.setHermanoDerecha(f);
-							RESULT=ini;
-						}else{
-							RESULT=f;
-						}
-						:}
-					|  function_stmt:f	{: if(debug) System.out.println("\t regla 1b-b"); 
-					RESULT = f;
-					:} 
-		;	
+// Declaraciones globales
+global_declaration ::= GLOBAL ID:var SEMI
+                      {: if(debug) System.out.println("\t declaracion global variable"); 
+                         RESULT = new NodoDeclaracion(var.toString(), true);
+                      :}
+                    | GLOBAL ID:var COLON ARRAY LBRACKET NUM:size RBRACKET SEMI
+                      {: if(debug) System.out.println("\t declaracion global array"); 
+                         RESULT = new NodoDeclaracion(var.toString(), true, new NodoValor(Integer.parseInt(size)));
+                      :}
+;
 
-function_stmt ::= BEGIN stmt_seq:s RETURN exp:e END 	{: if(debug) System.out.println("\t regla 1a"); 
-					RESULT = new NodoFuncion(s,e);
-					:}		
+// Declaración de función
+function_declaration ::= FUNCTION ID:name LPAREN parameter_list:params RPAREN 
+                        BEGIN stmt_seq:body END
+                        {: if(debug) System.out.println("\t declaracion funcion con parametros"); 
+                           RESULT = new NodoFuncion(name.toString(), params, body, null);
+                        :}
+                      | FUNCTION ID:name LPAREN RPAREN 
+                        BEGIN stmt_seq:body END
+                        {: if(debug) System.out.println("\t declaracion funcion sin parametros"); 
+                           RESULT = new NodoFuncion(name.toString(), null, body, null);
+                        :}
+;
 
-main     ::=BEGIN stmt_seq:s END	{: if(debug) System.out.println("\t regla 1a"); 
-					RESULT = s;
-					:}
-		;
+// Lista de parámetros
+parameter_list ::= parameter_list:list COMMA parameter:param
+                  {: if(debug) System.out.println("\t lista parametros"); 
+                     NodoBase current = list;
+                     if(current != null){
+                         while(current.TieneHermano()){
+                             current = current.getHermanoDerecha();
+                         }
+                         current.setHermanoDerecha(param);
+                         RESULT = list;
+                     } else {
+                         RESULT = param;
+                     }
+                  :}
+                | parameter:param
+                  {: RESULT = param; :}
+;
 
+// Parámetro individual
+parameter ::= ID:name
+             {: RESULT = new NodoDeclaracion(name.toString(), false); :}
+           | ID:name COLON ARRAY LBRACKET RBRACKET
+             {: RESULT = new NodoDeclaracion(name.toString(), false, null); :}
+;
 
+// Programa principal
+main ::= BEGIN stmt_seq:s END
+        {: if(debug) System.out.println("\t programa principal"); 
+           RESULT = s;
+        :}
+;
 
-stmt_seq    ::= stmt_seq:ini SEMI stmt:sent	{: if(debug) System.out.println("\t regla 2a"); 
-						NodoBase hijoActual = ini;
-						if(hijoActual !=null){
-							while(hijoActual.TieneHermano()){
-								hijoActual = hijoActual.getHermanoDerecha();
-							}
-							hijoActual.setHermanoDerecha(sent);
-							RESULT=ini;
-						}else{
-							RESULT=sent;
-						}
-						:}
-            | stmt:sent	{: if(debug) System.out.println("\t regla 2b"); 
-				RESULT=sent;				
-				:}
-		;
+// Declaración de variable local
+var_declaration ::= VAR ID:var SEMI
+                   {: if(debug) System.out.println("\t declaracion variable local"); 
+                      RESULT = new NodoDeclaracion(var.toString(), false);
+                   :}
+;
 
-stmt        ::= if_stmt:sif	{: if(debug) System.out.println("\t regla 3a"); 
-					RESULT=sif;
-					:}
-            | repeat_stmt:srep	{: if(debug) System.out.println("\t regla 3b"); 
-						RESULT=srep;
-						:}
-            | assign_stmt:sasi	{: if(debug) System.out.println("\t regla 3c"); 
-						RESULT=sasi;
-						:}
-            | read_stmt:slec	{: if(debug) System.out.println("\t regla 3d"); 
-					RESULT=slec;
-					:}
-            | write_stmt:sesc	{: if(debug) System.out.println("\t regla 3e"); 
-					RESULT=sesc;
-					:}
-            | error	{: if(debug) System.out.println("\t regla 3f"); 
-				System.out.println("Ocurrio error en cup # 0004 C");
-				RESULT=null;
-				:}
-            ;
+// Secuencia de sentencias
+stmt_seq ::= stmt_seq:seq SEMI stmt:sent
+            {: if(debug) System.out.println("\t secuencia sentencias"); 
+               NodoBase current = seq;
+               if(current != null){
+                   while(current.TieneHermano()){
+                       current = current.getHermanoDerecha();
+                   }
+                   current.setHermanoDerecha(sent);
+                   RESULT = seq;
+               } else {
+                   RESULT = sent;
+               }
+            :}
+          | stmt:sent
+            {: if(debug) System.out.println("\t sentencia unica"); 
+               RESULT = sent;
+            :}
+;
 
-if_stmt     ::= IF exp:ex THEN stmt_seq:pthen END	{: if(debug) System.out.println("\t regla 4a"); 
-		RESULT = new NodoIf(ex,pthen);
-		:}
-		| IF exp:ex THEN stmt_seq:pthen ELSE stmt_seq:pelse END	{: if(debug) System.out.println("\t regla 4b"); 
-		RESULT = new NodoIf(ex,pthen,pelse);		
-		:}
-		;
+// Tipos de sentencias
+stmt ::= if_stmt:s {:RESULT=s;:}
+       | repeat_stmt:s {:RESULT=s;:}
+       | for_stmt:s {:RESULT=s;:}
+       | assign_stmt:s {:RESULT=s;:}
+       | read_stmt:s {:RESULT=s;:}
+       | write_stmt:s {:RESULT=s;:}
+       | call_stmt:s {:RESULT=s;:}
+       | return_stmt:s {:RESULT=s;:}
+       | break_stmt:s {:RESULT=s;:}
+       | continue_stmt:s {:RESULT=s;:}
+       | var_declaration:s {:RESULT=s;:}
+       | error
+         {: if(debug) System.out.println("\t error en sentencia"); 
+            System.out.println("Error sintáctico en sentencia");
+            RESULT = null;
+         :}
+;
 
-repeat_stmt ::= REPEAT stmt_seq:cuerpo UNTIL exp:prueba	{: if(debug) System.out.println("\t regla 5"); 
-							RESULT = new NodoRepeat(cuerpo,prueba);
-							:}
-		;
+// Sentencia IF
+if_stmt ::= IF exp:cond THEN stmt_seq:then_part END
+           {: if(debug) System.out.println("\t if simple"); 
+              RESULT = new NodoIf(cond, then_part);
+           :}
+         | IF exp:cond THEN stmt_seq:then_part ELSE stmt_seq:else_part END
+           {: if(debug) System.out.println("\t if-else"); 
+              RESULT = new NodoIf(cond, then_part, else_part);
+           :}
+;
 
-assign_stmt ::= ID:variable 	{: if(debug) System.out.println("\t regla 6 parte del medio"); 
-				/*lineanum=1000; //Pasar/Obtener la linea correcta por el Simbolo
-				String nombre = variable.getName();*/
-				:}
-			ASSIGN exp:ex	{: if(debug) System.out.println("\t regla 6 parte final");
-					if(variable!=null)
-					RESULT = new NodoAsignacion(variable.toString(),ex);
-					else{
-					RESULT = null;
-					System.out.println("Ocurrio error en cup # 0001");
-					}
-					:}
-		;
+// Sentencia REPEAT
+repeat_stmt ::= REPEAT stmt_seq:body UNTIL exp:cond
+               {: if(debug) System.out.println("\t repeat-until"); 
+                  RESULT = new NodoRepeat(body, cond);
+               :}
+;
 
-read_stmt   ::= READ ID:variable	{: if(debug) System.out.println("\t regla 7"); 
-					System.out.println("Leyendo Variable");
-					if(variable!=null)
-					RESULT = new NodoLeer(variable.toString());
-					else{
-					RESULT = null;
-					System.out.println("Ocurrio error en cup # 0002");
-					}
-					:}
-		;
+// Sentencia FOR
+for_stmt ::= FOR ID:var ASSIGN exp:init TO exp:final_val STEP exp:step 
+            BEGIN stmt_seq:body END
+            {: if(debug) System.out.println("\t for con step"); 
+               RESULT = new NodoFor(var.toString(), init, final_val, step, body);
+            :}
+          | FOR ID:var ASSIGN exp:init TO exp:final_val 
+            BEGIN stmt_seq:body END
+            {: if(debug) System.out.println("\t for sin step"); 
+               RESULT = new NodoFor(var.toString(), init, final_val, new NodoValor(1), body);
+            :}
+;
 
-write_stmt  ::= WRITE exp:ex	{: if(debug) System.out.println("\t regla 8"); 
-					RESULT= new NodoEscribir(ex);
-					:}
-		;
+// Sentencia de asignación
+assign_stmt ::= ID:var ASSIGN exp:value
+               {: if(debug) System.out.println("\t asignacion variable"); 
+                  RESULT = new NodoAsignacion(var.toString(), value);
+               :}
+             | ID:var LBRACKET exp:index RBRACKET ASSIGN exp:value
+               {: if(debug) System.out.println("\t asignacion array"); 
+                  RESULT = new NodoAsignacion(var.toString(), value, index);
+               :}
+;
 
-exp         ::= simple_exp:exI LT simple_exp:exD	{: if(debug) System.out.println("\t regla 9a"); 
-								RESULT = new NodoOperacion(exI,tipoOp.menor,exD);
-								:} 
-		| simple_exp:exI EQ simple_exp:exD	{: if(debug) System.out.println("\t regla 9b"); 
-							RESULT = new NodoOperacion(exI,tipoOp.igual,exD);
-							:}
-		| simple_exp:ex	{: if(debug) System.out.println("\t regla 9c"); 
-					RESULT = ex;
-					:}
-		;
+// Sentencia READ
+read_stmt ::= READ ID:var
+             {: if(debug) System.out.println("\t read variable"); 
+                RESULT = new NodoLeer(var.toString());
+             :}
+;
 
-simple_exp  ::= simple_exp:exI PLUS term:exD	{: if(debug) System.out.println("\t regla 10a"); 
-							RESULT = new NodoOperacion(exI,tipoOp.mas,exD);
-							:}
-		| simple_exp:exI MINUS term:exD	{: if(debug) System.out.println("\t regla 10b"); 
-							RESULT = new NodoOperacion(exI,tipoOp.menos,exD);
-							:}
-		| term:ex	{: if(debug) System.out.println("\t regla 10c"); 
-				RESULT=ex;
-				:}
-		;
+// Sentencia write
+write_stmt ::= WRITE exp:value
+              {: if(debug) System.out.println("\t write expresion"); 
+                 RESULT = new NodoEscribir(value);
+              :}
+;
 
-term        ::= term:exI TIMES factor:exD	{: if(debug) System.out.println("\t regla 11a"); 
-							RESULT = new NodoOperacion(exI,tipoOp.por,exD);
-							:}
-		| term:exI OVER factor:exD	{: if(debug) System.out.println("\t regla 11b"); 
-						RESULT = new NodoOperacion(exI,tipoOp.entre,exD);
-						:}
-		| factor:ex	{: if(debug) System.out.println("\t regla 11c"); 
-					RESULT=ex;
-					:}
-		;
+// Llamada a función
+call_stmt ::= CALL ID:func LPAREN argument_list:args RPAREN
+             {: if(debug) System.out.println("\t llamada funcion con argumentos"); 
+                RESULT = new NodoLlamadaFuncion(func.toString(), args);
+             :}
+           | CALL ID:func LPAREN RPAREN
+             {: if(debug) System.out.println("\t llamada funcion sin argumentos"); 
+                RESULT = new NodoLlamadaFuncion(func.toString());
+             :}
+;
 
-factor      ::= LPAREN exp:ex RPAREN	{: if(debug) System.out.println("\t regla 12a"); 
-							RESULT = ex;
-							:}
-		| NUM:valor	{: if(debug) System.out.println("\t regla 12b"); 
-					System.out.println("Devolvi nodo numero entero");
-					if(valor!=null){
-						RESULT= new NodoValor(Integer.parseInt(valor));
-					}else{
-						RESULT = null;
-						System.out.println("Ocurrio error en cup # 0005");
-					}
-					:}
-		| ID:variable	{: if(debug) System.out.println("\t regla 12c"); 
-					if(variable!=null){
-						System.out.println("Construyendo Nodo ID para Lexema: "+ variable.toString());
-						RESULT= new NodoIdentificador(variable.toString());		
-					}else{
-						RESULT = null;
-						System.out.println("Ocurrio error en cup # 0005");
-					}
-					:} 
-		| ID:variable LBRACKET exp:ex RBRACKET	{: if(debug) System.out.println("\t regla 12c"); 
-					if(variable!=null){
-						System.out.println("Construyendo Nodo ID para Lexema: "+ variable.toString());
-						RESULT= new NodoIdentificador(variable.toString(), ex);		
-					}else{
-						RESULT = null;
-						System.out.println("Ocurrio error en cup # 0005");
-					}
-					:}			
-		| error	{: if(debug) System.out.println("\t regla 12d"); 
-				System.out.println("Ocurrio error en cup # 0003");
-				RESULT=null;
-				:}
-		;
+// Sentencia return
+return_stmt ::= RETURN exp:value
+               {: if(debug) System.out.println("\t return con valor"); 
+                  RESULT = new NodoReturn(value);
+               :}
+             | RETURN
+               {: if(debug) System.out.println("\t return sin valor"); 
+                  RESULT = new NodoReturn();
+               :}
+;
+
+// Sentencia break
+break_stmt ::= BREAK
+              {: if(debug) System.out.println("\t break"); 
+                 RESULT = new NodoBreak();
+              :}
+;
+
+// Sentencia continue
+continue_stmt ::= CONTINUE
+                 {: if(debug) System.out.println("\t continue"); 
+                    RESULT = new NodoContinue();
+                 :}
+;
+
+// Lista de argumentos
+argument_list ::= argument_list:list COMMA exp:arg
+                 {: if(debug) System.out.println("\t lista argumentos"); 
+                    NodoBase current = list;
+                    if(current != null){
+                        while(current.TieneHermano()){
+                            current = current.getHermanoDerecha();
+                        }
+                        current.setHermanoDerecha(arg);
+                        RESULT = list;
+                    } else {
+                        RESULT = arg;
+                    }
+                 :}
+               | exp:arg
+                 {: RESULT = arg; :}
+;
+
+// Expresiones
+exp ::= logical_exp:e {:RESULT=e;:}
+;
+
+// Expresiones lógicas
+logical_exp ::= logical_exp:left OR relational_exp:right
+               {: if(debug) System.out.println("\t operacion OR"); 
+                  RESULT = new NodoOperacion(left, tipoOp.or, right);
+               :}
+             | logical_exp:left AND relational_exp:right
+               {: if(debug) System.out.println("\t operacion AND"); 
+                  RESULT = new NodoOperacion(left, tipoOp.and, right);
+               :}
+             | NOT relational_exp:expr
+               {: if(debug) System.out.println("\t operacion NOT"); 
+                  RESULT = new NodoOperacion(null, tipoOp.not, expr);
+               :}
+             | relational_exp:e
+               {:RESULT=e;:}
+;
+
+// Expresiones relacionales
+relational_exp ::= simple_exp:left LT simple_exp:right
+                  {: if(debug) System.out.println("\t operacion menor"); 
+                     RESULT = new NodoOperacion(left, tipoOp.menor, right);
+                  :}
+                | simple_exp:left LE simple_exp:right
+                  {: if(debug) System.out.println("\t operacion menor igual"); 
+                     RESULT = new NodoOperacion(left, tipoOp.menorigual, right);
+                  :}
+                | simple_exp:left GT simple_exp:right
+                  {: if(debug) System.out.println("\t operacion mayor"); 
+                     RESULT = new NodoOperacion(left, tipoOp.mayor, right);
+                  :}
+                | simple_exp:left GE simple_exp:right
+                  {: if(debug) System.out.println("\t operacion mayor igual"); 
+                     RESULT = new NodoOperacion(left, tipoOp.mayorigual, right);
+                  :}
+                | simple_exp:left EQ simple_exp:right
+                  {: if(debug) System.out.println("\t operacion igual"); 
+                     RESULT = new NodoOperacion(left, tipoOp.igual, right);
+                  :}
+                | simple_exp:left NE simple_exp:right
+                  {: if(debug) System.out.println("\t operacion diferente"); 
+                     RESULT = new NodoOperacion(left, tipoOp.diferente, right);
+                  :}
+                | simple_exp:e
+                  {:RESULT=e;:}
+;
+
+// Expresiones simples
+simple_exp ::= simple_exp:left PLUS term:right
+              {: if(debug) System.out.println("\t suma"); 
+                 RESULT = new NodoOperacion(left, tipoOp.mas, right);
+              :}
+            | simple_exp:left MINUS term:right
+              {: if(debug) System.out.println("\t resta"); 
+                 RESULT = new NodoOperacion(left, tipoOp.menos, right);
+              :}
+            | term:e
+              {:RESULT=e;:}
+;
+
+// Términos
+term ::= term:left TIMES factor:right
+        {: if(debug) System.out.println("\t multiplicacion"); 
+           RESULT = new NodoOperacion(left, tipoOp.por, right);
+        :}
+      | term:left OVER factor:right
+        {: if(debug) System.out.println("\t division"); 
+           RESULT = new NodoOperacion(left, tipoOp.entre, right);
+        :}
+      | term:left MOD factor:right
+        {: if(debug) System.out.println("\t modulo"); 
+           RESULT = new NodoOperacion(left, tipoOp.modulo, right);
+        :}
+      | factor:left POW factor:right
+        {: if(debug) System.out.println("\t potencia"); 
+           RESULT = new NodoOperacion(left, tipoOp.potencia, right);
+        :}
+      | factor:e
+        {:RESULT=e;:}
+;
+
+// Factores
+factor ::= LPAREN exp:e RPAREN
+          {: if(debug) System.out.println("\t expresion parentesis"); 
+             RESULT = e;
+          :}
+        | NUM:value
+          {: if(debug) System.out.println("\t numero entero"); 
+             if(value != null){
+                 RESULT = new NodoValor(Integer.parseInt(value));
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: valor numérico nulo");
+             }
+          :}
+        | REAL:value
+          {: if(debug) System.out.println("\t numero real"); 
+             if(value != null){
+                 RESULT = new NodoValor(Double.parseDouble(value));
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: valor real nulo");
+             }
+          :}
+        | STRING:value
+          {: if(debug) System.out.println("\t cadena texto"); 
+             if(value != null){
+                 RESULT = new NodoString(value);
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: cadena nula");
+             }
+          :}
+        | ID:var
+          {: if(debug) System.out.println("\t identificador"); 
+             if(var != null){
+                 RESULT = new NodoIdentificador(var.toString());
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: identificador nulo");
+             }
+          :}
+        | ID:var LBRACKET exp:index RBRACKET
+          {: if(debug) System.out.println("\t acceso array"); 
+             if(var != null){
+                 RESULT = new NodoIdentificador(var.toString(), index);
+             } else {
+                 RESULT = null;
+                 System.out.println("Error: identificador array nulo");
+             }
+          :}
+        | CALL ID:func LPAREN argument_list:args RPAREN
+          {: if(debug) System.out.println("\t llamada funcion en expresion"); 
+             RESULT = new NodoLlamadaFuncion(func.toString(), args);
+          :}
+        | CALL ID:func LPAREN RPAREN
+          {: if(debug) System.out.println("\t llamada funcion sin args en expresion"); 
+             RESULT = new NodoLlamadaFuncion(func.toString());
+          :}
+        | error
+          {: if(debug) System.out.println("\t error en factor"); 
+             System.out.println("Error sintáctico en expresión");
+             RESULT = null;
+          :}
+;
