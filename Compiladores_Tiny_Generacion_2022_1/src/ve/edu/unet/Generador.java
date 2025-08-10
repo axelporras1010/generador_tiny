@@ -15,9 +15,9 @@ public class Generador {
 	 * |y	|<- gp
 	 * 
 	 * */
-	
-	
-	
+		
+		
+		
 	/* desplazamientoTmp es una variable inicializada en 0
 	 * y empleada como el desplazamiento de la siguiente localidad
 	 * temporal disponible desde la parte superior o tope de la memoria
@@ -59,6 +59,9 @@ public class Generador {
 	//prerequisito: Fijar la tabla de simbolos antes de generar el codigo objeto 
 	private static void generar(NodoBase nodo){
 	if(tablaSimbolos!=null){
+		if (nodo == null) {
+			return;
+		}
 		if (nodo instanceof  NodoIf){
 			generarIf(nodo);
 		}else if (nodo instanceof  NodoRepeat){
@@ -75,7 +78,18 @@ public class Generador {
 			generarIdentificador(nodo);
 		}else if (nodo instanceof NodoOperacion){
 			generarOperacion(nodo);
-		}else{
+		}else if (nodo instanceof NodoPrograma) { 
+			NodoPrograma prog = (NodoPrograma)nodo;
+			if (prog.getGlobal_block() != null) generar(prog.getGlobal_block());
+			if (prog.getFunction_block() != null) generar(prog.getFunction_block());
+			if (prog.getMain() != null) generar(prog.getMain());
+		}else if (nodo instanceof NodoDeclaracion) {
+			// No generar codigo directo para declaraciones en este backend simple
+		}else if (nodo instanceof NodoString) {
+			// Este backend no maneja cadenas; podria ignorarse o manejarse como literal no soportado
+			UtGen.emitirComentario("string literal ignorado en generador actual");
+		}
+		else{
 			System.out.println("BUG: Tipo de nodo a generar desconocido");
 		}
 		/*Si el hijo de extrema izquierda tiene hermano a la derecha lo genero tambien*/
@@ -182,12 +196,24 @@ public class Generador {
 	private static void generarOperacion(NodoBase nodo){
 		NodoOperacion n = (NodoOperacion) nodo;
 		if(UtGen.debug)	UtGen.emitirComentario("-> Operacion: " + n.getOperacion());
+		/* Caso unario NOT */
+		if (n.getOperacion() == tipoOp.not) {
+			/* Genero solo la expresion derecha */
+			if (n.getOpDerecho() != null) generar(n.getOpDerecho());
+			/* AC = (AC == 0) ? 1 : 0 */
+			UtGen.emitirRM("JEQ", UtGen.AC, 2, UtGen.PC, "not: si AC==0 salto a poner 1");
+			UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "not: caso verdadero->falso (AC=0)");
+			UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "not: salto para evitar setear 1");
+			UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "not: caso falso->verdadero (AC=1)");
+			if(UtGen.debug)	UtGen.emitirComentario("<- Operacion: " + n.getOperacion());
+			return;
+		}
 		/* Genero la expresion izquierda de la operacion */
-		generar(n.getOpIzquierdo());
+		if (n.getOpIzquierdo() != null) generar(n.getOpIzquierdo());
 		/* Almaceno en la pseudo pila de valor temporales el valor de la operacion izquierda */
 		UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "op: push en la pila tmp el resultado expresion izquierda");
 		/* Genero la expresion derecha de la operacion */
-		generar(n.getOpDerecho());
+		if (n.getOpDerecho() != null) generar(n.getOpDerecho());
 		/* Ahora cargo/saco de la pila el valor izquierdo */
 		UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "op: pop o cargo de la pila el valor izquierdo en AC1");
 		switch(n.getOperacion()){
@@ -210,7 +236,67 @@ public class Generador {
 							UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "caso de falso (AC=0)");
 							UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)");
 							UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "caso de verdadero (AC=1)");
-							break;	
+							break;
+			case mayor:
+				UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: >");
+				UtGen.emitirRM("JGT", UtGen.AC, 2, UtGen.PC, "if verdadero (AC>0)");
+				UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "falso (AC=0)");
+				UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "salto incondicional");
+				UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "verdadero (AC=1)");
+				break;
+			case menorigual:
+				UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: <=");
+				// true if AC<=0: !(AC>0)
+				UtGen.emitirRM("JGT", UtGen.AC, 2, UtGen.PC, "si AC>0 salto a falso");
+				UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "verdadero (AC=1)");
+				UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "salto incondicional");
+				UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "falso (AC=0)");
+				break;
+			case mayorigual:
+				UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: >=");
+				// true if AC>=0: !(AC<0)
+				UtGen.emitirRM("JLT", UtGen.AC, 2, UtGen.PC, "si AC<0 salto a falso");
+				UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "verdadero (AC=1)");
+				UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "salto incondicional");
+				UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "falso (AC=0)");
+				break;
+			case diferente:
+				UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: !=");
+				UtGen.emitirRM("JNE", UtGen.AC, 2, UtGen.PC, "if verdadero (AC!=0)");
+				UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "falso (AC=0)");
+				UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "salto incondicional");
+				UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "verdadero (AC=1)");
+				break;
+			case modulo:
+				// naive: a % b -> a - (a / b) * b
+				// AC1 holds left, AC holds right (b). We'll compute AC = left % right.
+				UtGen.emitirRO("DIV", UtGen.AC, UtGen.AC1, UtGen.AC, "tmp = left / right");
+				UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "guardar tmp");
+				UtGen.emitirRM("LD", UtGen.AC, ++desplazamientoTmp, UtGen.MP, "cargar tmp");
+				UtGen.emitirRO("MUL", UtGen.AC, UtGen.AC, UtGen.AC1, "tmp * left");
+				// Reload right into AC1: we lost it; but simple backend can't, so mark as unknown
+				UtGen.emitirComentario("BUG: modulo implementacion simplificada, requiere mas registros");
+				break;
+			case potencia:
+				UtGen.emitirComentario("BUG: potencia no implementada en TM simple");
+				break;
+			case and:
+				// Logical and: if left==0 then false else evaluate right and check !=0
+				UtGen.emitirRM("JEQ", UtGen.AC1, 2, UtGen.PC, "and: si izq==0 salto a falso");
+				// AC currently right; compare right != 0
+				UtGen.emitirRM("JEQ", UtGen.AC, 2, UtGen.PC, "and: si der==0 salto a falso");
+				UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "and: verdadero");
+				UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "and: salto");
+				UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "and: falso");
+				break;
+			case or:
+				// Logical or: if left!=0 then true else check right!=0
+				UtGen.emitirRM("JNE", UtGen.AC1, 2, UtGen.PC, "or: si izq!=0 salto a verdadero");
+				UtGen.emitirRM("JNE", UtGen.AC, 2, UtGen.PC, "or: si der!=0 salto a verdadero");
+				UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "or: falso");
+				UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "or: salto");
+				UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "or: verdadero");
+				break;
 			default:
 							UtGen.emitirComentario("BUG: tipo de operacion desconocida");
 		}

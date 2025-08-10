@@ -364,6 +364,14 @@ IMPRESION DEL AST GENERADO
 
   Tipo de nodo desconocido
 *** Tabla de Simbolos ***
+Consegui Key: arr con direccion: 1
+Consegui Key: total con direccion: 5
+Consegui Key: size con direccion: 3
+Consegui Key: resultado con direccion: 7
+Consegui Key: v con direccion: 2
+Consegui Key: num con direccion: 6
+Consegui Key: x con direccion: 0
+Consegui Key: i con direccion: 4
 
 
 ------ CODIGO OBJETO DEL LENGUAJE TINY GENERADO PARA LA TM ------
@@ -375,8 +383,233 @@ IMPRESION DEL AST GENERADO
 0:       LD       6,0(0)      cargar la maxima direccion desde la localidad 0
 1:       ST       0,0(0)      limpio el registro de la localidad 0
 BUG: Tipo de nodo a generar desconocido
+*      -> escribir
+*      string literal ignorado en generador actual
+2:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      -> leer
+3:       IN       0,0,0      leer: lee un valor entero 
+4:       ST       0,6(5)      leer: almaceno el valor entero leido en el id num
+*      <- leer
+BUG: Tipo de nodo a generar desconocido
+*      -> if
+*      -> Operacion: and
+*      -> Operacion: mayorigual
+*      -> identificador
+5:       LD       0,6(5)      cargar valor de identificador: num
+*      -> identificador
+6:       ST       0,0(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> constante
+7:       LDC       0,0(0)      cargar constante: 0
+*      <- constante
+8:       LD       1,0(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+9:       SUB       0,1,0      op: >=
+10:       JLT       0,2(7)      si AC<0 salto a falso
+11:       LDC       0,1(0)      verdadero (AC=1)
+12:       LDA       7,1(7)      salto incondicional
+13:       LDC       0,0(0)      falso (AC=0)
+*      <- Operacion: mayorigual
+14:       ST       0,0(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> Operacion: menorigual
+*      -> identificador
+15:       LD       0,6(5)      cargar valor de identificador: num
+*      -> identificador
+16:       ST       0,-1(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> constante
+17:       LDC       0,10(0)      cargar constante: 10
+*      <- constante
+18:       LD       1,-1(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+19:       SUB       0,1,0      op: <=
+20:       JGT       0,2(7)      si AC>0 salto a falso
+21:       LDC       0,1(0)      verdadero (AC=1)
+22:       LDA       7,1(7)      salto incondicional
+23:       LDC       0,0(0)      falso (AC=0)
+*      <- Operacion: menorigual
+24:       LD       1,0(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+25:       JEQ       1,2(7)      and: si izq==0 salto a falso
+26:       JEQ       0,2(7)      and: si der==0 salto a falso
+27:       LDC       0,1(0)      and: verdadero
+28:       LDA       7,1(7)      and: salto
+29:       LDC       0,0(0)      and: falso
+*      <- Operacion: and
+*      If: el salto hacia el else debe estar aqui
+*      -> escribir
+*      string literal ignorado en generador actual
+31:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      -> escribir
+*      -> identificador
+32:       LD       0,6(5)      cargar valor de identificador: num
+*      -> identificador
+33:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      -> if
+*      -> Operacion: igual
+*      -> Operacion: modulo
+*      -> identificador
+34:       LD       0,6(5)      cargar valor de identificador: num
+*      -> identificador
+35:       ST       0,0(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> constante
+36:       LDC       0,2(0)      cargar constante: 2
+*      <- constante
+37:       LD       1,0(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+38:       DIV       0,1,0      tmp = left / right
+39:       ST       0,0(6)      guardar tmp
+40:       LD       0,0(6)      cargar tmp
+41:       MUL       0,0,1      tmp * left
+*      BUG: modulo implementacion simplificada, requiere mas registros
+*      <- Operacion: modulo
+42:       ST       0,0(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> constante
+43:       LDC       0,0(0)      cargar constante: 0
+*      <- constante
+44:       LD       1,0(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+45:       SUB       0,1,0      op: ==
+46:       JEQ       0,2(7)      voy dos instrucciones mas alla if verdadero (AC==0)
+47:       LDC       0,0(0)      caso de falso (AC=0)
+48:       LDA       7,1(7)      Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)
+49:       LDC       0,1(0)      caso de verdadero (AC=1)
+*      <- Operacion: igual
+*      If: el salto hacia el else debe estar aqui
+*      -> escribir
+*      string literal ignorado en generador actual
+51:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      If: el salto hacia el final debe estar aqui
+50:       JEQ       0,2(7)      if: jmp hacia else
+*      -> escribir
+*      string literal ignorado en generador actual
+53:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+52:       LDA       7,1(7)      if: jmp hacia el final
+*      <- if
+*      -> asignacion
+*      -> Operacion: potencia
+*      -> identificador
+54:       LD       0,6(5)      cargar valor de identificador: num
+*      -> identificador
+55:       ST       0,0(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> constante
+56:       LDC       0,2(0)      cargar constante: 2
+*      <- constante
+57:       LD       1,0(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+*      BUG: potencia no implementada en TM simple
+*      <- Operacion: potencia
+58:       ST       0,0(5)      asignacion: almaceno el valor para el id x
+*      <- asignacion
+*      -> escribir
+*      string literal ignorado en generador actual
+59:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      -> escribir
+*      -> identificador
+60:       LD       0,0(5)      cargar valor de identificador: x
+*      -> identificador
+61:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      If: el salto hacia el final debe estar aqui
+30:       JEQ       0,32(7)      if: jmp hacia else
+*      -> escribir
+*      string literal ignorado en generador actual
+63:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+62:       LDA       7,1(7)      if: jmp hacia el final
+*      <- if
+*      -> asignacion
+BUG: Tipo de nodo a generar desconocido
+64:       ST       0,7(5)      asignacion: almaceno el valor para el id resultado
+*      <- asignacion
+*      -> escribir
+*      string literal ignorado en generador actual
+65:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      -> escribir
+*      -> identificador
+66:       LD       0,7(5)      cargar valor de identificador: resultado
+*      -> identificador
+67:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      -> if
+*      -> Operacion: or
+*      -> Operacion: mayor
+*      -> identificador
+68:       LD       0,6(5)      cargar valor de identificador: num
+*      -> identificador
+69:       ST       0,0(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> constante
+70:       LDC       0,5(0)      cargar constante: 5
+*      <- constante
+71:       LD       1,0(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+72:       SUB       0,1,0      op: >
+73:       JGT       0,2(7)      if verdadero (AC>0)
+74:       LDC       0,0(0)      falso (AC=0)
+75:       LDA       7,1(7)      salto incondicional
+76:       LDC       0,1(0)      verdadero (AC=1)
+*      <- Operacion: mayor
+77:       ST       0,0(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> Operacion: menor
+*      -> identificador
+78:       LD       0,6(5)      cargar valor de identificador: num
+*      -> identificador
+79:       ST       0,-1(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> constante
+80:       LDC       0,0(0)      cargar constante: 0
+*      <- constante
+81:       LD       1,-1(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+82:       SUB       0,1,0      op: <
+83:       JLT       0,2(7)      voy dos instrucciones mas alla if verdadero (AC<0)
+84:       LDC       0,0(0)      caso de falso (AC=0)
+85:       LDA       7,1(7)      Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)
+86:       LDC       0,1(0)      caso de verdadero (AC=1)
+*      <- Operacion: menor
+87:       LD       1,0(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+88:       JNE       1,2(7)      or: si izq!=0 salto a verdadero
+89:       JNE       0,2(7)      or: si der!=0 salto a verdadero
+90:       LDC       0,0(0)      or: falso
+91:       LDA       7,1(7)      or: salto
+92:       LDC       0,1(0)      or: verdadero
+*      <- Operacion: or
+*      If: el salto hacia el else debe estar aqui
+*      -> escribir
+*      string literal ignorado en generador actual
+94:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      If: el salto hacia el final debe estar aqui
+93:       JEQ       0,2(7)      if: jmp hacia else
+*      <- if
+*      -> if
+*      -> Operacion: not
+*      -> Operacion: diferente
+*      -> identificador
+96:       LD       0,6(5)      cargar valor de identificador: num
+*      -> identificador
+97:       ST       0,0(6)      op: push en la pila tmp el resultado expresion izquierda
+*      -> constante
+98:       LDC       0,5(0)      cargar constante: 5
+*      <- constante
+99:       LD       1,0(6)      op: pop o cargo de la pila el valor izquierdo en AC1
+100:       SUB       0,1,0      op: !=
+101:       JNE       0,2(7)      if verdadero (AC!=0)
+102:       LDC       0,0(0)      falso (AC=0)
+103:       LDA       7,1(7)      salto incondicional
+104:       LDC       0,1(0)      verdadero (AC=1)
+*      <- Operacion: diferente
+105:       JEQ       0,2(7)      not: si AC==0 salto a poner 1
+106:       LDC       0,0(0)      not: caso verdadero->falso (AC=0)
+107:       LDA       7,1(7)      not: salto para evitar setear 1
+108:       LDC       0,1(0)      not: caso falso->verdadero (AC=1)
+*      <- Operacion: not
+*      If: el salto hacia el else debe estar aqui
+*      -> escribir
+*      string literal ignorado en generador actual
+110:       OUT       0,0,0      escribir: genero la salida de la expresion
+*      <- escribir
+*      If: el salto hacia el final debe estar aqui
+109:       JEQ       0,2(7)      if: jmp hacia else
+*      <- if
 *      Fin de la ejecucion.
-2:       HALT       0,0,0      
+112:       HALT       0,0,0      
 
 
 ------ FIN DEL CODIGO OBJETO DEL LENGUAJE TINY GENERADO PARA LA TM ------
