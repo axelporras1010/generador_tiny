@@ -20,51 +20,6 @@ token FUNCTION
 token ID
 token LPAREN
 token ID
-token RPAREN
-token BEGIN
-token VAR
-token ID
-token SEMI
-token IF
-Syntax error
-instead expected token classes are []
-token ID
-token LE
-token NUM
-token THEN
-token ID
-token ASSIGN
-token NUM
-token ELSE
-token ID
-token ASSIGN
-token ID
-token TIMES
-token CALL
-token ID
-token LPAREN
-token ID
-token MINUS
-token NUM
-token RPAREN
-token END
-token SEMI
-token RETURN
-token ID
-token END
-	 error en sentencia
-Error sintáctico en sentencia
-	 sentencia unica
-	 identificador
-	 return con valor
-	 secuencia sentencias
-token COMENTARIO_LINEA
-token FUNCTION
-	 declaracion funcion con parametros
-	 secuencia declaraciones
-token ID
-token LPAREN
-token ID
 token COLON
 token ARRAY
 token LBRACKET
@@ -78,20 +33,19 @@ token VAR
 token ID
 token SEMI
 token VAR
-Syntax error
-instead expected token classes are [END, SEMI]
+	 declaracion variable local
+	 sentencia unica
 token ID
 token SEMI
 token ID
+	 declaracion variable local
+	 secuencia sentencias sin punto y coma
 token ASSIGN
 token NUM
-	 error en sentencia
-Error sintáctico en sentencia
-	 sentencia unica
 token SEMI
 	 numero entero
 	 asignacion variable
-	 secuencia sentencias
+	 secuencia sentencias sin punto y coma
 token FOR
 token ID
 token ASSIGN
@@ -138,7 +92,7 @@ token THEN
 token CONTINUE
 token END
 	 continue
-	 sentencia unica
+	 bloque sentencia unica
 token SEMI
 	 if simple
 	 secuencia sentencias
@@ -153,11 +107,12 @@ token THEN
 token BREAK
 token END
 	 break
-	 sentencia unica
+	 bloque sentencia unica
 token END
 	 if simple
 	 secuencia sentencias
 token SEMI
+	 bloque begin-end
 	 for con step
 	 secuencia sentencias
 token RETURN
@@ -174,28 +129,27 @@ token VAR
 token ID
 token SEMI
 token VAR
-Syntax error
-instead expected token classes are [END, SEMI]
+	 declaracion variable local
+	 sentencia unica
 token ID
 token SEMI
 token VAR
+	 declaracion variable local
+	 secuencia sentencias sin punto y coma
 token ID
 token SEMI
-	 error en sentencia
-Error sintáctico en sentencia
-	 sentencia unica
 token COMENTARIO_LINEA
 token WRITE
-Syntax error
-instead expected token classes are [END, SEMI]
+	 declaracion variable local
+	 secuencia sentencias sin punto y coma
 token STRING
 token SEMI
+	 cadena texto
+	 write expresion
+	 secuencia sentencias sin punto y coma
 token READ
 token ID
 token SEMI
-	 error en sentencia
-Error sintáctico en sentencia
-	 secuencia sentencias
 	 read variable
 	 secuencia sentencias
 token COMENTARIO_LINEA
@@ -231,6 +185,7 @@ token END
 	 asignacion array
 	 sentencia unica
 token SEMI
+	 bloque begin-end
 	 for con step
 	 secuencia sentencias
 token COMENTARIO_LINEA
@@ -251,37 +206,12 @@ token THEN
 	 operacion menor igual
 	 operacion AND
 token BEGIN
-Syntax error
-instead expected token classes are [error, IF, REPEAT, READ, WRITE, RETURN, CALL, VAR, FOR, BREAK, CONTINUE, ID]
-token ID
-token ASSIGN
-token CALL
-token ID
-token LPAREN
-token ID
-token RPAREN
-token SEMI
 token WRITE
 token STRING
 token SEMI
-	 error en sentencia
-Error sintáctico en sentencia
+	 cadena texto
+	 write expresion
 	 sentencia unica
-	 cadena texto
-	 write expresion
-	 secuencia sentencias
-token WRITE
-token ID
-token SEMI
-	 identificador
-	 write expresion
-	 secuencia sentencias
-token WRITE
-token STRING
-token SEMI
-	 cadena texto
-	 write expresion
-	 secuencia sentencias
 token WRITE
 token ID
 token SEMI
@@ -306,13 +236,13 @@ token STRING
 token ELSE
 	 cadena texto
 	 write expresion
-	 sentencia unica
+	 bloque sentencia unica
 token WRITE
 token STRING
 token END
 	 cadena texto
 	 write expresion
-	 sentencia unica
+	 bloque sentencia unica
 token SEMI
 	 if-else
 	 secuencia sentencias
@@ -341,81 +271,60 @@ token END
 	 write expresion
 	 secuencia sentencias
 token ELSE
-	 if simple
-	 secuencia sentencias
-Syntax error
-instead expected token classes are [END, SEMI]
+	 bloque begin-end
 token BEGIN
 token WRITE
 token STRING
 token END
+	 cadena texto
+	 write expresion
+	 sentencia unica
 token SEMI
+	 bloque begin-end
+Syntax error
+instead expected token classes are []
 token COMENTARIO_LINEA
 token ID
 token ASSIGN
 token CALL
-	 error en sentencia
-Error sintáctico en sentencia
-	 sentencia unica
 token ID
 token LPAREN
 token ID
 token COMMA
-	 identificador
 token NUM
 token RPAREN
-	 numero entero
-	 lista argumentos
 token SEMI
-	 llamada funcion en expresion
-	 asignacion variable
-	 secuencia sentencias
 token WRITE
 token STRING
 token SEMI
-	 cadena texto
-	 write expresion
-	 secuencia sentencias
 token WRITE
 token ID
 token SEMI
-	 identificador
-	 write expresion
-	 secuencia sentencias
 token COMENTARIO_LINEA
 token IF
 token LPAREN
 token ID
 token GT
-	 identificador
 token NUM
 token RPAREN
-	 numero entero
-	 operacion mayor
 token OR
-	 expresion parentesis
 token LPAREN
 token ID
 token LT
-	 identificador
 token NUM
 token RPAREN
-	 numero entero
-	 operacion menor
 token THEN
-	 expresion parentesis
-	 operacion OR
 token WRITE
 token STRING
 token END
-	 cadena texto
-	 write expresion
-	 sentencia unica
 token SEMI
-	 if simple
-	 secuencia sentencias
 token IF
 token NOT
+	 error en sentencia
+Error sintáctico en sentencia
+	 bloque sentencia unica
+	 if-else
+	 secuencia sentencias
 token LPAREN
 token ID
 token NE
@@ -432,7 +341,7 @@ token STRING
 token END
 	 cadena texto
 	 write expresion
-	 sentencia unica
+	 bloque sentencia unica
 token END
 	 if simple
 	 secuencia sentencias

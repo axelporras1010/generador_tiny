@@ -4,18 +4,6 @@
 global x;
 global arr : array[10];
 
-// Definición de función que calcula factorial
-function factorial(n) 
-begin
-    var result;
-    if n <= 1 then
-        result := 1
-    else
-        result := n * call factorial(n - 1)
-    end;
-    return result
-end
-
 // Función que suma elementos de un vector
 function suma_vector(v : array[], size)
 begin
@@ -54,11 +42,8 @@ begin
     // Prueba de operadores relacionales y matemáticos
     if num >= 0 && num <= 10 then
     begin
-        resultado := call factorial(num);
-        write "El factorial de ";
+        write "El número está en rango";
         write num;
-        write " es ";
-        write resultado;
         
         // Operaciones matemáticas adicionales
         if num % 2 = 0 then

@@ -113,6 +113,7 @@ non terminal NodoBase simple_exp;
 non terminal NodoBase term;
 non terminal NodoBase factor;
 non terminal NodoBase argument_list;
+non terminal NodoBase block;
 
 /* Precedencia de operadores */
 precedence left OR;
@@ -217,6 +218,17 @@ main ::= BEGIN stmt_seq:s END
         :}
 ;
 
+// Bloque de código (puede ser BEGIN...END o una sola sentencia)
+block ::= BEGIN stmt_seq:s END
+         {: if(debug) System.out.println("\t bloque begin-end"); 
+            RESULT = s;
+         :}
+       | stmt:s
+         {: if(debug) System.out.println("\t bloque sentencia unica"); 
+            RESULT = s;
+         :}
+;
+
 // Declaración de variable local
 var_declaration ::= VAR ID:var SEMI
                    {: if(debug) System.out.println("\t declaracion variable local"); 
@@ -227,6 +239,19 @@ var_declaration ::= VAR ID:var SEMI
 // Secuencia de sentencias
 stmt_seq ::= stmt_seq:seq SEMI stmt:sent
             {: if(debug) System.out.println("\t secuencia sentencias"); 
+               NodoBase current = seq;
+               if(current != null){
+                   while(current.TieneHermano()){
+                       current = current.getHermanoDerecha();
+                   }
+                   current.setHermanoDerecha(sent);
+                   RESULT = seq;
+               } else {
+                   RESULT = sent;
+               }
+            :}
+          | stmt_seq:seq stmt:sent
+            {: if(debug) System.out.println("\t secuencia sentencias sin punto y coma"); 
                NodoBase current = seq;
                if(current != null){
                    while(current.TieneHermano()){
@@ -264,11 +289,11 @@ stmt ::= if_stmt:s {:RESULT=s;:}
 ;
 
 // Sentencia IF
-if_stmt ::= IF exp:cond THEN stmt_seq:then_part END
+if_stmt ::= IF exp:cond THEN block:then_part END
            {: if(debug) System.out.println("\t if simple"); 
               RESULT = new NodoIf(cond, then_part);
            :}
-         | IF exp:cond THEN stmt_seq:then_part ELSE stmt_seq:else_part END
+         | IF exp:cond THEN block:then_part ELSE block:else_part END
            {: if(debug) System.out.println("\t if-else"); 
               RESULT = new NodoIf(cond, then_part, else_part);
            :}
@@ -283,12 +308,12 @@ repeat_stmt ::= REPEAT stmt_seq:body UNTIL exp:cond
 
 // Sentencia FOR
 for_stmt ::= FOR ID:var ASSIGN exp:init TO exp:final_val STEP exp:step 
-            BEGIN stmt_seq:body END
+            block:body
             {: if(debug) System.out.println("\t for con step"); 
                RESULT = new NodoFor(var.toString(), init, final_val, step, body);
             :}
           | FOR ID:var ASSIGN exp:init TO exp:final_val 
-            BEGIN stmt_seq:body END
+            block:body
             {: if(debug) System.out.println("\t for sin step"); 
                RESULT = new NodoFor(var.toString(), init, final_val, new NodoValor(1), body);
             :}
@@ -334,10 +359,6 @@ call_stmt ::= CALL ID:func LPAREN argument_list:args RPAREN
 return_stmt ::= RETURN exp:value
                {: if(debug) System.out.println("\t return con valor"); 
                   RESULT = new NodoReturn(value);
-               :}
-             | RETURN
-               {: if(debug) System.out.println("\t return sin valor"); 
-                  RESULT = new NodoReturn();
                :}
 ;
 
