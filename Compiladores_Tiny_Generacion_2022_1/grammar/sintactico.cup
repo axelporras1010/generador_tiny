@@ -289,11 +289,11 @@ stmt ::= if_stmt:s {:RESULT=s;:}
 ;
 
 // Sentencia IF
-if_stmt ::= IF exp:cond THEN block:then_part END
+if_stmt ::= IF exp:cond THEN stmt_seq:then_part END
            {: if(debug) System.out.println("\t if simple"); 
               RESULT = new NodoIf(cond, then_part);
            :}
-         | IF exp:cond THEN block:then_part ELSE block:else_part END
+         | IF exp:cond THEN stmt_seq:then_part ELSE stmt_seq:else_part END
            {: if(debug) System.out.println("\t if-else"); 
               RESULT = new NodoIf(cond, then_part, else_part);
            :}
@@ -308,12 +308,12 @@ repeat_stmt ::= REPEAT stmt_seq:body UNTIL exp:cond
 
 // Sentencia FOR
 for_stmt ::= FOR ID:var ASSIGN exp:init TO exp:final_val STEP exp:step 
-            block:body
+            stmt_seq:body END
             {: if(debug) System.out.println("\t for con step"); 
                RESULT = new NodoFor(var.toString(), init, final_val, step, body);
             :}
           | FOR ID:var ASSIGN exp:init TO exp:final_val 
-            block:body
+            stmt_seq:body END
             {: if(debug) System.out.println("\t for sin step"); 
                RESULT = new NodoFor(var.toString(), init, final_val, new NodoValor(1), body);
             :}
