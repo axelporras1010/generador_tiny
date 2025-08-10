@@ -587,7 +587,36 @@ Mas informacion en: http//4thmouse.com/index.php/2007/02/15/using-custom-symbols
 		ts.cargarTabla(root);
 		ts.ImprimirClaves();
 		Generador.setTablaSimbolos(ts);
+		
+		// Generar código objeto tanto en consola como en archivo .tm
 		Generador.generarCodigoObjeto(root);
+		
+		// Generar archivo .tm en la carpeta ejemplo_generado
+		String nombreArchivo = args.length > 0 ? 
+			extraerNombreArchivo(args[0]) : "programa";
+		String rutaArchivo = "ejemplo_generado/" + nombreArchivo + ".tm";
+		try {
+			Generador.generarCodigoObjetoAArchivo(root, rutaArchivo);
+		} catch (java.io.IOException e) {
+			System.err.println("Error generando archivo .tm: " + e.getMessage());
+		}
+	}
+	
+	// Método auxiliar para extraer el nombre del archivo sin extensión
+	private static String extraerNombreArchivo(String rutaCompleta) {
+		String nombreArchivo = rutaCompleta;
+		// Obtener solo el nombre del archivo sin la ruta
+		if (nombreArchivo.contains("/")) {
+			nombreArchivo = nombreArchivo.substring(nombreArchivo.lastIndexOf("/") + 1);
+		}
+		if (nombreArchivo.contains("\\")) {
+			nombreArchivo = nombreArchivo.substring(nombreArchivo.lastIndexOf("\\") + 1);
+		}
+		// Quitar la extensión
+		if (nombreArchivo.contains(".")) {
+			nombreArchivo = nombreArchivo.substring(0, nombreArchivo.lastIndexOf("."));
+		}
+		return nombreArchivo;
 	}
 
 

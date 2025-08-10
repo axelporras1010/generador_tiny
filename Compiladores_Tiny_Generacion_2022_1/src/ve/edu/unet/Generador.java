@@ -1,6 +1,7 @@
 package ve.edu.unet;
 
 import ve.edu.unet.nodosAST.*;
+import java.io.IOException;
 
 public class Generador {
 	/* Ilustracion de la disposicion de la memoria en
@@ -58,6 +59,28 @@ public class Generador {
 		System.out.println();
 		System.out.println();
 		System.out.println("------ FIN DEL CODIGO OBJETO DEL LENGUAJE TINY GENERADO PARA LA TM ------");
+	}
+	
+	// Método sobrecargado para generar código a archivo .tm
+	public static void generarCodigoObjetoAArchivo(NodoBase raiz, String nombreArchivo) throws IOException {
+		try {
+			// Inicializar salida a archivo
+			UtGen.inicializarArchivoSalida(nombreArchivo);
+			
+			System.out.println("Generando código objeto en archivo: " + nombreArchivo);
+			
+			// Generar código objeto
+			generarPreludioEstandar();
+			generar(raiz);
+			/*Genero el codigo de finalizacion de ejecucion del codigo*/   
+			UtGen.emitirComentario("Fin de la ejecucion.");
+			UtGen.emitirRO("HALT", 0, 0, 0, "");
+			
+			System.out.println("Archivo " + nombreArchivo + " generado exitosamente.");
+		} finally {
+			// Asegurar que el archivo se cierre
+			UtGen.cerrarArchivoSalida();
+		}
 	}
 	
 	//Funcion principal de generacion de codigo

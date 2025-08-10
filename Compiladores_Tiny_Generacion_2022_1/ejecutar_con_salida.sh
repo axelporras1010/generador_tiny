@@ -6,8 +6,9 @@ echo "=== Compilando y Ejecutando Programa Extendido ==="
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# Crear directorio de salida si no existe
+# Crear directorios de salida si no existen
 mkdir -p salida
+mkdir -p ejemplo_generado
 
 echo "Ejecutando compilador..."
 # Detectar el separador de classpath según el OS
@@ -23,6 +24,10 @@ echo ""
 echo "Contenido del archivo de salida:"
 echo "================================"
 cat salida/resultado_compilacion.txt
+
+echo ""
+echo "Archivos .tm generados en ejemplo_generado/:"
+ls -la ejemplo_generado/*.tm 2>/dev/null || echo "No se encontraron archivos .tm"
 
 echo ""
 echo "=== Compilación completada ==="
