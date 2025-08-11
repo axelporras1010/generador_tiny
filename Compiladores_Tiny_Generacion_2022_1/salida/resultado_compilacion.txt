@@ -394,7 +394,7 @@ Variable: i -> Direccion: 14
 4:      ST        0,0(5)        global: almacenar en direccion 0
 * <- declaracion
 * -> declaracion: arr
-* Declaracion de array: arr tama√±o definido
+* Declaracion de array: arr tamaÒo definido
 * -> constante
 5:      LDC       0,10(0)       cargar constante: 10
 * <- constante
@@ -421,7 +421,7 @@ Variable: i -> Direccion: 14
 * <- declaracion
 * -> funcion: suma_vector
 * === INICIO FUNCION suma_vector ===
-26:     ST        0,0(6)        funci√≥n: guardar frame anterior
+26:     ST        0,0(6)        funciÛn: guardar frame anterior
 * Procesamiento de parametros
 * -> declaracion: i
 * Declaracion de variable: i (local)
@@ -550,8 +550,8 @@ Variable: i -> Direccion: 14
 86:     LD        7,0(1)        return: salto a direccion de retorno
 * <- return
 * Return implicito de funcion
-87:     LD        0,1(6)        funci√≥n: restaurar frame anterior
-88:     LD        7,0(0)        funci√≥n: retorno
+87:     LD        0,1(6)        funciÛn: restaurar frame anterior
+88:     LD        7,0(0)        funciÛn: retorno
 * === FIN FUNCION suma_vector ===
 * <- funcion
 * -> declaracion: i
@@ -571,7 +571,7 @@ Variable: i -> Direccion: 14
 * <- declaracion
 * -> escribir
 * -> string
-* String: "Ingrese un n√∫mero: "
+* String: "Ingrese un n˙mero: "
 95:     LDC       0,73(0)       string: cargar caracter 'I'
 96:     OUT       0,0,0         string: escribir caracter
 97:     LDC       0,110(0)      string: cargar caracter 'n'
@@ -596,7 +596,7 @@ Variable: i -> Direccion: 14
 116:    OUT       0,0,0         string: escribir caracter
 117:    LDC       0,110(0)      string: cargar caracter 'n'
 118:    OUT       0,0,0         string: escribir caracter
-119:    LDC       0,250(0)      string: cargar caracter '√∫'
+119:    LDC       0,250(0)      string: cargar caracter '˙'
 120:    OUT       0,0,0         string: escribir caracter
 121:    LDC       0,109(0)      string: cargar caracter 'm'
 122:    OUT       0,0,0         string: escribir caracter
@@ -715,7 +715,7 @@ Variable: i -> Direccion: 14
 * If: el salto hacia el else debe estar aqui
 * -> escribir
 * -> string
-* String: "El n√∫mero est√° en rango"
+* String: "El n˙mero est· en rango"
 191:    LDC       0,69(0)       string: cargar caracter 'E'
 192:    OUT       0,0,0         string: escribir caracter
 193:    LDC       0,108(0)      string: cargar caracter 'l'
@@ -724,7 +724,7 @@ Variable: i -> Direccion: 14
 196:    OUT       0,0,0         string: escribir caracter
 197:    LDC       0,110(0)      string: cargar caracter 'n'
 198:    OUT       0,0,0         string: escribir caracter
-199:    LDC       0,250(0)      string: cargar caracter '√∫'
+199:    LDC       0,250(0)      string: cargar caracter '˙'
 200:    OUT       0,0,0         string: escribir caracter
 201:    LDC       0,109(0)      string: cargar caracter 'm'
 202:    OUT       0,0,0         string: escribir caracter
@@ -742,7 +742,7 @@ Variable: i -> Direccion: 14
 214:    OUT       0,0,0         string: escribir caracter
 215:    LDC       0,116(0)      string: cargar caracter 't'
 216:    OUT       0,0,0         string: escribir caracter
-217:    LDC       0,225(0)      string: cargar caracter '√°'
+217:    LDC       0,225(0)      string: cargar caracter '·'
 218:    OUT       0,0,0         string: escribir caracter
 219:    LDC       0,32(0)       string: cargar caracter ' '
 220:    OUT       0,0,0         string: escribir caracter
@@ -804,7 +804,7 @@ Variable: i -> Direccion: 14
 * If: el salto hacia el else debe estar aqui
 * -> escribir
 * -> string
-* String: "El n√∫mero es par"
+* String: "El n˙mero es par"
 260:    LDC       0,69(0)       string: cargar caracter 'E'
 261:    OUT       0,0,0         string: escribir caracter
 262:    LDC       0,108(0)      string: cargar caracter 'l'
@@ -813,7 +813,7 @@ Variable: i -> Direccion: 14
 265:    OUT       0,0,0         string: escribir caracter
 266:    LDC       0,110(0)      string: cargar caracter 'n'
 267:    OUT       0,0,0         string: escribir caracter
-268:    LDC       0,250(0)      string: cargar caracter '√∫'
+268:    LDC       0,250(0)      string: cargar caracter '˙'
 269:    OUT       0,0,0         string: escribir caracter
 270:    LDC       0,109(0)      string: cargar caracter 'm'
 271:    OUT       0,0,0         string: escribir caracter
@@ -844,7 +844,7 @@ Variable: i -> Direccion: 14
 259:    JEQ       0,34(7)       if: jmp hacia else
 * -> escribir
 * -> string
-* String: "El n√∫mero es impar"
+* String: "El n˙mero es impar"
 294:    LDC       0,69(0)       string: cargar caracter 'E'
 295:    OUT       0,0,0         string: escribir caracter
 296:    LDC       0,108(0)      string: cargar caracter 'l'
@@ -853,7 +853,7 @@ Variable: i -> Direccion: 14
 299:    OUT       0,0,0         string: escribir caracter
 300:    LDC       0,110(0)      string: cargar caracter 'n'
 301:    OUT       0,0,0         string: escribir caracter
-302:    LDC       0,250(0)      string: cargar caracter '√∫'
+302:    LDC       0,250(0)      string: cargar caracter '˙'
 303:    OUT       0,0,0         string: escribir caracter
 304:    LDC       0,109(0)      string: cargar caracter 'm'
 305:    OUT       0,0,0         string: escribir caracter
@@ -896,8 +896,8 @@ Variable: i -> Direccion: 14
 333:    LDC       0,2(0)        cargar constante: 2
 * <- constante
 334:    LD        1,1(6)        op: pop o cargo de la pila el valor izquierdo en AC1
-* potencia: implementaci√≥n simplificada
-335:    MUL       0,1,0         potencia: multiplicaci√≥n simple
+* potencia: implementaciÛn simplificada
+335:    MUL       0,1,0         potencia: multiplicaciÛn simple
 * <- Operacion: potencia
 336:    ST        0,0(5)        asignacion: almaceno el valor para el id x
 * <- asignacion
@@ -949,10 +949,10 @@ Variable: i -> Direccion: 14
 190:    JEQ       0,182(7)      if: jmp hacia else
 * -> escribir
 * -> string
-* String: "N√∫mero fuera de rango"
+* String: "N˙mero fuera de rango"
 373:    LDC       0,78(0)       string: cargar caracter 'N'
 374:    OUT       0,0,0         string: escribir caracter
-375:    LDC       0,250(0)      string: cargar caracter '√∫'
+375:    LDC       0,250(0)      string: cargar caracter '˙'
 376:    OUT       0,0,0         string: escribir caracter
 377:    LDC       0,109(0)      string: cargar caracter 'm'
 378:    OUT       0,0,0         string: escribir caracter
@@ -1012,7 +1012,7 @@ Variable: i -> Direccion: 14
 420:    LDC       0,10(0)       cargar constante: 10
 * <- constante
 421:    ST        0,-1(6)       call: guardar argumento
-* Llamada a funcion suma_vector (implementaci√≥n simplificada)
+* Llamada a funcion suma_vector (implementaciÛn simplificada)
 * <- llamada funcion
 422:    ST        0,17(5)       asignacion: almaceno el valor para el id resultado
 * <- asignacion
@@ -1117,7 +1117,7 @@ Variable: i -> Direccion: 14
 * If: el salto hacia el else debe estar aqui
 * -> escribir
 * -> string
-* String: "Condici√≥n compleja verdadera"
+* String: "CondiciÛn compleja verdadera"
 498:    LDC       0,67(0)       string: cargar caracter 'C'
 499:    OUT       0,0,0         string: escribir caracter
 500:    LDC       0,111(0)      string: cargar caracter 'o'
@@ -1132,7 +1132,7 @@ Variable: i -> Direccion: 14
 509:    OUT       0,0,0         string: escribir caracter
 510:    LDC       0,105(0)      string: cargar caracter 'i'
 511:    OUT       0,0,0         string: escribir caracter
-512:    LDC       0,243(0)      string: cargar caracter '√≥'
+512:    LDC       0,243(0)      string: cargar caracter 'Û'
 513:    OUT       0,0,0         string: escribir caracter
 514:    LDC       0,110(0)      string: cargar caracter 'n'
 515:    OUT       0,0,0         string: escribir caracter
@@ -1205,7 +1205,7 @@ Variable: i -> Direccion: 14
 * If: el salto hacia el else debe estar aqui
 * -> escribir
 * -> string
-* String: "El n√∫mero es 5"
+* String: "El n˙mero es 5"
 570:    LDC       0,69(0)       string: cargar caracter 'E'
 571:    OUT       0,0,0         string: escribir caracter
 572:    LDC       0,108(0)      string: cargar caracter 'l'
@@ -1214,7 +1214,7 @@ Variable: i -> Direccion: 14
 575:    OUT       0,0,0         string: escribir caracter
 576:    LDC       0,110(0)      string: cargar caracter 'n'
 577:    OUT       0,0,0         string: escribir caracter
-578:    LDC       0,250(0)      string: cargar caracter '√∫'
+578:    LDC       0,250(0)      string: cargar caracter '˙'
 579:    OUT       0,0,0         string: escribir caracter
 580:    LDC       0,109(0)      string: cargar caracter 'm'
 581:    OUT       0,0,0         string: escribir caracter
@@ -1246,5 +1246,3 @@ Variable: i -> Direccion: 14
 
 
 ------ FIN DEL CODIGO OBJETO DEL LENGUAJE TINY GENERADO PARA LA TM ------
-Generando c√≥digo objeto en archivo: ejemplo_generado/programa_extendido.tm
-Archivo ejemplo_generado/programa_extendido.tm generado exitosamente.
