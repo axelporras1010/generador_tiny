@@ -2,6 +2,10 @@ package ve.edu.unet;
 
 import ve.edu.unet.nodosAST.*;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Generador {
 	/* Ilustracion de la disposicion de la memoria en
@@ -40,6 +44,11 @@ public class Generador {
 	private static int contadorEtiquetas = 0;
 	private static java.util.Stack<Integer> pilaBreak = new java.util.Stack<Integer>();
 	private static java.util.Stack<Integer> pilaContinue = new java.util.Stack<Integer>();
+
+    // Compilación diferida de funciones
+    private static final Map<String, NodoFuncion> funcionesRegistradas = new HashMap<>();
+    private static final Map<String, Integer> inicioFuncion = new HashMap<>();
+    private static final Set<String> funcionesEmitidas = new HashSet<>();
 	
 	public static void setTablaSimbolos(TablaSimbolos tabla){
 		tablaSimbolos = tabla;
@@ -92,7 +101,7 @@ public class Generador {
 			}else if (nodo instanceof NodoDeclaracion){
 				generarDeclaracion(nodo);
 			}else if (nodo instanceof NodoFuncion){
-				generarFuncion(nodo);
+				registrarFuncion((NodoFuncion) nodo);
 			}else if (nodo instanceof NodoIf){
 				generarIf(nodo);
 			}else if (nodo instanceof NodoRepeat){
@@ -140,7 +149,7 @@ public class Generador {
 			generar(n.getGlobal_block());
 		}
 		
-		// Generar funciones
+		// Registrar funciones (sin generar su cuerpo)
 		if(n.getFunction_block() != null){
 			generar(n.getFunction_block());
 		}
@@ -163,7 +172,7 @@ public class Generador {
 		if(n.isEsArray()){
 			// Declaración de array
 			UtGen.emitirComentario("Declaracion de array: " + n.getNombreVariable() + 
-								  (n.getTamaño() != null ? " tamaño definido" : " tamaño por parámetro"));
+							  (n.getTamaño() != null ? " tamaño definido" : " tamaño por parámetro"));
 			
 			if(n.getTamaño() != null && n.isEsGlobal()){
 				// Array global con tamaño definido - reservar espacio
@@ -179,7 +188,7 @@ public class Generador {
 		} else {
 			// Declaración de variable simple
 			UtGen.emitirComentario("Declaracion de variable: " + n.getNombreVariable() + 
-								  (n.isEsGlobal() ? " (global)" : " (local)"));
+							  (n.isEsGlobal() ? " (global)" : " (local)"));
 			
 			if(n.isEsGlobal()){
 				// Variable global - inicializar a cero
@@ -197,36 +206,47 @@ public class Generador {
 		if(UtGen.debug) UtGen.emitirComentario("<- declaracion");
 	}
 
-	private static void generarFuncion(NodoBase nodo){
-		NodoFuncion n = (NodoFuncion)nodo;
-		if(UtGen.debug) UtGen.emitirComentario("-> funcion: " + n.getNombre());
-		
-		// Etiqueta de inicio de función
-		int etiquetaFuncion = contadorEtiquetas++;
-		UtGen.emitirComentario("=== INICIO FUNCION " + n.getNombre() + " ===");
-		
-		// Guardar frame anterior
-		UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "función: guardar frame anterior");
-		
-		// Procesar parámetros si existen
-		if(n.getParametros() != null){
-			UtGen.emitirComentario("Procesamiento de parametros");
-			// Los parámetros se procesan al momento de la llamada
-		}
-		
-		// Generar cuerpo de la función
-		if(n.getCuerpo() != null){
-			generar(n.getCuerpo());
-		}
-		
-		// Return implícito si no hay return explícito
-		UtGen.emitirComentario("Return implicito de funcion");
-		UtGen.emitirRM("LD", UtGen.AC, ++desplazamientoTmp, UtGen.MP, "función: restaurar frame anterior");
-		UtGen.emitirRM("LD", UtGen.PC, 0, UtGen.AC, "función: retorno");
-		
-		UtGen.emitirComentario("=== FIN FUNCION " + n.getNombre() + " ===");
-		if(UtGen.debug) UtGen.emitirComentario("<- funcion");
-	}
+    // Emite el cuerpo de una función (una sola vez) y registra su inicio
+    private static void emitirFuncionSiNecesaria(String nombreFuncion) {
+        if (funcionesEmitidas.contains(nombreFuncion)) {
+            return;
+        }
+        NodoFuncion n = funcionesRegistradas.get(nombreFuncion);
+        if (n == null) {
+            UtGen.emitirComentario("ERROR: llamada a funcion no definida: " + nombreFuncion);
+            return;
+        }
+
+        int inicio = UtGen.emitirSalto(0); // dirección actual donde comenzará la función
+        inicioFuncion.put(nombreFuncion, inicio);
+        funcionesEmitidas.add(nombreFuncion);
+
+        UtGen.emitirComentario("=== INICIO FUNCION " + n.getNombre() + " ===");
+
+        // Procesamiento de parámetros: pendiente (los argumentos ya se apilaron en la llamada)
+
+        // Generar cuerpo de la función
+        if (n.getCuerpo() != null) {
+            generar(n.getCuerpo());
+        }
+
+        // Return implícito: recuperar dirección de retorno de la pila y saltar
+        UtGen.emitirComentario("Return implicito de funcion");
+        UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "funcion: recuperar direccion de retorno");
+        UtGen.emitirRM("LD", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
+
+        UtGen.emitirComentario("=== FIN FUNCION " + n.getNombre() + " ===");
+    }
+
+    // Registrar función en la primera pasada (sin generar código)
+    private static void registrarFuncion(NodoFuncion funcion) {
+        if (funcion.getNombre() == null) {
+            UtGen.emitirComentario("ADVERTENCIA: funcion sin nombre");
+            return;
+        }
+        funcionesRegistradas.put(funcion.getNombre(), funcion);
+        UtGen.emitirComentario("registrada funcion: " + funcion.getNombre());
+    }
 
 	private static void generarFor(NodoBase nodo){
 		NodoFor n = (NodoFor)nodo;
@@ -301,7 +321,7 @@ public class Generador {
 		NodoLlamadaFuncion n = (NodoLlamadaFuncion)nodo;
 		if(UtGen.debug) UtGen.emitirComentario("-> llamada funcion: " + n.getNombreFuncion());
 		
-		// Guardar estado actual
+		// Guardar estado actual: direccion de retorno
 		UtGen.emitirRM("ST", UtGen.PC, desplazamientoTmp--, UtGen.MP, "call: guardar direccion de retorno");
 		
 		// Procesar argumentos si existen
@@ -315,8 +335,41 @@ public class Generador {
 			}
 		}
 		
-		// Llamada a la función (simulada con salto)
-		UtGen.emitirComentario("Llamada a funcion " + n.getNombreFuncion() + " (implementación simplificada)");
+		// Compilación diferida: emitir la función al final del código la primera vez que se use
+		Integer inicio = inicioFuncion.get(n.getNombreFuncion());
+		if (inicio == null) {
+			// Guardar posicion actual (sitio de llamada)
+			int posLlamada = UtGen.emitirSalto(0);
+			// Ir al final del código emitido hasta ahora
+			UtGen.restaurarRespaldo();
+			// Registrar inicio de la funcion
+			inicio = UtGen.emitirSalto(0);
+			inicioFuncion.put(n.getNombreFuncion(), inicio);
+			funcionesEmitidas.add(n.getNombreFuncion());
+			
+			// Emitir cuerpo de la función
+			NodoFuncion def = funcionesRegistradas.get(n.getNombreFuncion());
+			if (def == null) {
+				UtGen.emitirComentario("ERROR: llamada a funcion no definida: " + n.getNombreFuncion());
+			} else {
+				UtGen.emitirComentario("=== INICIO FUNCION " + def.getNombre() + " ===");
+				if (def.getCuerpo() != null) {
+					generar(def.getCuerpo());
+				}
+				UtGen.emitirComentario("Return implicito de funcion");
+				UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "funcion: recuperar direccion de retorno");
+				UtGen.emitirRM("LD", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
+				UtGen.emitirComentario("=== FIN FUNCION " + def.getNombre() + " ===");
+			}
+			// Volver al sitio de llamada y emitir el salto a la función
+			UtGen.cargarRespaldo(posLlamada);
+			UtGen.emitirRM_Abs("LDA", UtGen.PC, inicio, "call: salto a funcion " + n.getNombreFuncion());
+			// Restaurar emision al final para continuar generando el resto del programa
+			UtGen.restaurarRespaldo();
+		} else {
+			// Ya fue emitida antes: emitir solo el salto
+			UtGen.emitirRM_Abs("LDA", UtGen.PC, inicio, "call: salto a funcion " + n.getNombreFuncion());
+		}
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- llamada funcion");
 	}
@@ -330,8 +383,8 @@ public class Generador {
 			generar(n.getExpresion());
 		}
 		
-		// Restaurar frame y retornar
-		UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "return: restaurar frame");
+		// Recuperar direccion de retorno y saltar
+		UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "return: recuperar direccion de retorno");
 		UtGen.emitirRM("LD", UtGen.PC, 0, UtGen.AC1, "return: salto a direccion de retorno");
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- return");
@@ -498,12 +551,12 @@ public class Generador {
 		} else {
 			// Acceso normal a variable
 			direccion = tablaSimbolos.getDireccion(n.getNombre());
-			UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador: "+n.getNombre());
+			UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar id: val["+n.getNombre()+"]");
 		}
 		
 		if(UtGen.debug)	UtGen.emitirComentario("<- identificador");
 	}
-
+	
 	private static void generarOperacion(NodoBase nodo){
 		NodoOperacion n = (NodoOperacion) nodo;
 		if(UtGen.debug)	UtGen.emitirComentario("-> Operacion: " + n.getOperacion());
@@ -612,23 +665,12 @@ public class Generador {
 		if(UtGen.debug)	UtGen.emitirComentario("<- Operacion: " + n.getOperacion());
 	}
 	
-	//TODO: enviar preludio a archivo de salida, obtener antes su nombre
 	private static void generarPreludioEstandar(){
-		UtGen.emitirComentario("Compilacion TINY EXTENDIDO para el codigo objeto TM");
-		UtGen.emitirComentario("Archivo: programa_extendido.tiny");
-		/*Genero inicializaciones del preludio estandar*/
-		/*Todos los registros en tiny comienzan en cero*/
-		UtGen.emitirComentario("Preludio estandar:");
-		UtGen.emitirRM("LD", UtGen.MP, 0, UtGen.AC, "cargar la maxima direccion desde la localidad 0");
-		UtGen.emitirRM("ST", UtGen.AC, 0, UtGen.AC, "limpio el registro de la localidad 0");
-		
-		// Configurar el Global Pointer (GP) para que apunte al inicio del área de variables globales
-		UtGen.emitirRM("LDC", UtGen.GP, 0, 0, "GP apunta al inicio de variables globales (direccion 0)");
-		
-		// Información sobre el uso de memoria
-		if(tablaSimbolos != null){
-			int totalMemoria = tablaSimbolos.getTotalMemoriaUtilizada();
-			UtGen.emitirComentario("Total de memoria reservada para variables: " + totalMemoria + " posiciones");
-		}
+		UtGen.emitirComentario("* Compilacion TINY para la maquina TM");
+		UtGen.emitirComentario("* Prefacio estandar");
+		/* Aseguro quedar en la primer localidad de almacenamiento*/
+		UtGen.emitirRM("LD", UtGen.MP, 0, UtGen.AC, "load mp with maxaddr");
+		UtGen.emitirRM("ST", UtGen.AC, 0, UtGen.AC, "clear location 0");
+		UtGen.emitirComentario("* Fin del prefacio estandar");
 	}
 }
