@@ -438,7 +438,8 @@ public class Generador {
 			// Calcular dirección del array
 			generar(n.getIndice());
 			direccion = tablaSimbolos.getDireccion(n.getIdentificador());
-			UtGen.emitirRO("ADD", UtGen.AC, UtGen.AC, direccion, "asignacion array: calcular direccion");
+			UtGen.emitirRM("LDC", UtGen.AC1, direccion, 0, "asignacion array: cargar direccion base");
+			UtGen.emitirRO("ADD", UtGen.AC, UtGen.AC, UtGen.AC1, "asignacion array: calcular direccion");
 			
 			// Cargar valor y almacenar en la dirección calculada
 			UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "asignacion array: recuperar valor");
@@ -492,8 +493,8 @@ public class Generador {
 			// Acceso a array: arr[indice]
 			generar(n.getDesplazamiento());
 			direccion = tablaSimbolos.getDireccion(n.getNombre());
-			UtGen.emitirRO("ADD", UtGen.AC, UtGen.AC, direccion, "identificador array: calcular direccion");
-			UtGen.emitirRM("LD", UtGen.AC, 0, UtGen.AC, "identificador array: cargar valor");
+			UtGen.emitirRM("LDC", UtGen.AC1, direccion, 0, "identificador array: cargar direccion base");
+			UtGen.emitirRO("ADD", UtGen.AC, UtGen.AC, UtGen.AC1, "identificador array: calcular direccion");
 		} else {
 			// Acceso normal a variable
 			direccion = tablaSimbolos.getDireccion(n.getNombre());
