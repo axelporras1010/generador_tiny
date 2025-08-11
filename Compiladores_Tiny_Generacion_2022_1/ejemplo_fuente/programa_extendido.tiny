@@ -4,6 +4,52 @@
 global x;
 global arr : array[10];
 
+// Programa principal
+begin
+    var i;
+    var num;
+    var resultado;
+    
+    // Lectura de datos
+    read num;
+    
+    // Inicialización del vector con valores
+    for i := 0 to 9 step 1
+        arr[i] := i * 2 + 1
+    end;
+    
+    // Prueba de operadores relacionales y matemáticos
+    if num >= 0 && num <= 10 then
+        write num;
+        
+        // Operaciones matemáticas adicionales
+        if num % 2 = 0 then
+            write 1
+        else
+            write 0
+        end;
+        
+        // Prueba de potenciación
+        x := num ** 2;
+        write x
+    else
+        write 999
+    end;
+    
+    // Prueba de la función suma_vector
+    resultado := call suma_vector(arr, 10);
+    write resultado;
+    
+    // Prueba de operadores lógicos
+    if (num > 5) || (num < 0) then
+        write 1
+    end;
+    
+    if !(num != 5) then
+        write 5
+    end
+end
+
 // Función que suma elementos de un vector
 function suma_vector(v : array[], size)
 begin
@@ -15,59 +61,9 @@ begin
         if v[i] < 0 then
             continue
         end;
-        if total > 1000 then
+        if total > 200 then
             break
         end
     end;
     return total
-end
-
-// Programa principal
-begin
-    var i;
-    var num;
-    var resultado;
-    
-    // Lectura de datos
-    write "Ingrese un número: ";
-    read num;
-    
-    // Inicialización del vector con valores
-    for i := 0 to 9 step 1
-        arr[i] := i * 2 + 1
-    end;
-    
-    // Prueba de operadores relacionales y matemáticos
-    if num >= 0 && num <= 10 then
-        write "El número está en rango";
-        write num;
-        
-        // Operaciones matemáticas adicionales
-        if num % 2 = 0 then
-            write "El número es par"
-        else
-            write "El número es impar"
-        end;
-        
-        // Prueba de potenciación
-        x := num ** 2;
-        write "El cuadrado es: ";
-        write x
-    else
-        write "Número fuera de rango"
-    end;
-    
-    // Prueba de la función suma_vector
-    resultado := call suma_vector(arr, 10);
-    write "La suma del vector es: ";
-    write resultado;
-    
-    // Prueba de operadores lógicos
-    if (num > 5) || (num < 0) then
-        write "Condición compleja verdadera"
-    end;
-    
-    if !(num != 5) then
-        write "El número es 5"
-    end
 end
