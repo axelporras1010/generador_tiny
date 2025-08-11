@@ -605,10 +605,43 @@ public class Generador {
 							UtGen.emitirRO("MUL", UtGen.AC, UtGen.AC, 2, "mod: (a/b)*b");
 							UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "mod: a - (a/b)*b");
 							break;
-			case	potencia: // Implementación simplificada de potencia
-							UtGen.emitirComentario("potencia: implementación simplificada");
-							UtGen.emitirRO("MUL", UtGen.AC, UtGen.AC1, UtGen.AC, "potencia: multiplicación simple");
+			case	potencia: {
+							// AC = exponente (derecha), AC1 = base (izquierda)
+							UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "pow: guardar exp");
+							UtGen.emitirRM("ST", UtGen.AC1, desplazamientoTmp--, UtGen.MP, "pow: guardar base");
+							UtGen.emitirRM("LDC", UtGen.AC, 1, 0, "pow: inicializar resultado = 1");
+							UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "pow: guardar res");
+							int posRes = desplazamientoTmp + 1;
+							int posBase = desplazamientoTmp + 2;
+							int posExp = desplazamientoTmp + 3;
+							int loopStart = UtGen.emitirSalto(0);
+							UtGen.emitirComentario("pow: inicio bucle");
+							UtGen.emitirRM("LD", UtGen.AC, posExp, UtGen.MP, "pow: cargar exp");
+							int jmpEnd = UtGen.emitirSalto(1);
+							UtGen.emitirComentario("pow: salto condicional a fin (exp==0)");
+							// res = res * base
+							UtGen.emitirRM("LD", UtGen.AC, posRes, UtGen.MP, "pow: cargar res");
+							UtGen.emitirRM("LD", UtGen.AC1, posBase, UtGen.MP, "pow: cargar base");
+							UtGen.emitirRO("MUL", UtGen.AC, UtGen.AC1, UtGen.AC, "pow: res = res * base");
+							UtGen.emitirRM("ST", UtGen.AC, posRes, UtGen.MP, "pow: guardar res");
+							// exp = exp - 1
+							UtGen.emitirRM("LD", UtGen.AC1, posExp, UtGen.MP, "pow: cargar exp en AC1");
+							UtGen.emitirRM("LDC", UtGen.AC, 1, 0, "pow: cargar 1");
+							UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "pow: exp - 1");
+							UtGen.emitirRM("ST", UtGen.AC, posExp, UtGen.MP, "pow: guardar exp");
+							UtGen.emitirRM_Abs("LDA", UtGen.PC, loopStart, "pow: repetir");
+							int loopEnd = UtGen.emitirSalto(0);
+							UtGen.cargarRespaldo(jmpEnd);
+							UtGen.emitirRM_Abs("JEQ", UtGen.AC, loopEnd, "pow: salir si exp == 0");
+							UtGen.restaurarRespaldo();
+							// resultado final en AC
+							UtGen.emitirRM("LD", UtGen.AC, posRes, UtGen.MP, "pow: cargar resultado");
+							// limpiar pila temporal (res, base, exp)
+							UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "pow: pop res");
+							UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "pow: pop base");
+							UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "pow: pop exp");
 							break;
+						}
 			case	menor:	UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: <");
 							UtGen.emitirRM("JLT", UtGen.AC, 2, UtGen.PC, "voy dos instrucciones mas alla if verdadero (AC<0)");
 							UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "caso de falso (AC=0)");
