@@ -321,19 +321,22 @@ public class Generador {
 		NodoLlamadaFuncion n = (NodoLlamadaFuncion)nodo;
 		if(UtGen.debug) UtGen.emitirComentario("-> llamada funcion: " + n.getNombreFuncion());
 		
-		// Guardar estado actual: direccion de retorno
-		UtGen.emitirRM("ST", UtGen.PC, desplazamientoTmp--, UtGen.MP, "call: guardar direccion de retorno");
-		
-		// Procesar argumentos si existen
+		// 1) Procesar argumentos si existen (se apilan primero)
+		int numArgs = 0;
 		if(n.getArgumentos() != null){
 			UtGen.emitirComentario("Procesando argumentos de la llamada");
 			NodoBase arg = n.getArgumentos();
 			while(arg != null){
 				generar(arg);
 				UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "call: guardar argumento");
+				numArgs++;
 				arg = arg.getHermanoDerecha();
 			}
 		}
+
+		// 2) Calcular y apilar direccion de retorno: AC = PC + 2; push(AC)
+		UtGen.emitirRM("LDA", UtGen.AC, 2, UtGen.PC, "call: calcular return addr (PC+2)");
+		UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "call: push return addr");
 		
 		// Compilación diferida: emitir la función al final del código la primera vez que se use
 		Integer inicio = inicioFuncion.get(n.getNombreFuncion());
@@ -358,7 +361,7 @@ public class Generador {
 				}
 				UtGen.emitirComentario("Return implicito de funcion");
 				UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "funcion: recuperar direccion de retorno");
-				UtGen.emitirRM("LD", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
+				UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
 				UtGen.emitirComentario("=== FIN FUNCION " + def.getNombre() + " ===");
 			}
 			// Volver al sitio de llamada y emitir el salto a la función
@@ -370,6 +373,9 @@ public class Generador {
 			// Ya fue emitida antes: emitir solo el salto
 			UtGen.emitirRM_Abs("LDA", UtGen.PC, inicio, "call: salto a funcion " + n.getNombreFuncion());
 		}
+		
+		// 3) Restaurar desplazamiento temporal (limpiar argumentos en el generador)
+		desplazamientoTmp += numArgs;
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- llamada funcion");
 	}
@@ -385,7 +391,7 @@ public class Generador {
 		
 		// Recuperar direccion de retorno y saltar
 		UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "return: recuperar direccion de retorno");
-		UtGen.emitirRM("LD", UtGen.PC, 0, UtGen.AC1, "return: salto a direccion de retorno");
+		UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "return: salto a direccion de retorno");
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- return");
 	}

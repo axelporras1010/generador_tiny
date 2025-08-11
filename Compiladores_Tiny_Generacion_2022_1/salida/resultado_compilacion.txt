@@ -883,381 +883,382 @@ Variable: i -> Direccion: 14
 * <- if
 * -> asignacion
 * -> llamada funcion: suma_vector
-371:    ST        7,0(6)        call: guardar direccion de retorno
 * Procesando argumentos de la llamada
 * -> identificador
-372:    LD        0,1(5)        cargar id: val[arr]
+371:    LD        0,1(5)        cargar id: val[arr]
 * <- identificador
 * -> constante
-373:    LDC       0,10(0)       cargar constante: 10
+372:    LDC       0,10(0)       cargar constante: 10
 * <- constante
-374:    ST        0,-1(6)       call: guardar argumento
+373:    ST        0,0(6)        call: guardar argumento
 * -> constante
-375:    LDC       0,10(0)       cargar constante: 10
+374:    LDC       0,10(0)       cargar constante: 10
 * <- constante
-376:    ST        0,-2(6)       call: guardar argumento
+375:    ST        0,-1(6)       call: guardar argumento
+376:    LDA       0,1(7)        call: calcular return addr (PC+1)
+377:    ST        0,-2(6)       call: push return addr
 * === INICIO FUNCION suma_vector ===
 * -> declaracion: i
 * Declaracion de variable: i (local)
-377:    LDC       0,0(0)        local: inicializar variable i a cero
-378:    ST        0,14(5)       local: almacenar en direccion 14
+378:    LDC       0,0(0)        local: inicializar variable i a cero
+379:    ST        0,14(5)       local: almacenar en direccion 14
 * <- declaracion
 * -> declaracion: total
 * Declaracion de variable: total (local)
-379:    LDC       0,0(0)        local: inicializar variable total a cero
-380:    ST        0,15(5)       local: almacenar en direccion 15
+380:    LDC       0,0(0)        local: inicializar variable total a cero
+381:    ST        0,15(5)       local: almacenar en direccion 15
 * <- declaracion
 * -> asignacion
 * -> constante
-381:    LDC       0,0(0)        cargar constante: 0
+382:    LDC       0,0(0)        cargar constante: 0
 * <- constante
-382:    ST        0,15(5)       asignacion: almaceno el valor para el id total
+383:    ST        0,15(5)       asignacion: almaceno el valor para el id total
 * <- asignacion
 * -> for
 * -> constante
-383:    LDC       0,0(0)        cargar constante: 0
+384:    LDC       0,0(0)        cargar constante: 0
 * <- constante
-384:    ST        0,14(5)       for: inicializar variable i
+385:    ST        0,14(5)       for: inicializar variable i
 * for: inicio del bucle
-385:    LD        0,14(5)       for: cargar variable de control
-386:    ST        0,-3(6)       for: guardar variable en pila temp
+386:    LD        0,14(5)       for: cargar variable de control
+387:    ST        0,-3(6)       for: guardar variable en pila temp
 * -> Operacion: menos
 * -> identificador
-387:    LD        0,13(5)       cargar id: val[size]
+388:    LD        0,13(5)       cargar id: val[size]
 * <- identificador
-388:    ST        0,-4(6)       op: push en la pila tmp el resultado expresion izquierda
+389:    ST        0,-4(6)       op: push en la pila tmp el resultado expresion izquierda
 * -> constante
-389:    LDC       0,1(0)        cargar constante: 1
+390:    LDC       0,1(0)        cargar constante: 1
 * <- constante
-390:    LD        1,-4(6)       op: pop o cargo de la pila el valor izquierdo en AC1
-391:    SUB       0,1,0         op: -
+391:    LD        1,-4(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+392:    SUB       0,1,0         op: -
 * <- Operacion: menos
-392:    LD        1,-3(6)       for: cargar variable de pila temp
-393:    SUB       0,1,0         for: variable - valor_final
+393:    LD        1,-3(6)       for: cargar variable de pila temp
+394:    SUB       0,1,0         for: variable - valor_final
 * for: salto condicional al final
 * -> asignacion
 * -> Operacion: mas
 * -> identificador
-395:    LD        0,15(5)       cargar id: val[total]
+396:    LD        0,15(5)       cargar id: val[total]
 * <- identificador
-396:    ST        0,-3(6)       op: push en la pila tmp el resultado expresion izquierda
+397:    ST        0,-3(6)       op: push en la pila tmp el resultado expresion izquierda
 * -> identificador
 * -> identificador
-397:    LD        0,14(5)       cargar id: val[i]
+398:    LD        0,14(5)       cargar id: val[i]
 * <- identificador
-398:    LDC       1,12(0)       identificador array: cargar direccion base
-399:    ADD       0,0,1         identificador array: calcular direccion
+399:    LDC       1,12(0)       identificador array: cargar direccion base
+400:    ADD       0,0,1         identificador array: calcular direccion
 * <- identificador
-400:    LD        1,-3(6)       op: pop o cargo de la pila el valor izquierdo en AC1
-401:    ADD       0,1,0         op: +
+401:    LD        1,-3(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+402:    ADD       0,1,0         op: +
 * <- Operacion: mas
-402:    ST        0,15(5)       asignacion: almaceno el valor para el id total
+403:    ST        0,15(5)       asignacion: almaceno el valor para el id total
 * <- asignacion
 * -> if
 * -> Operacion: menor
 * -> identificador
 * -> identificador
-403:    LD        0,14(5)       cargar id: val[i]
+404:    LD        0,14(5)       cargar id: val[i]
 * <- identificador
-404:    LDC       1,12(0)       identificador array: cargar direccion base
-405:    ADD       0,0,1         identificador array: calcular direccion
+405:    LDC       1,12(0)       identificador array: cargar direccion base
+406:    ADD       0,0,1         identificador array: calcular direccion
 * <- identificador
-406:    ST        0,-3(6)       op: push en la pila tmp el resultado expresion izquierda
+407:    ST        0,-3(6)       op: push en la pila tmp el resultado expresion izquierda
 * -> constante
-407:    LDC       0,0(0)        cargar constante: 0
+408:    LDC       0,0(0)        cargar constante: 0
 * <- constante
-408:    LD        1,-3(6)       op: pop o cargo de la pila el valor izquierdo en AC1
-409:    SUB       0,1,0         op: <
-410:    JLT       0,2(7)        voy dos instrucciones mas alla if verdadero (AC<0)
-411:    LDC       0,0(0)        caso de falso (AC=0)
-412:    LDA       7,1(7)        Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)
-413:    LDC       0,1(0)        caso de verdadero (AC=1)
+409:    LD        1,-3(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+410:    SUB       0,1,0         op: <
+411:    JLT       0,2(7)        voy dos instrucciones mas alla if verdadero (AC<0)
+412:    LDC       0,0(0)        caso de falso (AC=0)
+413:    LDA       7,1(7)        Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)
+414:    LDC       0,1(0)        caso de verdadero (AC=1)
 * <- Operacion: menor
 * If: el salto hacia el else debe estar aqui
 * -> continue
 * continue: salto al incremento del bucle
 * <- continue
 * If: el salto hacia el final debe estar aqui
-414:    JEQ       0,1(7)        if: jmp hacia else
+415:    JEQ       0,1(7)        if: jmp hacia else
 * <- if
 * -> if
 * -> Operacion: mayor
 * -> identificador
-416:    LD        0,15(5)       cargar id: val[total]
+417:    LD        0,15(5)       cargar id: val[total]
 * <- identificador
-417:    ST        0,-3(6)       op: push en la pila tmp el resultado expresion izquierda
+418:    ST        0,-3(6)       op: push en la pila tmp el resultado expresion izquierda
 * -> constante
-418:    LDC       0,1000(0)      cargar constante: 1000
+419:    LDC       0,1000(0)      cargar constante: 1000
 * <- constante
-419:    LD        1,-3(6)       op: pop o cargo de la pila el valor izquierdo en AC1
-420:    SUB       0,1,0         op: >
-421:    JGT       0,2(7)        saltar si AC>0
-422:    LDC       0,0(0)        caso falso
-423:    LDA       7,1(7)        saltar caso verdadero
-424:    LDC       0,1(0)        caso verdadero
+420:    LD        1,-3(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+421:    SUB       0,1,0         op: >
+422:    JGT       0,2(7)        saltar si AC>0
+423:    LDC       0,0(0)        caso falso
+424:    LDA       7,1(7)        saltar caso verdadero
+425:    LDC       0,1(0)        caso verdadero
 * <- Operacion: mayor
 * If: el salto hacia el else debe estar aqui
 * -> break
 * break: salto al final del bucle
 * <- break
 * If: el salto hacia el final debe estar aqui
-425:    JEQ       0,1(7)        if: jmp hacia else
+426:    JEQ       0,1(7)        if: jmp hacia else
 * <- if
 * for: punto de continue
-427:    LD        0,14(5)       for: cargar variable para incremento
-428:    ST        0,-3(6)       for: guardar variable en pila temp
+428:    LD        0,14(5)       for: cargar variable para incremento
+429:    ST        0,-3(6)       for: guardar variable en pila temp
 * -> constante
-429:    LDC       0,1(0)        cargar constante: 1
+430:    LDC       0,1(0)        cargar constante: 1
 * <- constante
-430:    LD        1,-3(6)       for: cargar variable de pila temp
-431:    ADD       0,1,0         for: incrementar variable
-432:    ST        0,14(5)       for: guardar variable incrementada
-433:    LDA       7,-49(7)      for: salto al inicio
+431:    LD        1,-3(6)       for: cargar variable de pila temp
+432:    ADD       0,1,0         for: incrementar variable
+433:    ST        0,14(5)       for: guardar variable incrementada
+434:    LDA       7,-49(7)      for: salto al inicio
 * for: fin del bucle
-394:    JGT       0,39(7)       for: saltar si variable > final
+395:    JGT       0,39(7)       for: saltar si variable > final
 * <- for
 * -> return
 * -> identificador
-434:    LD        0,15(5)       cargar id: val[total]
+435:    LD        0,15(5)       cargar id: val[total]
 * <- identificador
-435:    LD        1,-2(6)       return: recuperar direccion de retorno
-436:    LD        7,0(1)        return: salto a direccion de retorno
+436:    LD        1,-2(6)       return: recuperar direccion de retorno
+437:    LDA       7,0(1)        return: salto a direccion de retorno
 * <- return
 * Return implicito de funcion
-437:    LD        1,-1(6)       funcion: recuperar direccion de retorno
-438:    LD        7,0(1)        funcion: retorno
+438:    LD        1,-1(6)       funcion: recuperar direccion de retorno
+439:    LDA       7,0(1)        funcion: retorno
 * === FIN FUNCION suma_vector ===
-377:    LDA       7,-1(7)       call: salto a funcion suma_vector
+378:    LDA       7,-1(7)       call: salto a funcion suma_vector
 * <- llamada funcion
-439:    ST        0,17(5)       asignacion: almaceno el valor para el id resultado
+440:    ST        0,17(5)       asignacion: almaceno el valor para el id resultado
 * <- asignacion
 * -> escribir
 * -> string
 * String: "La suma del vector es: "
-440:    LDC       0,76(0)       string: cargar caracter 'L'
-441:    OUT       0,0,0         string: escribir caracter
-442:    LDC       0,97(0)       string: cargar caracter 'a'
-443:    OUT       0,0,0         string: escribir caracter
-444:    LDC       0,32(0)       string: cargar caracter ' '
-445:    OUT       0,0,0         string: escribir caracter
-446:    LDC       0,115(0)      string: cargar caracter 's'
-447:    OUT       0,0,0         string: escribir caracter
-448:    LDC       0,117(0)      string: cargar caracter 'u'
-449:    OUT       0,0,0         string: escribir caracter
-450:    LDC       0,109(0)      string: cargar caracter 'm'
-451:    OUT       0,0,0         string: escribir caracter
-452:    LDC       0,97(0)       string: cargar caracter 'a'
-453:    OUT       0,0,0         string: escribir caracter
-454:    LDC       0,32(0)       string: cargar caracter ' '
-455:    OUT       0,0,0         string: escribir caracter
-456:    LDC       0,100(0)      string: cargar caracter 'd'
-457:    OUT       0,0,0         string: escribir caracter
-458:    LDC       0,101(0)      string: cargar caracter 'e'
-459:    OUT       0,0,0         string: escribir caracter
-460:    LDC       0,108(0)      string: cargar caracter 'l'
-461:    OUT       0,0,0         string: escribir caracter
-462:    LDC       0,32(0)       string: cargar caracter ' '
-463:    OUT       0,0,0         string: escribir caracter
-464:    LDC       0,118(0)      string: cargar caracter 'v'
-465:    OUT       0,0,0         string: escribir caracter
-466:    LDC       0,101(0)      string: cargar caracter 'e'
-467:    OUT       0,0,0         string: escribir caracter
-468:    LDC       0,99(0)       string: cargar caracter 'c'
-469:    OUT       0,0,0         string: escribir caracter
-470:    LDC       0,116(0)      string: cargar caracter 't'
-471:    OUT       0,0,0         string: escribir caracter
-472:    LDC       0,111(0)      string: cargar caracter 'o'
-473:    OUT       0,0,0         string: escribir caracter
-474:    LDC       0,114(0)      string: cargar caracter 'r'
-475:    OUT       0,0,0         string: escribir caracter
-476:    LDC       0,32(0)       string: cargar caracter ' '
-477:    OUT       0,0,0         string: escribir caracter
-478:    LDC       0,101(0)      string: cargar caracter 'e'
-479:    OUT       0,0,0         string: escribir caracter
-480:    LDC       0,115(0)      string: cargar caracter 's'
-481:    OUT       0,0,0         string: escribir caracter
-482:    LDC       0,58(0)       string: cargar caracter ':'
-483:    OUT       0,0,0         string: escribir caracter
-484:    LDC       0,32(0)       string: cargar caracter ' '
-485:    OUT       0,0,0         string: escribir caracter
+441:    LDC       0,76(0)       string: cargar caracter 'L'
+442:    OUT       0,0,0         string: escribir caracter
+443:    LDC       0,97(0)       string: cargar caracter 'a'
+444:    OUT       0,0,0         string: escribir caracter
+445:    LDC       0,32(0)       string: cargar caracter ' '
+446:    OUT       0,0,0         string: escribir caracter
+447:    LDC       0,115(0)      string: cargar caracter 's'
+448:    OUT       0,0,0         string: escribir caracter
+449:    LDC       0,117(0)      string: cargar caracter 'u'
+450:    OUT       0,0,0         string: escribir caracter
+451:    LDC       0,109(0)      string: cargar caracter 'm'
+452:    OUT       0,0,0         string: escribir caracter
+453:    LDC       0,97(0)       string: cargar caracter 'a'
+454:    OUT       0,0,0         string: escribir caracter
+455:    LDC       0,32(0)       string: cargar caracter ' '
+456:    OUT       0,0,0         string: escribir caracter
+457:    LDC       0,100(0)      string: cargar caracter 'd'
+458:    OUT       0,0,0         string: escribir caracter
+459:    LDC       0,101(0)      string: cargar caracter 'e'
+460:    OUT       0,0,0         string: escribir caracter
+461:    LDC       0,108(0)      string: cargar caracter 'l'
+462:    OUT       0,0,0         string: escribir caracter
+463:    LDC       0,32(0)       string: cargar caracter ' '
+464:    OUT       0,0,0         string: escribir caracter
+465:    LDC       0,118(0)      string: cargar caracter 'v'
+466:    OUT       0,0,0         string: escribir caracter
+467:    LDC       0,101(0)      string: cargar caracter 'e'
+468:    OUT       0,0,0         string: escribir caracter
+469:    LDC       0,99(0)       string: cargar caracter 'c'
+470:    OUT       0,0,0         string: escribir caracter
+471:    LDC       0,116(0)      string: cargar caracter 't'
+472:    OUT       0,0,0         string: escribir caracter
+473:    LDC       0,111(0)      string: cargar caracter 'o'
+474:    OUT       0,0,0         string: escribir caracter
+475:    LDC       0,114(0)      string: cargar caracter 'r'
+476:    OUT       0,0,0         string: escribir caracter
+477:    LDC       0,32(0)       string: cargar caracter ' '
+478:    OUT       0,0,0         string: escribir caracter
+479:    LDC       0,101(0)      string: cargar caracter 'e'
+480:    OUT       0,0,0         string: escribir caracter
+481:    LDC       0,115(0)      string: cargar caracter 's'
+482:    OUT       0,0,0         string: escribir caracter
+483:    LDC       0,58(0)       string: cargar caracter ':'
+484:    OUT       0,0,0         string: escribir caracter
+485:    LDC       0,32(0)       string: cargar caracter ' '
+486:    OUT       0,0,0         string: escribir caracter
 * <- string
-486:    OUT       0,0,0         escribir: genero la salida de la expresion
+487:    OUT       0,0,0         escribir: genero la salida de la expresion
 * <- escribir
 * -> escribir
 * -> identificador
-487:    LD        0,17(5)       cargar id: val[resultado]
+488:    LD        0,17(5)       cargar id: val[resultado]
 * <- identificador
-488:    OUT       0,0,0         escribir: genero la salida de la expresion
+489:    OUT       0,0,0         escribir: genero la salida de la expresion
 * <- escribir
 * -> if
 * -> Operacion: or
 * -> Operacion: mayor
 * -> identificador
-489:    LD        0,16(5)       cargar id: val[num]
+490:    LD        0,16(5)       cargar id: val[num]
 * <- identificador
-490:    ST        0,-1(6)       op: push en la pila tmp el resultado expresion izquierda
+491:    ST        0,-1(6)       op: push en la pila tmp el resultado expresion izquierda
 * -> constante
-491:    LDC       0,5(0)        cargar constante: 5
+492:    LDC       0,5(0)        cargar constante: 5
 * <- constante
-492:    LD        1,-1(6)       op: pop o cargo de la pila el valor izquierdo en AC1
-493:    SUB       0,1,0         op: >
-494:    JGT       0,2(7)        saltar si AC>0
-495:    LDC       0,0(0)        caso falso
-496:    LDA       7,1(7)        saltar caso verdadero
-497:    LDC       0,1(0)        caso verdadero
+493:    LD        1,-1(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+494:    SUB       0,1,0         op: >
+495:    JGT       0,2(7)        saltar si AC>0
+496:    LDC       0,0(0)        caso falso
+497:    LDA       7,1(7)        saltar caso verdadero
+498:    LDC       0,1(0)        caso verdadero
 * <- Operacion: mayor
-498:    ST        0,-1(6)       op: push en la pila tmp el resultado expresion izquierda
+499:    ST        0,-1(6)       op: push en la pila tmp el resultado expresion izquierda
 * -> Operacion: menor
 * -> identificador
-499:    LD        0,16(5)       cargar id: val[num]
+500:    LD        0,16(5)       cargar id: val[num]
 * <- identificador
-500:    ST        0,-2(6)       op: push en la pila tmp el resultado expresion izquierda
+501:    ST        0,-2(6)       op: push en la pila tmp el resultado expresion izquierda
 * -> constante
-501:    LDC       0,0(0)        cargar constante: 0
+502:    LDC       0,0(0)        cargar constante: 0
 * <- constante
-502:    LD        1,-2(6)       op: pop o cargo de la pila el valor izquierdo en AC1
-503:    SUB       0,1,0         op: <
-504:    JLT       0,2(7)        voy dos instrucciones mas alla if verdadero (AC<0)
-505:    LDC       0,0(0)        caso de falso (AC=0)
-506:    LDA       7,1(7)        Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)
-507:    LDC       0,1(0)        caso de verdadero (AC=1)
+503:    LD        1,-2(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+504:    SUB       0,1,0         op: <
+505:    JLT       0,2(7)        voy dos instrucciones mas alla if verdadero (AC<0)
+506:    LDC       0,0(0)        caso de falso (AC=0)
+507:    LDA       7,1(7)        Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)
+508:    LDC       0,1(0)        caso de verdadero (AC=1)
 * <- Operacion: menor
-508:    LD        1,-1(6)       op: pop o cargo de la pila el valor izquierdo en AC1
-509:    JNE       1,3(7)        or: si izquierdo es verdadero, resultado es verdadero
-510:    JNE       0,2(7)        or: si derecho es verdadero, resultado es verdadero
-511:    LDC       0,0(0)        or: ambos falsos
-512:    LDA       7,1(7)        or: saltar caso verdadero
-513:    LDC       0,1(0)        or: resultado verdadero
+509:    LD        1,-1(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+510:    JNE       1,3(7)        or: si izquierdo es verdadero, resultado es verdadero
+511:    JNE       0,2(7)        or: si derecho es verdadero, resultado es verdadero
+512:    LDC       0,0(0)        or: ambos falsos
+513:    LDA       7,1(7)        or: saltar caso verdadero
+514:    LDC       0,1(0)        or: resultado verdadero
 * <- Operacion: or
 * If: el salto hacia el else debe estar aqui
 * -> escribir
 * -> string
 * String: "Condición compleja verdadera"
-515:    LDC       0,67(0)       string: cargar caracter 'C'
-516:    OUT       0,0,0         string: escribir caracter
-517:    LDC       0,111(0)      string: cargar caracter 'o'
-518:    OUT       0,0,0         string: escribir caracter
-519:    LDC       0,110(0)      string: cargar caracter 'n'
-520:    OUT       0,0,0         string: escribir caracter
-521:    LDC       0,100(0)      string: cargar caracter 'd'
-522:    OUT       0,0,0         string: escribir caracter
-523:    LDC       0,105(0)      string: cargar caracter 'i'
-524:    OUT       0,0,0         string: escribir caracter
-525:    LDC       0,99(0)       string: cargar caracter 'c'
-526:    OUT       0,0,0         string: escribir caracter
-527:    LDC       0,105(0)      string: cargar caracter 'i'
-528:    OUT       0,0,0         string: escribir caracter
-529:    LDC       0,243(0)      string: cargar caracter 'ó'
-530:    OUT       0,0,0         string: escribir caracter
-531:    LDC       0,110(0)      string: cargar caracter 'n'
-532:    OUT       0,0,0         string: escribir caracter
-533:    LDC       0,32(0)       string: cargar caracter ' '
-534:    OUT       0,0,0         string: escribir caracter
-535:    LDC       0,99(0)       string: cargar caracter 'c'
-536:    OUT       0,0,0         string: escribir caracter
-537:    LDC       0,111(0)      string: cargar caracter 'o'
-538:    OUT       0,0,0         string: escribir caracter
-539:    LDC       0,109(0)      string: cargar caracter 'm'
-540:    OUT       0,0,0         string: escribir caracter
-541:    LDC       0,112(0)      string: cargar caracter 'p'
-542:    OUT       0,0,0         string: escribir caracter
-543:    LDC       0,108(0)      string: cargar caracter 'l'
-544:    OUT       0,0,0         string: escribir caracter
-545:    LDC       0,101(0)      string: cargar caracter 'e'
-546:    OUT       0,0,0         string: escribir caracter
-547:    LDC       0,106(0)      string: cargar caracter 'j'
-548:    OUT       0,0,0         string: escribir caracter
-549:    LDC       0,97(0)       string: cargar caracter 'a'
-550:    OUT       0,0,0         string: escribir caracter
-551:    LDC       0,32(0)       string: cargar caracter ' '
-552:    OUT       0,0,0         string: escribir caracter
-553:    LDC       0,118(0)      string: cargar caracter 'v'
-554:    OUT       0,0,0         string: escribir caracter
-555:    LDC       0,101(0)      string: cargar caracter 'e'
-556:    OUT       0,0,0         string: escribir caracter
-557:    LDC       0,114(0)      string: cargar caracter 'r'
-558:    OUT       0,0,0         string: escribir caracter
-559:    LDC       0,100(0)      string: cargar caracter 'd'
-560:    OUT       0,0,0         string: escribir caracter
-561:    LDC       0,97(0)       string: cargar caracter 'a'
-562:    OUT       0,0,0         string: escribir caracter
-563:    LDC       0,100(0)      string: cargar caracter 'd'
-564:    OUT       0,0,0         string: escribir caracter
-565:    LDC       0,101(0)      string: cargar caracter 'e'
-566:    OUT       0,0,0         string: escribir caracter
-567:    LDC       0,114(0)      string: cargar caracter 'r'
-568:    OUT       0,0,0         string: escribir caracter
-569:    LDC       0,97(0)       string: cargar caracter 'a'
-570:    OUT       0,0,0         string: escribir caracter
+516:    LDC       0,67(0)       string: cargar caracter 'C'
+517:    OUT       0,0,0         string: escribir caracter
+518:    LDC       0,111(0)      string: cargar caracter 'o'
+519:    OUT       0,0,0         string: escribir caracter
+520:    LDC       0,110(0)      string: cargar caracter 'n'
+521:    OUT       0,0,0         string: escribir caracter
+522:    LDC       0,100(0)      string: cargar caracter 'd'
+523:    OUT       0,0,0         string: escribir caracter
+524:    LDC       0,105(0)      string: cargar caracter 'i'
+525:    OUT       0,0,0         string: escribir caracter
+526:    LDC       0,99(0)       string: cargar caracter 'c'
+527:    OUT       0,0,0         string: escribir caracter
+528:    LDC       0,105(0)      string: cargar caracter 'i'
+529:    OUT       0,0,0         string: escribir caracter
+530:    LDC       0,243(0)      string: cargar caracter 'ó'
+531:    OUT       0,0,0         string: escribir caracter
+532:    LDC       0,110(0)      string: cargar caracter 'n'
+533:    OUT       0,0,0         string: escribir caracter
+534:    LDC       0,32(0)       string: cargar caracter ' '
+535:    OUT       0,0,0         string: escribir caracter
+536:    LDC       0,99(0)       string: cargar caracter 'c'
+537:    OUT       0,0,0         string: escribir caracter
+538:    LDC       0,111(0)      string: cargar caracter 'o'
+539:    OUT       0,0,0         string: escribir caracter
+540:    LDC       0,109(0)      string: cargar caracter 'm'
+541:    OUT       0,0,0         string: escribir caracter
+542:    LDC       0,112(0)      string: cargar caracter 'p'
+543:    OUT       0,0,0         string: escribir caracter
+544:    LDC       0,108(0)      string: cargar caracter 'l'
+545:    OUT       0,0,0         string: escribir caracter
+546:    LDC       0,101(0)      string: cargar caracter 'e'
+547:    OUT       0,0,0         string: escribir caracter
+548:    LDC       0,106(0)      string: cargar caracter 'j'
+549:    OUT       0,0,0         string: escribir caracter
+550:    LDC       0,97(0)       string: cargar caracter 'a'
+551:    OUT       0,0,0         string: escribir caracter
+552:    LDC       0,32(0)       string: cargar caracter ' '
+553:    OUT       0,0,0         string: escribir caracter
+554:    LDC       0,118(0)      string: cargar caracter 'v'
+555:    OUT       0,0,0         string: escribir caracter
+556:    LDC       0,101(0)      string: cargar caracter 'e'
+557:    OUT       0,0,0         string: escribir caracter
+558:    LDC       0,114(0)      string: cargar caracter 'r'
+559:    OUT       0,0,0         string: escribir caracter
+560:    LDC       0,100(0)      string: cargar caracter 'd'
+561:    OUT       0,0,0         string: escribir caracter
+562:    LDC       0,97(0)       string: cargar caracter 'a'
+563:    OUT       0,0,0         string: escribir caracter
+564:    LDC       0,100(0)      string: cargar caracter 'd'
+565:    OUT       0,0,0         string: escribir caracter
+566:    LDC       0,101(0)      string: cargar caracter 'e'
+567:    OUT       0,0,0         string: escribir caracter
+568:    LDC       0,114(0)      string: cargar caracter 'r'
+569:    OUT       0,0,0         string: escribir caracter
+570:    LDC       0,97(0)       string: cargar caracter 'a'
+571:    OUT       0,0,0         string: escribir caracter
 * <- string
-571:    OUT       0,0,0         escribir: genero la salida de la expresion
+572:    OUT       0,0,0         escribir: genero la salida de la expresion
 * <- escribir
 * If: el salto hacia el final debe estar aqui
-514:    JEQ       0,58(7)       if: jmp hacia else
+515:    JEQ       0,58(7)       if: jmp hacia else
 * <- if
 * -> if
 * -> Operacion: not
 * -> Operacion: diferente
 * -> identificador
-573:    LD        0,16(5)       cargar id: val[num]
+574:    LD        0,16(5)       cargar id: val[num]
 * <- identificador
-574:    ST        0,-1(6)       op: push en la pila tmp el resultado expresion izquierda
+575:    ST        0,-1(6)       op: push en la pila tmp el resultado expresion izquierda
 * -> constante
-575:    LDC       0,5(0)        cargar constante: 5
+576:    LDC       0,5(0)        cargar constante: 5
 * <- constante
-576:    LD        1,-1(6)       op: pop o cargo de la pila el valor izquierdo en AC1
-577:    SUB       0,1,0         op: !=
-578:    JNE       0,2(7)        saltar si AC!=0
-579:    LDC       0,0(0)        caso falso
-580:    LDA       7,1(7)        saltar caso verdadero
-581:    LDC       0,1(0)        caso verdadero
+577:    LD        1,-1(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+578:    SUB       0,1,0         op: !=
+579:    JNE       0,2(7)        saltar si AC!=0
+580:    LDC       0,0(0)        caso falso
+581:    LDA       7,1(7)        saltar caso verdadero
+582:    LDC       0,1(0)        caso verdadero
 * <- Operacion: diferente
-582:    JEQ       0,2(7)        not: saltar si es cero (falso)
-583:    LDC       0,0(0)        not: resultado falso
-584:    LDA       7,1(7)        not: saltar carga de verdadero
-585:    LDC       0,1(0)        not: resultado verdadero
+583:    JEQ       0,2(7)        not: saltar si es cero (falso)
+584:    LDC       0,0(0)        not: resultado falso
+585:    LDA       7,1(7)        not: saltar carga de verdadero
+586:    LDC       0,1(0)        not: resultado verdadero
 * <- Operacion: not
 * If: el salto hacia el else debe estar aqui
 * -> escribir
 * -> string
 * String: "El número es 5"
-587:    LDC       0,69(0)       string: cargar caracter 'E'
-588:    OUT       0,0,0         string: escribir caracter
-589:    LDC       0,108(0)      string: cargar caracter 'l'
-590:    OUT       0,0,0         string: escribir caracter
-591:    LDC       0,32(0)       string: cargar caracter ' '
-592:    OUT       0,0,0         string: escribir caracter
-593:    LDC       0,110(0)      string: cargar caracter 'n'
-594:    OUT       0,0,0         string: escribir caracter
-595:    LDC       0,250(0)      string: cargar caracter 'ú'
-596:    OUT       0,0,0         string: escribir caracter
-597:    LDC       0,109(0)      string: cargar caracter 'm'
-598:    OUT       0,0,0         string: escribir caracter
-599:    LDC       0,101(0)      string: cargar caracter 'e'
-600:    OUT       0,0,0         string: escribir caracter
-601:    LDC       0,114(0)      string: cargar caracter 'r'
-602:    OUT       0,0,0         string: escribir caracter
-603:    LDC       0,111(0)      string: cargar caracter 'o'
-604:    OUT       0,0,0         string: escribir caracter
-605:    LDC       0,32(0)       string: cargar caracter ' '
-606:    OUT       0,0,0         string: escribir caracter
-607:    LDC       0,101(0)      string: cargar caracter 'e'
-608:    OUT       0,0,0         string: escribir caracter
-609:    LDC       0,115(0)      string: cargar caracter 's'
-610:    OUT       0,0,0         string: escribir caracter
-611:    LDC       0,32(0)       string: cargar caracter ' '
-612:    OUT       0,0,0         string: escribir caracter
-613:    LDC       0,53(0)       string: cargar caracter '5'
-614:    OUT       0,0,0         string: escribir caracter
+588:    LDC       0,69(0)       string: cargar caracter 'E'
+589:    OUT       0,0,0         string: escribir caracter
+590:    LDC       0,108(0)      string: cargar caracter 'l'
+591:    OUT       0,0,0         string: escribir caracter
+592:    LDC       0,32(0)       string: cargar caracter ' '
+593:    OUT       0,0,0         string: escribir caracter
+594:    LDC       0,110(0)      string: cargar caracter 'n'
+595:    OUT       0,0,0         string: escribir caracter
+596:    LDC       0,250(0)      string: cargar caracter 'ú'
+597:    OUT       0,0,0         string: escribir caracter
+598:    LDC       0,109(0)      string: cargar caracter 'm'
+599:    OUT       0,0,0         string: escribir caracter
+600:    LDC       0,101(0)      string: cargar caracter 'e'
+601:    OUT       0,0,0         string: escribir caracter
+602:    LDC       0,114(0)      string: cargar caracter 'r'
+603:    OUT       0,0,0         string: escribir caracter
+604:    LDC       0,111(0)      string: cargar caracter 'o'
+605:    OUT       0,0,0         string: escribir caracter
+606:    LDC       0,32(0)       string: cargar caracter ' '
+607:    OUT       0,0,0         string: escribir caracter
+608:    LDC       0,101(0)      string: cargar caracter 'e'
+609:    OUT       0,0,0         string: escribir caracter
+610:    LDC       0,115(0)      string: cargar caracter 's'
+611:    OUT       0,0,0         string: escribir caracter
+612:    LDC       0,32(0)       string: cargar caracter ' '
+613:    OUT       0,0,0         string: escribir caracter
+614:    LDC       0,53(0)       string: cargar caracter '5'
+615:    OUT       0,0,0         string: escribir caracter
 * <- string
-615:    OUT       0,0,0         escribir: genero la salida de la expresion
+616:    OUT       0,0,0         escribir: genero la salida de la expresion
 * <- escribir
 * If: el salto hacia el final debe estar aqui
-586:    JEQ       0,30(7)       if: jmp hacia else
+587:    JEQ       0,30(7)       if: jmp hacia else
 * <- if
 * <- programa
 * Fin de la ejecucion.
-617:    HALT      0,0,0         
+618:    HALT      0,0,0         
 
 
 ------ FIN DEL CODIGO OBJETO DEL LENGUAJE TINY GENERADO PARA LA TM ------
