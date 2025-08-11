@@ -895,7 +895,7 @@ Variable: i -> Direccion: 14
 374:    LDC       0,10(0)       cargar constante: 10
 * <- constante
 375:    ST        0,-1(6)       call: guardar argumento
-376:    LDA       0,1(7)        call: calcular return addr (PC+1)
+376:    LDA       0,3(7)        call: calcular return addr (PC+3)
 377:    ST        0,-2(6)       call: push return addr
 * === INICIO FUNCION suma_vector ===
 * -> declaracion: i
@@ -1096,34 +1096,34 @@ Variable: i -> Direccion: 14
 * -> identificador
 490:    LD        0,16(5)       cargar id: val[num]
 * <- identificador
-491:    ST        0,-1(6)       op: push en la pila tmp el resultado expresion izquierda
+491:    ST        0,1(6)        op: push en la pila tmp el resultado expresion izquierda
 * -> constante
 492:    LDC       0,5(0)        cargar constante: 5
 * <- constante
-493:    LD        1,-1(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+493:    LD        1,1(6)        op: pop o cargo de la pila el valor izquierdo en AC1
 494:    SUB       0,1,0         op: >
 495:    JGT       0,2(7)        saltar si AC>0
 496:    LDC       0,0(0)        caso falso
 497:    LDA       7,1(7)        saltar caso verdadero
 498:    LDC       0,1(0)        caso verdadero
 * <- Operacion: mayor
-499:    ST        0,-1(6)       op: push en la pila tmp el resultado expresion izquierda
+499:    ST        0,1(6)        op: push en la pila tmp el resultado expresion izquierda
 * -> Operacion: menor
 * -> identificador
 500:    LD        0,16(5)       cargar id: val[num]
 * <- identificador
-501:    ST        0,-2(6)       op: push en la pila tmp el resultado expresion izquierda
+501:    ST        0,0(6)        op: push en la pila tmp el resultado expresion izquierda
 * -> constante
 502:    LDC       0,0(0)        cargar constante: 0
 * <- constante
-503:    LD        1,-2(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+503:    LD        1,0(6)        op: pop o cargo de la pila el valor izquierdo en AC1
 504:    SUB       0,1,0         op: <
 505:    JLT       0,2(7)        voy dos instrucciones mas alla if verdadero (AC<0)
 506:    LDC       0,0(0)        caso de falso (AC=0)
 507:    LDA       7,1(7)        Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)
 508:    LDC       0,1(0)        caso de verdadero (AC=1)
 * <- Operacion: menor
-509:    LD        1,-1(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+509:    LD        1,1(6)        op: pop o cargo de la pila el valor izquierdo en AC1
 510:    JNE       1,3(7)        or: si izquierdo es verdadero, resultado es verdadero
 511:    JNE       0,2(7)        or: si derecho es verdadero, resultado es verdadero
 512:    LDC       0,0(0)        or: ambos falsos
@@ -1202,11 +1202,11 @@ Variable: i -> Direccion: 14
 * -> identificador
 574:    LD        0,16(5)       cargar id: val[num]
 * <- identificador
-575:    ST        0,-1(6)       op: push en la pila tmp el resultado expresion izquierda
+575:    ST        0,1(6)        op: push en la pila tmp el resultado expresion izquierda
 * -> constante
 576:    LDC       0,5(0)        cargar constante: 5
 * <- constante
-577:    LD        1,-1(6)       op: pop o cargo de la pila el valor izquierdo en AC1
+577:    LD        1,1(6)        op: pop o cargo de la pila el valor izquierdo en AC1
 578:    SUB       0,1,0         op: !=
 579:    JNE       0,2(7)        saltar si AC!=0
 580:    LDC       0,0(0)        caso falso

@@ -334,8 +334,9 @@ public class Generador {
 			}
 		}
 
-		// 2) Calcular y apilar direccion de retorno: AC = PC + 2; push(AC)
-		UtGen.emitirRM("LDA", UtGen.AC, 2, UtGen.PC, "call: calcular return addr (PC+2)");
+		// 2) Calcular y apilar direccion de retorno: AC = PC + 3; push(AC)
+		// i: LDA AC,(PC+3); i+1: ST AC,...; i+2: LDA PC,func -> retornar a i+3
+		UtGen.emitirRM("LDA", UtGen.AC, 3, UtGen.PC, "call: calcular return addr (PC+3)");
 		UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "call: push return addr");
 		
 		// Compilación diferida: emitir la función al final del código la primera vez que se use
