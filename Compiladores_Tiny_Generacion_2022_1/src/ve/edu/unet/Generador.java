@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 
 public class Generador {
 	/* Ilustracion de la disposicion de la memoria en
@@ -49,6 +53,9 @@ public class Generador {
     private static final Map<String, NodoFuncion> funcionesRegistradas = new HashMap<>();
     private static final Map<String, Integer> inicioFuncion = new HashMap<>();
     private static final Set<String> funcionesEmitidas = new HashSet<>();
+
+    // Pila de nombres de parámetros que son arrays por función activa
+    private static final Deque<Set<String>> pilaParametrosArray = new ArrayDeque<>();
 	
 	public static void setTablaSimbolos(TablaSimbolos tabla){
 		tablaSimbolos = tabla;
@@ -376,6 +383,12 @@ public class Generador {
 			
 			// Emitir prólogo de función: copiar argumentos a parámetros y fijar RA en 0(MP)
 			if (defFuncion != null && !paramsOrden.isEmpty()) {
+				// Registrar parámetros array para uso durante el cuerpo
+				Set<String> nombresArray = new HashSet<>();
+				for (NodoDeclaracion pd : paramsOrden) {
+					if (pd.isEsArray()) nombresArray.add(pd.getNombreVariable());
+				}
+				pilaParametrosArray.push(nombresArray);
 				// Mover direccion de retorno a 0(MP)
 				UtGen.emitirRM("LD", UtGen.AC1, -numArgs, UtGen.MP, "prologo: cargar RA de -(numArgs)(MP)");
 				UtGen.emitirRM("ST", UtGen.AC1, 0, UtGen.MP, "prologo: colocar RA en 0(MP)");
@@ -401,6 +414,8 @@ public class Generador {
 				UtGen.emitirRM("LD", UtGen.AC1, 0, UtGen.MP, "funcion: recuperar direccion de retorno");
 				UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
 				UtGen.emitirComentario("=== FIN FUNCION " + def.getNombre() + " ===");
+				// Salir del contexto de parámetros array
+				if (!pilaParametrosArray.isEmpty()) pilaParametrosArray.pop();
 			}
 			// Volver al sitio de llamada y emitir el salto a la función
 			UtGen.cargarRespaldo(posLlamada);
@@ -590,7 +605,13 @@ public class Generador {
 			// Acceso a array: arr[indice]
 			generar(n.getDesplazamiento());
 			direccion = tablaSimbolos.getDireccion(n.getNombre());
-			UtGen.emitirRM("LDC", UtGen.AC1, direccion, 0, "identificador array: cargar direccion base");
+			// Si es un parámetro array en la función actual, cargar base desde su slot (puntero)
+			boolean esParamArray = !pilaParametrosArray.isEmpty() && pilaParametrosArray.peek().contains(n.getNombre());
+			if (esParamArray) {
+				UtGen.emitirRM("LD", UtGen.AC1, direccion, UtGen.GP, "identificador array(param): cargar base desde GP");
+			} else {
+				UtGen.emitirRM("LDC", UtGen.AC1, direccion, 0, "identificador array: cargar direccion base");
+			}
 			UtGen.emitirRO("ADD", UtGen.AC, UtGen.AC, UtGen.AC1, "identificador array: calcular direccion");
 		} else {
 			// Acceso normal a variable
