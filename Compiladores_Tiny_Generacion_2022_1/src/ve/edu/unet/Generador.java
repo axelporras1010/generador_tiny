@@ -323,13 +323,36 @@ public class Generador {
 		
 		// 1) Procesar argumentos si existen (se apilan primero)
 		int numArgs = 0;
+		NodoFuncion defFuncion = funcionesRegistradas.get(n.getNombreFuncion());
+		java.util.List<NodoDeclaracion> paramsOrden = new java.util.ArrayList<>();
+		if (defFuncion != null && defFuncion.getParametros() != null) {
+			NodoBase p = defFuncion.getParametros();
+			while (p != null) {
+				if (p instanceof NodoDeclaracion) paramsOrden.add((NodoDeclaracion)p);
+				p = p.getHermanoDerecha();
+			}
+		}
 		if(n.getArgumentos() != null){
 			UtGen.emitirComentario("Procesando argumentos de la llamada");
 			NodoBase arg = n.getArgumentos();
+			int idx = 0;
 			while(arg != null){
-				generar(arg);
+				// Si el parametro esperado es array, pasar la base (direccion) del array
+				boolean pasarBaseArray = false;
+				if (idx < paramsOrden.size()) {
+					NodoDeclaracion pd = paramsOrden.get(idx);
+					pasarBaseArray = pd.isEsArray();
+				}
+				if (pasarBaseArray && arg instanceof NodoIdentificador) {
+					String nombreArg = ((NodoIdentificador)arg).getNombre();
+					int base = tablaSimbolos.getDireccion(nombreArg);
+					UtGen.emitirRM("LDC", UtGen.AC, base, 0, "call: base addr de array " + nombreArg);
+				} else {
+					generar(arg);
+				}
 				UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "call: guardar argumento");
 				numArgs++;
+				idx++;
 				arg = arg.getHermanoDerecha();
 			}
 		}
@@ -342,8 +365,8 @@ public class Generador {
 		// Compilación diferida: emitir la función al final del código la primera vez que se use
 		Integer inicio = inicioFuncion.get(n.getNombreFuncion());
 		if (inicio == null) {
-			// Guardar posicion actual (sitio de llamada)
-			int posLlamada = UtGen.emitirSalto(0);
+			// Guardar posicion actual (sitio de llamada) dejando UN hueco para la instruccion de salto
+			int posLlamada = UtGen.emitirSalto(1);
 			// Ir al final del código emitido hasta ahora
 			UtGen.restaurarRespaldo();
 			// Registrar inicio de la funcion
@@ -351,6 +374,20 @@ public class Generador {
 			inicioFuncion.put(n.getNombreFuncion(), inicio);
 			funcionesEmitidas.add(n.getNombreFuncion());
 			
+			// Emitir prólogo de función: copiar argumentos a parámetros y fijar RA en 0(MP)
+			if (defFuncion != null && !paramsOrden.isEmpty()) {
+				// Mover direccion de retorno a 0(MP)
+				UtGen.emitirRM("LD", UtGen.AC1, -numArgs, UtGen.MP, "prologo: cargar RA de -(numArgs)(MP)");
+				UtGen.emitirRM("ST", UtGen.AC1, 0, UtGen.MP, "prologo: colocar RA en 0(MP)");
+				// Copiar cada argumento a su slot en GP
+				for (int i = 0; i < paramsOrden.size(); i++) {
+					NodoDeclaracion pd = paramsOrden.get(i);
+					int dirParam = tablaSimbolos.getDireccion(pd.getNombreVariable());
+					int off = -i; // primer arg en 0(MP), segundo en -1(MP), etc.
+					UtGen.emitirRM("LD", UtGen.AC, off, UtGen.MP, "prologo: cargar arg " + pd.getNombreVariable());
+					UtGen.emitirRM("ST", UtGen.AC, dirParam, UtGen.GP, "prologo: guardar param " + pd.getNombreVariable());
+				}
+			}
 			// Emitir cuerpo de la función
 			NodoFuncion def = funcionesRegistradas.get(n.getNombreFuncion());
 			if (def == null) {
@@ -361,7 +398,7 @@ public class Generador {
 					generar(def.getCuerpo());
 				}
 				UtGen.emitirComentario("Return implicito de funcion");
-				UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "funcion: recuperar direccion de retorno");
+				UtGen.emitirRM("LD", UtGen.AC1, 0, UtGen.MP, "funcion: recuperar direccion de retorno");
 				UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
 				UtGen.emitirComentario("=== FIN FUNCION " + def.getNombre() + " ===");
 			}
@@ -391,7 +428,7 @@ public class Generador {
 		}
 		
 		// Recuperar direccion de retorno y saltar
-		UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "return: recuperar direccion de retorno");
+		UtGen.emitirRM("LD", UtGen.AC1, 0, UtGen.MP, "return: recuperar direccion de retorno");
 		UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "return: salto a direccion de retorno");
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- return");
@@ -708,9 +745,9 @@ public class Generador {
 	private static void generarPreludioEstandar(){
 		UtGen.emitirComentario("* Compilacion TINY para la maquina TM");
 		UtGen.emitirComentario("* Prefacio estandar");
-		/* Aseguro quedar en la primer localidad de almacenamiento*/
-		UtGen.emitirRM("LD", UtGen.MP, 0, UtGen.AC, "load mp with maxaddr");
-		UtGen.emitirRM("ST", UtGen.AC, 0, UtGen.AC, "clear location 0");
+		// Inicializar punteros
+		UtGen.emitirRM("LDC", UtGen.GP, 0, 0, "init: GP = 0");
+		UtGen.emitirRM("LDC", UtGen.MP, 1023, 0, "init: MP = 1023 (tope de memoria)");
 		UtGen.emitirComentario("* Fin del prefacio estandar");
 	}
 }
