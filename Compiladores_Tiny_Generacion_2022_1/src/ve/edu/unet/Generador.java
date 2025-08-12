@@ -175,6 +175,18 @@ public class Generador {
             int inicio = UtGen.emitirSalto(0);
             inicioFuncion.put(nombre, inicio);
             funcionesEmitidas.add(nombre);
+            // Construir conjunto de parametros array para direccionamiento dentro del cuerpo
+            java.util.Set<String> arraysActual = new java.util.HashSet<>();
+            if (def.getParametros() != null) {
+                NodoBase p = def.getParametros();
+                while (p != null) {
+                    if (p instanceof NodoDeclaracion && ((NodoDeclaracion)p).isEsArray()) {
+                        arraysActual.add(((NodoDeclaracion)p).getNombreVariable());
+                    }
+                    p = p.getHermanoDerecha();
+                }
+            }
+            pilaParametrosArray.push(arraysActual);
             UtGen.emitirComentario("=== INICIO FUNCION " + nombre + " ===");
             if (def.getCuerpo() != null) generar(def.getCuerpo());
             // Retorno implícito: RA en pseudo-pila
@@ -182,6 +194,7 @@ public class Generador {
             UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "funcion: recuperar RA");
             UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
             UtGen.emitirComentario("=== FIN FUNCION " + nombre + " ===");
+            pilaParametrosArray.pop();
         }
     }
 
