@@ -384,9 +384,9 @@ public class Generador {
 			}
 		}
 
-		// 2) Calcular y apilar direccion de retorno: AC = PC + 3; push(AC)
-		// i: LDA AC,(PC+3); i+1: ST AC,...; i+2: LDA PC,func -> retornar a i+3
-		UtGen.emitirRM("LDA", UtGen.AC, 3, UtGen.PC, "call: calcular return addr (PC+3)");
+		// 2) Calcular y apilar direccion de retorno: AC = PC + 2; push(AC)
+		// i: LDA AC,(PC+2); i+1: ST AC,...; i+2: (hueco a parchar con LDA PC,func) -> retornar a i+2
+		UtGen.emitirRM("LDA", UtGen.AC, 2, UtGen.PC, "call: calcular return addr (PC+2)");
 		UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "call: push return addr");
 		
 		// Compilación diferida: emitir la función al final del código la primera vez que se use
@@ -714,15 +714,16 @@ public class Generador {
 							UtGen.cargarRespaldo(jmpEnd);
 							UtGen.emitirRM_Abs("JEQ", UtGen.AC, loopEnd, "pow: salir si exp == 0");
 							UtGen.restaurarRespaldo();
-							// resultado final en AC
-							UtGen.emitirRM("LD", UtGen.AC, posRes, UtGen.MP, "pow: cargar resultado");
-							// limpiar pila temporal (res, base, exp)
-							UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "pow: pop res");
-							UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "pow: pop base");
-							UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "pow: pop exp");
-							break;
+											// resultado final en AC
+				UtGen.emitirRM("LD", UtGen.AC, posRes, UtGen.MP, "pow: cargar resultado");
+				// limpiar pila temporal (res, base, exp)
+				UtGen.emitirRM("LD", UtGen.AC1, posRes, UtGen.MP, "pow: pop res (no-op)");
+				UtGen.emitirRM("LD", UtGen.AC1, posBase, UtGen.MP, "pow: pop base (no-op)");
+				UtGen.emitirRM("LD", UtGen.AC1, posExp, UtGen.MP, "pow: pop exp (no-op)");
+				desplazamientoTmp += 3; // restaurar tope temporal
+				break;
 						}
-			case	menor:	UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: <");
+case	menor:	UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: <");
 							UtGen.emitirRM("JLT", UtGen.AC, 2, UtGen.PC, "voy dos instrucciones mas alla if verdadero (AC<0)");
 							UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "caso de falso (AC=0)");
 							UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)");
