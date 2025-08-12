@@ -57,6 +57,7 @@ public class Generador {
     // Pila de nombres de parámetros que son arrays por función activa
     private static final Deque<Set<String>> pilaParametrosArray = new ArrayDeque<>();
     private static final List<PendingCall> llamadasPendientes = new ArrayList<>();
+    private static final Deque<Integer> pilaNumParams = new ArrayDeque<>();
 
     private static class PendingCall {
         final int pos;
@@ -409,6 +410,7 @@ public class Generador {
 					if (pd.isEsArray()) nombresArray.add(pd.getNombreVariable());
 				}
 				pilaParametrosArray.push(nombresArray);
+				pilaNumParams.push(paramsOrden.size());
 				// RA ya está en 0(MP). Copiar cada argumento a su slot en GP
 				for (int i = 0; i < paramsOrden.size(); i++) {
 					NodoDeclaracion pd = paramsOrden.get(i);
@@ -428,11 +430,13 @@ public class Generador {
 					generar(def.getCuerpo());
 				}
 				UtGen.emitirComentario("Return implicito de funcion");
-				UtGen.emitirRM("LD", UtGen.AC1, 0, UtGen.MP, "funcion: recuperar direccion de retorno");
+				int numParamsActual = pilaNumParams.isEmpty() ? 0 : pilaNumParams.peek();
+				UtGen.emitirRM("LD", UtGen.AC1, -numParamsActual, UtGen.MP, "funcion: recuperar direccion de retorno");
 				UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
 				UtGen.emitirComentario("=== FIN FUNCION " + def.getNombre() + " ===");
 				// Salir del contexto de parámetros array
 				if (!pilaParametrosArray.isEmpty()) pilaParametrosArray.pop();
+				if (!pilaNumParams.isEmpty()) pilaNumParams.pop();
 			}
 			// Registrar para parcheo posterior
 			llamadasPendientes.add(new PendingCall(posLlamada, n.getNombreFuncion()));
@@ -458,7 +462,8 @@ public class Generador {
 		}
 		
 		// Recuperar direccion de retorno y saltar
-		UtGen.emitirRM("LD", UtGen.AC1, 0, UtGen.MP, "return: recuperar direccion de retorno");
+		int numParamsActual = pilaNumParams.isEmpty() ? 0 : pilaNumParams.peek();
+		UtGen.emitirRM("LD", UtGen.AC1, -numParamsActual, UtGen.MP, "return: recuperar direccion de retorno");
 		UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "return: salto a direccion de retorno");
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- return");
