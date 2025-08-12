@@ -156,12 +156,7 @@ public class Generador {
 			generar(n.getGlobal_block());
 		}
 		
-		// Registrar funciones (sin generar su cuerpo)
-		if(n.getFunction_block() != null){
-			generar(n.getFunction_block());
-		}
-		// Emitir todas las funciones registradas antes del main
-		emitirFuncionesRegistradas();
+		// Funciones deshabilitadas: se ignoran los bloques de función
 		
 		// Generar programa principal
 		if(n.getMain() != null){
@@ -347,57 +342,9 @@ public class Generador {
 
 	private static void generarLlamadaFuncion(NodoBase nodo){
 		NodoLlamadaFuncion n = (NodoLlamadaFuncion)nodo;
-		if(UtGen.debug) UtGen.emitirComentario("-> llamada funcion: " + n.getNombreFuncion());
-		
-		// Pasar argumentos a slots GP de los parámetros
-		NodoFuncion defFuncion = funcionesRegistradas.get(n.getNombreFuncion());
-		java.util.List<NodoDeclaracion> paramsOrden = new java.util.ArrayList<>();
-		if (defFuncion != null && defFuncion.getParametros() != null) {
-			NodoBase p = defFuncion.getParametros();
-			Set<String> arraysActual = new HashSet<>();
-			while (p != null) {
-				if (p instanceof NodoDeclaracion) {
-					NodoDeclaracion nd = (NodoDeclaracion)p;
-					paramsOrden.add(nd);
-					if (nd.isEsArray()) arraysActual.add(nd.getNombreVariable());
-				}
-				p = p.getHermanoDerecha();
-			}
-			pilaParametrosArray.push(arraysActual);
-		}
-		NodoBase arg = n.getArgumentos();
-		for (int idx = 0; idx < paramsOrden.size(); idx++) {
-			NodoDeclaracion pd = paramsOrden.get(idx);
-			int dirParam = tablaSimbolos.getDireccion(pd.getNombreVariable());
-			if (arg != null) {
-				if (pd.isEsArray() && arg instanceof NodoIdentificador) {
-					String nombreArg = ((NodoIdentificador)arg).getNombre();
-					int base = tablaSimbolos.getDireccion(nombreArg);
-					UtGen.emitirRM("LDC", UtGen.AC, base, 0, "call: base addr de array " + nombreArg);
-				} else {
-					generar(arg);
-				}
-				UtGen.emitirRM("ST", UtGen.AC, dirParam, UtGen.GP, "call: pasar param " + pd.getNombreVariable());
-				arg = arg.getHermanoDerecha();
-			} else {
-				UtGen.emitirRM("LDC", UtGen.AC, 0, 0, "call: param faltante -> 0");
-				UtGen.emitirRM("ST", UtGen.AC, dirParam, UtGen.GP, "call: pasar param por defecto");
-			}
-		}
-
-		// Apilar direccion de retorno en pseudo-pila y saltar a la funcion
-		UtGen.emitirRM("LDA", UtGen.AC, 3, UtGen.PC, "call: calcular return addr (PC+3)");
-		UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "call: push RA en pseudo-pila");
-		Integer inicio = inicioFuncion.get(n.getNombreFuncion());
-		if (inicio == null) {
-			UtGen.emitirComentario("ERROR: funcion no emitida: " + n.getNombreFuncion());
-		} else {
-			UtGen.emitirRM_Abs("LDA", UtGen.PC, inicio, "call: salto a funcion " + n.getNombreFuncion());
-		}
-		// No mantener estado de parametros array en el llamador
-		if (!pilaParametrosArray.isEmpty()) pilaParametrosArray.pop();
-		
-		if(UtGen.debug) UtGen.emitirComentario("<- llamada funcion");
+		if(UtGen.debug) UtGen.emitirComentario("-> llamada funcion (deshabilitada): " + n.getNombreFuncion());
+		// Funciones deshabilitadas: no emitir nada
+		if(UtGen.debug) UtGen.emitirComentario("<- llamada funcion (deshabilitada)");
 	}
 
 	private static void generarReturn(NodoBase nodo){
