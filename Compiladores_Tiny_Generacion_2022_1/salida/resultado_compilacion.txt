@@ -247,7 +247,7 @@ token ID
 token SEMI
 token VAR
 	 error en sentencia
-Error sintáctico en sentencia
+Error sintÃ¡ctico en sentencia
 	 secuencia sentencias sin punto y coma
 	 declaracion variable local
 	 secuencia sentencias sin punto y coma
@@ -369,7 +369,7 @@ Variable: i -> Direccion: 11
 3:      ST        0,0(5)        global: almacenar en direccion 0
 * <- declaracion
 * -> declaracion: arr
-* Declaracion de array: arr tamaño definido
+* Declaracion de array: arr tamaÃ±o definido
 * -> constante
 4:      LDC       0,10(0)       cargar constante: 10
 * <- constante
@@ -630,7 +630,6 @@ Variable: i -> Direccion: 11
 150:    LDA       0,3(7)        call: calcular return addr (PC+3)
 151:    ST        0,-2(6)       call: push return addr
 * ERROR: llamada a funcion no definida: suma_vector
-152:    LDA       7,0(7)        call: salto a funcion suma_vector
 * <- llamada funcion
 153:    ST        0,13(5)       asignacion: almaceno el valor para el id resultado
 * <- asignacion
@@ -848,6 +847,7 @@ Variable: i -> Direccion: 11
 260:    LD        1,0(6)        return: recuperar direccion de retorno
 261:    LDA       7,0(1)        return: salto a direccion de retorno
 * <- return
+152:    LDA       7,0(7)        call: salto a funcion suma_vector
 * <- programa
 * Fin de la ejecucion.
 262:    HALT      0,0,0         

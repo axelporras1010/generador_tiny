@@ -56,6 +56,13 @@ public class Generador {
 
     // Pila de nombres de parámetros que son arrays por función activa
     private static final Deque<Set<String>> pilaParametrosArray = new ArrayDeque<>();
+    private static final List<PendingCall> llamadasPendientes = new ArrayList<>();
+
+    private static class PendingCall {
+        final int pos;
+        final String nombreFuncion;
+        PendingCall(int pos, String nombreFuncion) { this.pos = pos; this.nombreFuncion = nombreFuncion; }
+    }
 	
 	public static void setTablaSimbolos(TablaSimbolos tabla){
 		tablaSimbolos = tabla;
@@ -165,9 +172,22 @@ public class Generador {
 		if(n.getMain() != null){
 			generar(n.getMain());
 		}
+		// Parchear saltos de llamadas una vez conocidas las direcciones finales
+		parcharLlamadasPendientes();
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- programa");
 	}
+
+    private static void parcharLlamadasPendientes() {
+        for (PendingCall pc : llamadasPendientes) {
+            Integer inicio = inicioFuncion.get(pc.nombreFuncion);
+            if (inicio == null) continue;
+            UtGen.cargarRespaldo(pc.pos);
+            UtGen.emitirRM_Abs("LDA", UtGen.PC, inicio, "call: salto a funcion " + pc.nombreFuncion);
+            UtGen.restaurarRespaldo();
+        }
+        llamadasPendientes.clear();
+    }
 
 	private static void generarDeclaracion(NodoBase nodo){
 		NodoDeclaracion n = (NodoDeclaracion)nodo;
@@ -417,14 +437,12 @@ public class Generador {
 				// Salir del contexto de parámetros array
 				if (!pilaParametrosArray.isEmpty()) pilaParametrosArray.pop();
 			}
-			// Volver al sitio de llamada y emitir el salto a la función
-			UtGen.cargarRespaldo(posLlamada);
-			UtGen.emitirRM_Abs("LDA", UtGen.PC, inicio, "call: salto a funcion " + n.getNombreFuncion());
-			// Restaurar emision al final para continuar generando el resto del programa
-			UtGen.restaurarRespaldo();
+			// Registrar para parcheo posterior
+			llamadasPendientes.add(new PendingCall(posLlamada, n.getNombreFuncion()));
 		} else {
-			// Ya fue emitida antes: emitir solo el salto
-			UtGen.emitirRM_Abs("LDA", UtGen.PC, inicio, "call: salto a funcion " + n.getNombreFuncion());
+			// Ya emitida: reservar hueco y parchar luego (uniformidad)
+			int posLlamada = UtGen.emitirSalto(1);
+			llamadasPendientes.add(new PendingCall(posLlamada, n.getNombreFuncion()));
 		}
 		
 		// 3) Restaurar desplazamiento temporal (limpiar argumentos en el generador)
