@@ -409,14 +409,11 @@ public class Generador {
 					if (pd.isEsArray()) nombresArray.add(pd.getNombreVariable());
 				}
 				pilaParametrosArray.push(nombresArray);
-				// Mover direccion de retorno a 0(MP)
-				UtGen.emitirRM("LD", UtGen.AC1, -numArgs, UtGen.MP, "prologo: cargar RA de -(numArgs)(MP)");
-				UtGen.emitirRM("ST", UtGen.AC1, 0, UtGen.MP, "prologo: colocar RA en 0(MP)");
-				// Copiar cada argumento a su slot en GP
+				// RA ya está en 0(MP). Copiar cada argumento a su slot en GP
 				for (int i = 0; i < paramsOrden.size(); i++) {
 					NodoDeclaracion pd = paramsOrden.get(i);
 					int dirParam = tablaSimbolos.getDireccion(pd.getNombreVariable());
-					int off = -i; // primer arg en 0(MP), segundo en -1(MP), etc.
+					int off = -(i+1); // primer arg en -1(MP), segundo en -2(MP), etc. RA está en 0(MP)
 					UtGen.emitirRM("LD", UtGen.AC, off, UtGen.MP, "prologo: cargar arg " + pd.getNombreVariable());
 					UtGen.emitirRM("ST", UtGen.AC, dirParam, UtGen.GP, "prologo: guardar param " + pd.getNombreVariable());
 				}
@@ -446,7 +443,7 @@ public class Generador {
 		}
 		
 		// 3) Restaurar desplazamiento temporal (limpiar argumentos en el generador)
-		desplazamientoTmp += numArgs;
+		desplazamientoTmp += (numArgs + 1); // consumir args y RA
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- llamada funcion");
 	}
