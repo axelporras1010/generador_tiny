@@ -54,16 +54,8 @@ public class Generador {
     private static final Map<String, Integer> inicioFuncion = new HashMap<>();
     private static final Set<String> funcionesEmitidas = new HashSet<>();
 
-    // Pila de nombres de parámetros que son arrays por función activa
+    // Bandera simple para saber si un identificador es parámetro array en el cuerpo actual
     private static final Deque<Set<String>> pilaParametrosArray = new ArrayDeque<>();
-    private static final List<PendingCall> llamadasPendientes = new ArrayList<>();
-    private static final Deque<Integer> pilaNumParams = new ArrayDeque<>();
-
-    private static class PendingCall {
-        final int pos;
-        final String nombreFuncion;
-        PendingCall(int pos, String nombreFuncion) { this.pos = pos; this.nombreFuncion = nombreFuncion; }
-    }
 	
 	public static void setTablaSimbolos(TablaSimbolos tabla){
 		tablaSimbolos = tabla;
@@ -175,8 +167,7 @@ public class Generador {
 		if(n.getMain() != null){
 			generar(n.getMain());
 		}
-		// Parchear saltos de llamadas una vez conocidas las direcciones finales
-		parcharLlamadasPendientes();
+		// No hay saltos pendientes: las funciones fueron emitidas arriba
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- programa");
 	}
@@ -185,64 +176,18 @@ public class Generador {
         for (Map.Entry<String, NodoFuncion> e : funcionesRegistradas.entrySet()) {
             String nombre = e.getKey();
             if (funcionesEmitidas.contains(nombre)) continue;
-            emitirFuncion(e.getValue());
+            NodoFuncion def = e.getValue();
+            int inicio = UtGen.emitirSalto(0);
+            inicioFuncion.put(nombre, inicio);
+            funcionesEmitidas.add(nombre);
+            UtGen.emitirComentario("=== INICIO FUNCION " + nombre + " ===");
+            if (def.getCuerpo() != null) generar(def.getCuerpo());
+            // Retorno implícito: RA en pseudo-pila
+            UtGen.emitirComentario("Return implicito de funcion");
+            UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "funcion: recuperar RA");
+            UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
+            UtGen.emitirComentario("=== FIN FUNCION " + nombre + " ===");
         }
-    }
-
-    private static void emitirFuncion(NodoFuncion def) {
-        String nombre = def.getNombre();
-        int inicio = UtGen.emitirSalto(0);
-        inicioFuncion.put(nombre, inicio);
-        funcionesEmitidas.add(nombre);
-
-        // Registrar parámetros array y copiar args a GP
-        Set<String> nombresArray = new HashSet<>();
-        List<NodoDeclaracion> params = new ArrayList<>();
-        if (def.getParametros() != null) {
-            NodoBase p = def.getParametros();
-            while (p != null) {
-                if (p instanceof NodoDeclaracion) {
-                    NodoDeclaracion pd = (NodoDeclaracion)p;
-                    params.add(pd);
-                    if (pd.isEsArray()) nombresArray.add(pd.getNombreVariable());
-                }
-                p = p.getHermanoDerecha();
-            }
-        }
-        pilaParametrosArray.push(nombresArray);
-        // Copiar cada argumento a GP (arg1 en -1(MP), etc.)
-        for (int i = 0; i < params.size(); i++) {
-            NodoDeclaracion pd = params.get(i);
-            int dirParam = tablaSimbolos.getDireccion(pd.getNombreVariable());
-            int off = -(i+1);
-            UtGen.emitirRM("LD", UtGen.AC, off, UtGen.MP, "prologo: cargar arg " + pd.getNombreVariable());
-            UtGen.emitirRM("ST", UtGen.AC, dirParam, UtGen.GP, "prologo: guardar param " + pd.getNombreVariable());
-        }
-        // Pop de argumentos, dejar RA en 0(MP)
-        if (!params.isEmpty()) {
-            UtGen.emitirRM("LDA", UtGen.MP, params.size(), UtGen.MP, "prologo: pop args");
-        }
-
-        UtGen.emitirComentario("=== INICIO FUNCION " + nombre + " ===");
-        if (def.getCuerpo() != null) generar(def.getCuerpo());
-        // Return implícito
-        UtGen.emitirComentario("Return implicito de funcion");
-        UtGen.emitirRM("LD", UtGen.AC1, 0, UtGen.MP, "funcion: cargar RA");
-        UtGen.emitirRM("LDA", UtGen.MP, 1, UtGen.MP, "funcion: pop RA");
-        UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
-        UtGen.emitirComentario("=== FIN FUNCION " + nombre + " ===");
-        pilaParametrosArray.pop();
-    }
-
-    private static void parcharLlamadasPendientes() {
-        for (PendingCall pc : llamadasPendientes) {
-            Integer inicio = inicioFuncion.get(pc.nombreFuncion);
-            if (inicio == null) continue;
-            UtGen.cargarRespaldo(pc.pos);
-            UtGen.emitirRM_Abs("LDA", UtGen.PC, inicio, "call: salto a funcion " + pc.nombreFuncion);
-            UtGen.restaurarRespaldo();
-        }
-        llamadasPendientes.clear();
     }
 
 	private static void generarDeclaracion(NodoBase nodo){
@@ -404,108 +349,53 @@ public class Generador {
 		NodoLlamadaFuncion n = (NodoLlamadaFuncion)nodo;
 		if(UtGen.debug) UtGen.emitirComentario("-> llamada funcion: " + n.getNombreFuncion());
 		
-		// 1) Procesar argumentos si existen (se apilan primero)
-		int numArgs = 0;
+		// Pasar argumentos a slots GP de los parámetros
 		NodoFuncion defFuncion = funcionesRegistradas.get(n.getNombreFuncion());
 		java.util.List<NodoDeclaracion> paramsOrden = new java.util.ArrayList<>();
 		if (defFuncion != null && defFuncion.getParametros() != null) {
 			NodoBase p = defFuncion.getParametros();
+			Set<String> arraysActual = new HashSet<>();
 			while (p != null) {
-				if (p instanceof NodoDeclaracion) paramsOrden.add((NodoDeclaracion)p);
+				if (p instanceof NodoDeclaracion) {
+					NodoDeclaracion nd = (NodoDeclaracion)p;
+					paramsOrden.add(nd);
+					if (nd.isEsArray()) arraysActual.add(nd.getNombreVariable());
+				}
 				p = p.getHermanoDerecha();
 			}
+			pilaParametrosArray.push(arraysActual);
 		}
-		if(n.getArgumentos() != null){
-			UtGen.emitirComentario("Procesando argumentos de la llamada");
-			NodoBase arg = n.getArgumentos();
-			int idx = 0;
-			while(arg != null){
-				// Si el parametro esperado es array, pasar la base (direccion) del array
-				boolean pasarBaseArray = false;
-				if (idx < paramsOrden.size()) {
-					NodoDeclaracion pd = paramsOrden.get(idx);
-					pasarBaseArray = pd.isEsArray();
-				}
-				if (pasarBaseArray && arg instanceof NodoIdentificador) {
+		NodoBase arg = n.getArgumentos();
+		for (int idx = 0; idx < paramsOrden.size(); idx++) {
+			NodoDeclaracion pd = paramsOrden.get(idx);
+			int dirParam = tablaSimbolos.getDireccion(pd.getNombreVariable());
+			if (arg != null) {
+				if (pd.isEsArray() && arg instanceof NodoIdentificador) {
 					String nombreArg = ((NodoIdentificador)arg).getNombre();
 					int base = tablaSimbolos.getDireccion(nombreArg);
 					UtGen.emitirRM("LDC", UtGen.AC, base, 0, "call: base addr de array " + nombreArg);
 				} else {
 					generar(arg);
 				}
-				// Empujar argumento al stack de ejecución real
-				UtGen.emitirRM("LDA", UtGen.MP, -1, UtGen.MP, "call: MP=MP-1 (arg)");
-				UtGen.emitirRM("ST", UtGen.AC, 0, UtGen.MP, "call: guardar arg en 0(MP)");
-				numArgs++;
-				idx++;
+				UtGen.emitirRM("ST", UtGen.AC, dirParam, UtGen.GP, "call: pasar param " + pd.getNombreVariable());
 				arg = arg.getHermanoDerecha();
+			} else {
+				UtGen.emitirRM("LDC", UtGen.AC, 0, 0, "call: param faltante -> 0");
+				UtGen.emitirRM("ST", UtGen.AC, dirParam, UtGen.GP, "call: pasar param por defecto");
 			}
 		}
 
-		// 2) Calcular y apilar direccion de retorno: AC = PC + 2; push(AC)
-		// i: LDA AC,(PC+2); i+1: ST AC,...; i+2: (hueco a parchar con LDA PC,func) -> retornar a i+2
-		UtGen.emitirRM("LDA", UtGen.AC, 2, UtGen.PC, "call: calcular return addr (PC+2)");
-		UtGen.emitirRM("LDA", UtGen.MP, -1, UtGen.MP, "call: MP=MP-1 (RA)");
-		UtGen.emitirRM("ST", UtGen.AC, 0, UtGen.MP, "call: push RA en 0(MP)");
-		
-		// Compilación diferida: emitir la función al final del código la primera vez que se use
+		// Apilar direccion de retorno en pseudo-pila y saltar a la funcion
+		UtGen.emitirRM("LDA", UtGen.AC, 3, UtGen.PC, "call: calcular return addr (PC+3)");
+		UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "call: push RA en pseudo-pila");
 		Integer inicio = inicioFuncion.get(n.getNombreFuncion());
 		if (inicio == null) {
-			// Guardar posicion actual (sitio de llamada) dejando UN hueco para la instruccion de salto
-			int posLlamada = UtGen.emitirSalto(1);
-			// Ir al final del código emitido hasta ahora
-			UtGen.restaurarRespaldo();
-			// Registrar inicio de la funcion
-			inicio = UtGen.emitirSalto(0);
-			inicioFuncion.put(n.getNombreFuncion(), inicio);
-			funcionesEmitidas.add(n.getNombreFuncion());
-			
-			// Emitir prólogo de función: copiar argumentos a parámetros y fijar RA en 0(MP)
-			if (defFuncion != null && !paramsOrden.isEmpty()) {
-				// Registrar parámetros array para uso durante el cuerpo
-				Set<String> nombresArray = new HashSet<>();
-				for (NodoDeclaracion pd : paramsOrden) {
-					if (pd.isEsArray()) nombresArray.add(pd.getNombreVariable());
-				}
-				pilaParametrosArray.push(nombresArray);
-				pilaNumParams.push(paramsOrden.size());
-				// RA ya está en 0(MP). Copiar cada argumento a su slot en GP
-				for (int i = 0; i < paramsOrden.size(); i++) {
-					NodoDeclaracion pd = paramsOrden.get(i);
-					int dirParam = tablaSimbolos.getDireccion(pd.getNombreVariable());
-					int off = -(i+1); // primer arg en -1(MP), segundo en -2(MP), etc. RA está en 0(MP)
-					UtGen.emitirRM("LD", UtGen.AC, off, UtGen.MP, "prologo: cargar arg " + pd.getNombreVariable());
-					UtGen.emitirRM("ST", UtGen.AC, dirParam, UtGen.GP, "prologo: guardar param " + pd.getNombreVariable());
-				}
-			}
-			// Emitir cuerpo de la función
-			NodoFuncion def = funcionesRegistradas.get(n.getNombreFuncion());
-			if (def == null) {
-				UtGen.emitirComentario("ERROR: llamada a funcion no definida: " + n.getNombreFuncion());
-			} else {
-				UtGen.emitirComentario("=== INICIO FUNCION " + def.getNombre() + " ===");
-				if (def.getCuerpo() != null) {
-					generar(def.getCuerpo());
-				}
-				UtGen.emitirComentario("Return implicito de funcion");
-				int numParamsActual = pilaNumParams.isEmpty() ? 0 : pilaNumParams.peek();
-				UtGen.emitirRM("LD", UtGen.AC1, -numParamsActual, UtGen.MP, "funcion: recuperar direccion de retorno");
-				UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
-				UtGen.emitirComentario("=== FIN FUNCION " + def.getNombre() + " ===");
-				// Salir del contexto de parámetros array
-				if (!pilaParametrosArray.isEmpty()) pilaParametrosArray.pop();
-				if (!pilaNumParams.isEmpty()) pilaNumParams.pop();
-			}
-			// Registrar para parcheo posterior
-			llamadasPendientes.add(new PendingCall(posLlamada, n.getNombreFuncion()));
+			UtGen.emitirComentario("ERROR: funcion no emitida: " + n.getNombreFuncion());
 		} else {
-			// Ya emitida: reservar hueco y parchar luego (uniformidad)
-			int posLlamada = UtGen.emitirSalto(1);
-			llamadasPendientes.add(new PendingCall(posLlamada, n.getNombreFuncion()));
+			UtGen.emitirRM_Abs("LDA", UtGen.PC, inicio, "call: salto a funcion " + n.getNombreFuncion());
 		}
-		
-		// 3) Restaurar desplazamiento temporal (limpiar argumentos en el generador)
-		desplazamientoTmp += (numArgs + 1); // consumir args y RA
+		// No mantener estado de parametros array en el llamador
+		if (!pilaParametrosArray.isEmpty()) pilaParametrosArray.pop();
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- llamada funcion");
 	}
@@ -519,9 +409,8 @@ public class Generador {
 			generar(n.getExpresion());
 		}
 		
-		// Recuperar direccion de retorno y saltar
-		int numParamsActual = pilaNumParams.isEmpty() ? 0 : pilaNumParams.peek();
-		UtGen.emitirRM("LD", UtGen.AC1, -numParamsActual, UtGen.MP, "return: recuperar direccion de retorno");
+		// Recuperar direccion de retorno y saltar (pseudo-pila)
+		UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "return: recuperar RA");
 		UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "return: salto a direccion de retorno");
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- return");
