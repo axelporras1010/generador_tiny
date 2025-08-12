@@ -378,7 +378,9 @@ public class Generador {
 				} else {
 					generar(arg);
 				}
-				UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "call: guardar argumento");
+				// Empujar argumento al stack de ejecución real
+				UtGen.emitirRM("LDA", UtGen.MP, -1, UtGen.MP, "call: MP=MP-1 (arg)");
+				UtGen.emitirRM("ST", UtGen.AC, 0, UtGen.MP, "call: guardar arg en 0(MP)");
 				numArgs++;
 				idx++;
 				arg = arg.getHermanoDerecha();
@@ -388,7 +390,8 @@ public class Generador {
 		// 2) Calcular y apilar direccion de retorno: AC = PC + 2; push(AC)
 		// i: LDA AC,(PC+2); i+1: ST AC,...; i+2: (hueco a parchar con LDA PC,func) -> retornar a i+2
 		UtGen.emitirRM("LDA", UtGen.AC, 2, UtGen.PC, "call: calcular return addr (PC+2)");
-		UtGen.emitirRM("ST", UtGen.AC, desplazamientoTmp--, UtGen.MP, "call: push return addr");
+		UtGen.emitirRM("LDA", UtGen.MP, -1, UtGen.MP, "call: MP=MP-1 (RA)");
+		UtGen.emitirRM("ST", UtGen.AC, 0, UtGen.MP, "call: push RA en 0(MP)");
 		
 		// Compilación diferida: emitir la función al final del código la primera vez que se use
 		Integer inicio = inicioFuncion.get(n.getNombreFuncion());
