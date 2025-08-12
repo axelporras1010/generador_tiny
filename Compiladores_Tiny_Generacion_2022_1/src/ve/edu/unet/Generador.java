@@ -168,6 +168,8 @@ public class Generador {
 		if(n.getFunction_block() != null){
 			generar(n.getFunction_block());
 		}
+		// Emitir todas las funciones registradas antes del main
+		emitirFuncionesRegistradas();
 		
 		// Generar programa principal
 		if(n.getMain() != null){
@@ -178,6 +180,59 @@ public class Generador {
 		
 		if(UtGen.debug) UtGen.emitirComentario("<- programa");
 	}
+
+    private static void emitirFuncionesRegistradas() {
+        for (Map.Entry<String, NodoFuncion> e : funcionesRegistradas.entrySet()) {
+            String nombre = e.getKey();
+            if (funcionesEmitidas.contains(nombre)) continue;
+            emitirFuncion(e.getValue());
+        }
+    }
+
+    private static void emitirFuncion(NodoFuncion def) {
+        String nombre = def.getNombre();
+        int inicio = UtGen.emitirSalto(0);
+        inicioFuncion.put(nombre, inicio);
+        funcionesEmitidas.add(nombre);
+
+        // Registrar parámetros array y copiar args a GP
+        Set<String> nombresArray = new HashSet<>();
+        List<NodoDeclaracion> params = new ArrayList<>();
+        if (def.getParametros() != null) {
+            NodoBase p = def.getParametros();
+            while (p != null) {
+                if (p instanceof NodoDeclaracion) {
+                    NodoDeclaracion pd = (NodoDeclaracion)p;
+                    params.add(pd);
+                    if (pd.isEsArray()) nombresArray.add(pd.getNombreVariable());
+                }
+                p = p.getHermanoDerecha();
+            }
+        }
+        pilaParametrosArray.push(nombresArray);
+        // Copiar cada argumento a GP (arg1 en -1(MP), etc.)
+        for (int i = 0; i < params.size(); i++) {
+            NodoDeclaracion pd = params.get(i);
+            int dirParam = tablaSimbolos.getDireccion(pd.getNombreVariable());
+            int off = -(i+1);
+            UtGen.emitirRM("LD", UtGen.AC, off, UtGen.MP, "prologo: cargar arg " + pd.getNombreVariable());
+            UtGen.emitirRM("ST", UtGen.AC, dirParam, UtGen.GP, "prologo: guardar param " + pd.getNombreVariable());
+        }
+        // Pop de argumentos, dejar RA en 0(MP)
+        if (!params.isEmpty()) {
+            UtGen.emitirRM("LDA", UtGen.MP, params.size(), UtGen.MP, "prologo: pop args");
+        }
+
+        UtGen.emitirComentario("=== INICIO FUNCION " + nombre + " ===");
+        if (def.getCuerpo() != null) generar(def.getCuerpo());
+        // Return implícito
+        UtGen.emitirComentario("Return implicito de funcion");
+        UtGen.emitirRM("LD", UtGen.AC1, 0, UtGen.MP, "funcion: cargar RA");
+        UtGen.emitirRM("LDA", UtGen.MP, 1, UtGen.MP, "funcion: pop RA");
+        UtGen.emitirRM("LDA", UtGen.PC, 0, UtGen.AC1, "funcion: retorno");
+        UtGen.emitirComentario("=== FIN FUNCION " + nombre + " ===");
+        pilaParametrosArray.pop();
+    }
 
     private static void parcharLlamadasPendientes() {
         for (PendingCall pc : llamadasPendientes) {
